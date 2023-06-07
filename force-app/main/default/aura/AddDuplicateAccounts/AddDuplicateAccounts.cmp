@@ -1,0 +1,106 @@
+<aura:component controller="AddDuplicateAccountsController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="dupAccountRec" type="Account_Dups__c" default="{'sobjectType' : 'Account_Dups__c',
+                                                                         'Master_Account__c' : ''}"/> 
+    <aura:attribute name="dupAccountRecList" type="Account_Dups__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="dataLength" type="Integer" default="1"/>
+    <aura:attribute name="spinner" type="boolean" default="false"/>
+    <lightning:card>
+        <aura:if isTrue="{!v.spinner}">
+            <div class="exampleHolder">
+                <lightning:spinner alternativeText="Loading" size="medium" />
+            </div>
+        </aura:if>
+        <div class="slds-page-header" >
+            <div class="slds-page-header__row" >
+                <div class="slds-page-header__col-title" >
+                    <div class="slds-media" >
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-account" title="Account">
+                                <lightning:icon iconName="standard:account" alternativeText="Account" title="Account" />
+                                <span class="slds-assistive-text">Account</span>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate" title="Add Duplicate Accounts">Add Duplicate Accounts</span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2 slds-border_right" >
+                <br/>
+                <div style="width:50%;margin-left:2%;">
+                    <lightning:recordEditForm objectApiName="Account_Dups__c">
+                        <b>Winning Account</b>
+                        <lightning:inputField variant="label-hidden" fieldName="Master_Account__c" value="{!v.dupAccountRec.Master_Account__c}"/>
+                    </lightning:recordEditForm>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+                <br/>
+                <lightning:recordEditForm objectApiName="Account_Dups__c">
+                    <div class="slds-scrollable" style="height:350px;">
+                        <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col" style="width:20%;">
+                                        <div class="slds-truncate">S.No</div>
+                                    </th>
+                                    <th scope="col" style="width:50%;">
+                                        <div class="slds-truncate" title="Duplicate Account">Duplicate Account</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.dupAccountRecList}" var="dupRec" indexVar="index">
+                                    <tr class="slds-text-title_caps">
+                                        <td> 
+                                            {!index + 1}
+                                        </td>
+                                        <td>
+                                            <lightning:inputField variant="label-hidden" fieldName="Duplicate_Account__c" value="{!dupRec.Duplicate_Account__c}"/>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">
+                                                <aura:if isTrue="{!index == 0}">
+                                                    <a onclick="{!c.addNewRow}">
+                                                        <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                                        <span class="slds-assistive-text">Add Icon</span>
+                                                    </a>    
+                                                    <aura:set attribute="else">
+                                                        <aura:if isTrue="{!index + 1 == v.dataLength}">
+                                                            <a onclick="{!c.addNewRow}">
+                                                                <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                                                                <span class="slds-assistive-text">Add Icon</span>
+                                                            </a> 
+                                                        </aura:if>
+                                                        <a onclick="{!c.removeRow}" id="{!index}">
+                                                            <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                                            <span class="slds-assistive-text">Delete Icon</span>
+                                                        </a>
+                                                    </aura:set> 
+                                                </aura:if>
+                                            </div>
+                                        </td> 
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                </lightning:recordEditForm>
+            </div>
+        </div>
+        <div class="slds-docked-form-footer">
+            <lightning:button label="Cancel" title="Cancel" onclick="{!c.cancelAction}"/>
+            <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.saveData}" />
+        </div>
+    </lightning:card>
+</aura:component>

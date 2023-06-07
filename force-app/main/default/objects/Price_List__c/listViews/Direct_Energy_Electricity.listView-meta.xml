@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Direct_Energy_Electricity</fullName>
+    <columns>NAME</columns>
+    <columns>Effective_From__c</columns>
+    <columns>Effective_To__c</columns>
+    <columns>Market__c</columns>
+    <columns>Term__c</columns>
+    <columns>Month_Year__c</columns>
+    <columns>Size__c</columns>
+    <columns>Supplier__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Latest__c</columns>
+    <columns>List_Price__c</columns>
+    <columns>Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Supplier__c</field>
+        <operation>contains</operation>
+        <value>Link Energy - Alberta</value>
+    </filters>
+    <filters>
+        <field>Size__c</field>
+        <operation>equals</operation>
+        <value>Small</value>
+    </filters>
+    <filters>
+        <field>NAME</field>
+        <operation>equals</operation>
+        <value>Gas</value>
+    </filters>
+    <filters>
+        <field>Type__c</field>
+        <operation>equals</operation>
+        <value>Fixed</value>
+    </filters>
+    <label>Direct Energy - Elec- S-F-Alberta</label>
+</ListView>

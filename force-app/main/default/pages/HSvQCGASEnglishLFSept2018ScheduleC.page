@@ -1,0 +1,378 @@
+<apex:page showHeader="false" sidebar="false" cache="false" controller="HScSiteSchedule" contentType="text/xml" applyHtmlTag="true" >
+    <block>
+        <apex:variable var="cnt" value="{!0}" /> 
+        <apex:repeat value="{!siteScheduleList}" var="site">
+            <apex:variable var="cnt" value="{!cnt+1}"/>
+
+        <table font-family="open sans">
+            <table-body>
+                <table-row>
+                    <table-cell  padding="5" number-columns-spanned="1" border-bottom="2px solid black">
+                        <block text-align="center" font-size="13px" font-family= "open sans" font-weight="bold"><apex:outputText >Schedule C: Undertaking</apex:outputText></block>
+                    </table-cell>
+                </table-row>
+            </table-body>
+        </table>
+        
+        <table width="100%" margin-top="10px">
+            <table-body>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >I,   {!site.LegalCustomerName} [Customer], undertake to purchase from Énergir, L.P. (“Énergir”), if agreed to by it, all the natural gas that I will consume at my facilities located at,    {!site.ServiceAddress}        [Service Address], at a price of   ${!site.QSellingPrice} / m3     [agreed fixed-price]. I acknowledge that this fixed-price for natural gas supply is the price granted by  Direct Energy Business [name of supplier], duly represented by  DNE Resources [employee, agent, broker’s name of the supplier] to Énergir, in consideration of my consumption. My undertaking is for a term of    {!site.QLTerm}     [term] years from the date of first specific delivery by this supplier to Énergir with regard to the present undertaking.</apex:outputText> 
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            &#160;
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >For this purpose, I authorize Énergir and   Direct Energy Business [name of supplier], and, as the case may be,  DNE Resources [broker or agent’s name], to communicate to each other information on my account that they have or may have in my capacity as a natural gas consumer, notably my present and future specifics, the volumes of gas consumed and projected, as well as my gas consumption history in order to determine my eligibility for a fixed-price agreement.</apex:outputText> 
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            &#160;
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >Furthermore, I recognize and accept that if this supplier fails to deliver to Énergir, in accordance with the above- mentioned terms, the natural gas that will be consumed at my facilities mentioned above, I will pay for the said natural gas the natural gas rate as approved by the Régie de l’énergie for the variable-price natural gas supply service for all of the natural gas consumed by the facilities for the duration of the failure to deliver by the supplier.</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            &#160;
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >
+                                <block>I understand that:</block>
+                            </apex:outputText>
+                        </block>
+                        <block>
+                            <list-block  provisional-distance-between-starts="0.50cm" provisional-label-separation="0.5cm" space-after="12pt" start-indent="0.75cm">
+                                <list-item>
+                                    <list-item-label  end-indent="label-end()">
+                                        <block>1)</block>
+                                    </list-item-label>
+                                    <list-item-body start-indent="body-start()">
+                                        <block>
+                                            Énergir Web site publishes:
+                                            <list-block  provisional-distance-between-starts="0.75cm" provisional-label-separation="0.5cm" space-after="12pt" start-indent="1.50cm">
+                                                <list-item>
+                                                    <list-item-label  end-indent="label-end()">
+                                                        <block>a.</block>
+                                                    </list-item-label>
+                                                    <list-item-body start-indent="body-start()">
+                                                        <block>
+                                                            Price history of Énergir’s variable-price natural gas supply service at https://www.energir.com/en/business/price/natural-gas-price/ in Section “Evolution of natural gas price”
+                                                        </block>
+                                                    </list-item-body>
+                                                </list-item>
+                                                <list-item>
+                                                    <list-item-label  end-indent="label-end()">
+                                                        <block>b.</block>
+                                                    </list-item-label>
+                                                    <list-item-body start-indent="body-start()">
+                                                        <block>More information on Fixed Price Natural Gas supply service agreement:</block>
+                                                        <list-block  provisional-distance-between-starts="0.75cm" provisional-label-separation="0.5cm" space-after="12pt" start-indent="2.25cm">
+                                                    
+                                                            <list-item>
+                                                                <list-item-label  end-indent="label-end()">
+                                                                    <block>i.</block>
+                                                                </list-item-label>
+                                                                <list-item-body start-indent="body-start()">
+                                                                    <block>
+                                                                    At https://www.energir.com/en/business/price/natural-gas-price/ in Section “Fixed price natural gas”
+                                                                    </block>
+                                                                </list-item-body>
+                                                            </list-item>
+                                                            <list-item>
+                                                                <list-item-label  end-indent="label-end()">
+                                                                    <block>ii.</block>
+                                                                </list-item-label>
+                                                                <list-item-body start-indent="body-start()">
+                                                                    <block>
+                                                                    At https://www.energir.com/en/faq/ in Section “Fixed price natural gas" of the “Frequently Asked Questions”
+                                                                    </block>
+                                                                </list-item-body>
+                                                            </list-item>
+                                                        </list-block>
+                                                    </list-item-body>
+                                               </list-item>
+                                            </list-block>
+                                        </block>
+                                   </list-item-body>
+                                </list-item>
+      
+                                <list-item>
+                                    <list-item-label  end-indent="label-end()">
+                                        <block>2)</block>
+                                    </list-item-label>
+                                    <list-item-body start-indent="body-start()">
+                                        <block>this Undertaking is my fixed price natural gas supply agreement, to the exclusion of any other contract</block>
+                                    </list-item-body>
+                                </list-item>
+                            </list-block>
+                        </block>   
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            &#160;
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block font-style="italic" font-size="10px" >
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block font-style="italic" font-size="10px" >
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                
+            </table-body>
+        </table>
+        
+        
+        <table>
+            <table-body>
+                <table-row height="40px">
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">{!site.LegalCustomerName}</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">{!site.SiteName}</block>
+                        </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block font-weight="bold" text-align="left">Customer’s name</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block font-weight="bold" text-align="left">Account Number</block>
+                        </table-cell>
+                </table-row>
+                <table-row height="40px">
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">&#160;</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">&#160;</block>
+                        </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block font-weight="bold" text-align="left">Signatory's name</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">Client’s signature witnessed by:</block>
+                        </table-cell>
+                </table-row>
+                <table-row height="40px">
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">&#160;</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">DNE Resources</block>
+                        </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block font-weight="bold" text-align="left">Client’s signature witnessed by:</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block font-weight="bold" text-align="left">Name of agent or broker representing the supplier</block>
+                        </table-cell>
+                </table-row>
+            </table-body>
+        </table>
+        
+        <!-- Karthi-Commented
+        <table font-family="open sans">
+            <table-body>
+                <table-row height="25px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell  padding="5" number-columns-spanned="1">
+                        <block><apex:outputText >Signed before:</apex:outputText></block>
+                    </table-cell>
+                </table-row>
+                <table-row height="30px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell padding="5" number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >______________________________________</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell padding="5" number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >[Supplier&#39;s agent or broker]</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell padding="5" number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >Date:</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+            </table-body>
+        </table>
+        -->
+            
+            <table font-family="open sans">
+                <table-body>
+                    <table-row height="30px">
+                        <table-cell number-columns-spanned="1" >
+                            <block>
+                                <apex:outputText ></apex:outputText>
+                            </block>
+                        </table-cell>
+                    </table-row>
+                    <table-row>
+                    <table-cell number-columns-spanned="1" >
+                       
+                        <block>
+                            
+                            <list-block  provisional-distance-between-starts="0.75cm" provisional-label-separation="0.5cm" space-after="12pt">
+                                <list-item>
+                                    <list-item-label  end-indent="label-end()">
+                                        <block>
+                                        <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </block>
+                                    </list-item-label>
+                                    <list-item-body start-indent="body-start()">
+                                        <block>By checking this box, I agree to receive my confirmation letter by email to my corporate email address. I acknowledge that I will not receive any confirmation by regular mail. I release Énergir from any liability in case of non-delivery of the confirmation letter, as well as from any consequences that the non-delivery could cause to the customer.</block>
+                                    </list-item-body>
+                                </list-item>
+                                
+                            </list-block>
+                        </block>   
+                    </table-cell>
+                </table-row>
+                    
+                   
+                    <table-row height="30px">
+                        <table-cell number-columns-spanned="1" >
+                            <block>
+                                <apex:outputText ></apex:outputText>
+                            </block>
+                        </table-cell>
+                    </table-row>
+                    <table-row>
+                        <table-cell padding="5" number-columns-spanned="1" >
+                            <block>
+                                <apex:outputText >______________________________________@______________________________________</apex:outputText>
+                            </block>
+                        </table-cell>
+                    </table-row>
+                    <table-row>
+                        <table-cell padding="5" number-columns-spanned="1" >
+                            <block>
+                                <apex:outputText >Corporate email address (in capital letters)</apex:outputText>
+                            </block>
+                        </table-cell>
+                    </table-row>
+                    <table-row>
+                        <table-cell padding="5" number-columns-spanned="1" >
+                            <block>
+                                <apex:outputText ></apex:outputText>
+                            </block>
+                        </table-cell>
+                    </table-row>
+                </table-body>
+            </table>
+            
+            
+        <table font-family="open sans">
+            <table-body>
+                <table-row height="20px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row height="20px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row height="20px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row height="20px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row height="20px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row height="{!IF(cnt == siteScheduleList.size, '20px', '50px') }">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+            </table-body>
+       </table>
+    
+    </apex:repeat>
+      
+
+    </block>
+</apex:page>

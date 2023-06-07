@@ -1,0 +1,82 @@
+<apex:page controller="UpdateOpportunityAsRenewController" standardStylesheets="true" docType="html-5.0" lightningStylesheets="true" >
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds /> 
+        <head>
+            <title>Reservation Import</title>            
+        </head>        
+        <body class="slds-scope slds-grid" id="bodytag">
+            <style>
+                .slds-scope .slds-input {
+                padding-top: 0;
+                padding-right: 1rem;
+                padding-bottom: 0;
+                padding-left: .75rem;
+                width: 26%;
+                min-height: calc(1.875rem + (1px * 2));
+                line-height: 1.875rem;
+                border: 1px solid rgb(221, 219, 218);
+                border-radius: .25rem;
+                background-color: rgb(255, 255, 255);
+                color: var(--sds-c-input-text-color);
+                box-shadow: var(--sds-c-input-shadow);
+                transition: border .1s linear,background-color .1s linear;
+                display: inline-block;
+                margin-right: 4em;
+                }
+                #labelId {
+                padding-left: 23px;
+                }
+            </style>            
+            <apex:form id="frm">
+                <!-- PAGE HEADER -->
+                <apex:pageMessages id="pbm"/>
+                <div class="slds-page-header" role="banner">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-utility-settings" title="Update Opportunity As Renew">
+                                <svg aria-hidden="true" class="slds-icon slds-icon-text-default settingsIconSVG"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#settings"></use></svg>
+                            </span>                            
+                        </div>
+                        <div class="slds-media__body">
+                            <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Update Opportunity As Renew">Update Opportunity As Renew</h1>
+                            <p class="slds-text-body_small slds-line-height_reset">Update Opportunity As Renew</p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- / PAGE HEADER -->
+                <!-- PAGE CONTENT STARTS HERE -->
+                <div class="content slds-p-bottom_xx-large">
+                    <!-- TOAST MESSAGE -->
+                    <!-- INTEGRATION SECTION STARTS HERE -->
+                    <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small " title="Select Account">Select Account</span>
+                        </h3>
+                        <apex:actionStatus id="myAjaxStatus" >
+                            <apex:facet name="start" >
+                                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                                    &nbsp;
+                                </div>
+                                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                    <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                                        <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+                                    </div>
+                                </div>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        <br/>                        
+                         <div class="slds-grid slds-gutters">
+                            <div class="slds-col" style="margin-left:2%;">
+                                <apex:inputField label="Select Account" value="{!oppRec.AccountId}" required="false"/>  </div>
+                            <div class="slds-col">
+                                <apex:commandButton styleClass="slds-button slds-button_brand" style="right: 37em;" action="{!runRenewOppBatch}" value="Update Opportunity As Renew" title="Update Opportunity As Renew" status="myAjaxStatus" reRender="frm"/>                                
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+                <!-- FOOTER ENDS -->
+            </apex:form>
+        </body>        
+    </html>
+</apex:page>

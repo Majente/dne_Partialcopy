@@ -1,0 +1,237 @@
+<aura:component controller="ComparisonController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="LoadSpinner" type="boolean"/>
+    
+    <aura:attribute name="OldOppList" type="List"/>
+    <aura:attribute name="RenewOppList" type="List"/>
+    <aura:attribute name="PercList" type="List"/>
+    <aura:attribute name="MarginPerc" type="decimal"/>
+    <aura:attribute name="AmountPerc" type="decimal"/>
+    <aura:html tag="style">
+        
+        ::-webkit-scrollbar {
+        width: 10px;
+        }
+        
+        
+        ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+        }
+        
+        
+        ::-webkit-scrollbar-thumb {
+        background: #888; 
+        }
+        
+        
+        ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+        }
+    </aura:html>        
+    
+    <lightning:card title="Comparison Report" iconName="utility:entitlement">
+        <aura:if isTrue="{!v.LoadSpinner}">
+            <div class="slds-spinner_container">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+        <p class="slds-p-around_medium">
+            <div class="slds-scrollable_x">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-grid">
+                        <div class="slds-col">
+                            <div>
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="border: 1px solid #b4b4a9;">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-text-title_caps border" scope="col">
+                                                <div class="slds-truncate" title="Account Name" style="word-wrap: break-word">Company<br/>(Old Opportunity)</div>
+                                            </th>
+                                            <th class="slds-text-title_caps border" scope="col">
+                                                <div class="slds-truncate" title="Account Type">SF<br/>Link:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps border" scope="col">
+                                                <div class="slds-truncate" title="Industry">Commodity:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps border" scope="col">
+                                                <div class="slds-truncate" title="Rating">Flow Date:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps border" scope="col">
+                                                <div class="slds-truncate" title="Rating">End Date:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps border" scope="col">
+                                                <div class="slds-truncate" title="Rating">Term:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps border" scope="col">
+                                                <div class="slds-truncate" title="Rating">Annual Volume:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps border" scope="col">
+                                                <div class="slds-truncate" title="Rating">Margin:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps border" scope="col">
+                                                <div class="slds-truncate" title="Rating">Amount:</div>
+                                            </th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.OldOppList}" var="opp">
+                                            <tr>
+                                                <td class="border" >
+                                                    <a href="{!'/' + opp.Id}">
+                                                    <ui:outputText value="{!opp.Name}"/>
+                                                        </a>
+                                                </td>
+                                                <td class="border">
+                                                    <a href="{!'/' + opp.AccountId}">
+                                                    <ui:outputText value="{!opp.Account.Name}"/>
+                                                    </a>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!opp.Commodity_Type__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!opp.Flow_Date__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!opp.End_date__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!opp.Subscription_Term__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!opp.Annual_Volume__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!opp.Margin__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!opp.Amount}"/>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="slds-col" style="margin-left: -23px;">
+                            <div>
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="border: 1px solid #b4b4a9;">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-text-title_caps thcolor border" scope="col">
+                                                <div class="slds-truncate" title="Account Name">Company<br/>(NEW Renewal Opportunity)</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor border" scope="col">
+                                                <div class="slds-truncate" title="Account Type">SF<br/>Link:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor border" scope="col">
+                                                <div class="slds-truncate" title="Industry">Commodity:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor border" scope="col">
+                                                <div class="slds-truncate" title="Rating">Flow Date:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor border" scope="col">
+                                                <div class="slds-truncate" title="Rating">End Date:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor border" scope="col">
+                                                <div class="slds-truncate" title="Rating">Term:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor border" scope="col">
+                                                <div class="slds-truncate" title="Rating">Annual Volume:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor border" scope="col">
+                                                <div class="slds-truncate" title="Rating">Margin:</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor border" scope="col">
+                                                <div class="slds-truncate" title="Rating">Amount:</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.RenewOppList}" var="Renopp">
+                                            <tr>
+                                                <td class="border" >
+                                                    <a href="{!'/' + Renopp.Id}">
+                                                    <ui:outputText value="{!Renopp.Name}"/>
+                                                    </a>
+                                                </td>
+                                                <td class="border">
+                                                    <a href="{!'/' + Renopp.AccountId}">
+                                                    <ui:outputText value="{!Renopp.Account.Name}"/>
+                                                    </a>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!Renopp.Commodity_Type__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!Renopp.Flow_Date__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!Renopp.End_date__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!Renopp.Subscription_Term__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!Renopp.Annual_Volume__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!Renopp.Margin__c}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!Renopp.Amount}"/>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="slds-col" style="margin-left: -23px;">
+                            <div class="slds-m-right_x-small">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="border: 1px solid #b4b4a9;">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-text-title_caps thcolor2 border" scope="col">
+                                                <div class="slds-truncate" title="Rating">% of Volume<br/>completed at<br/>Renewal</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor2 border" scope="col">
+                                                <div class="slds-truncate" title="Rating">%of Margin at<br/>Renewal</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor2 border" scope="col">
+                                                <div class="slds-truncate" title="Rating">% of Amount<br/>over term at<br/>Renewal</div>
+                                            </th>
+                                            <th class="slds-text-title_caps thcolor2" scope="col">
+                                                <div class="slds-truncate" title="Rating">% of Amount<br/>annually at<br/>Renewal</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      <aura:iteration items="{!v.PercList}" var="perc">
+                                            <tr>
+                                                <td class="border">
+                                                    <ui:outputText value="{!perc.PercOfVolAtRenewal}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!perc.PercOfMarginAtRenewal}"/>
+                                                </td>
+                                                <td class="border">
+                                                    <ui:outputText value="{!perc.PercOfAmntAtRenewal}"/>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>  
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p>
+    </lightning:card>
+</aura:component>

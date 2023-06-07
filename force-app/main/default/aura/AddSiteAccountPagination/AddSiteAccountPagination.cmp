@@ -1,0 +1,190 @@
+<aura:component controller="PaginationController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--Event handler for Add and Delete Row Event which is fire from Child Component-->    
+    <aura:handler name="DeleteAccountSiteEvt" event="c:DeleteAccountSiteEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddNewAccountSiteEvt" event="c:AddNewAccountSiteEvt" action="{!c.addNewRow}"/>
+    
+    
+    <aura:registerEvent name="DeleteAccountSiteEvtParent" type="c:DeleteAccountSiteEvtParent"/> 
+    <aura:registerEvent name="AddNewAccountSiteEvtParent" type="c:AddNewAccountSiteEvtParent"/> 
+    <aura:handler name="updateSiteListDatas" event="c:updateSiteListDatas" action="{!c.updaeSiteList}"/>
+    
+    <!--Aura Attribute for store Contact Object List as Array-->    
+    
+    <aura:attribute name="recordId" type="String"  />
+    
+    <!--<aura:attribute name="parentAccountList" type="List" />-->
+    <aura:attribute name="view" type="Boolean" default= "false"/>
+    <aura:attribute name="rowIndexParent" type="Integer" />
+    <aura:attribute name="cardIndex" type="Integer" default="0"/>
+    <aura:attribute name="dependentMap" type="Map"/>
+    <aura:attribute name="ParentAccountInstance" type="object" />
+    <aura:attribute name="lengthOfList" type="Integer"/>
+    <aura:attribute name="ServiceInstance" type="Account" />
+    <aura:attribute name="typeslist" type="List" />
+    <aura:attribute name="units" type="List" />     
+    <aura:attribute name="SpinnerLoad" type="Boolean"/>
+    <aura:registerEvent name="CompEvent" type="c:CompEvent"/>
+    <aura:html tag="style">
+        .slds-modal__content {
+        overflow: auto !important; 
+        overflow-y: auto;        
+        }
+        .slds-modal__container{
+        width:100%!important;
+        max-width:90%!important;        
+        }
+        
+    </aura:html>
+    
+    <aura:attribute name="accountDetails" type="Account"/>
+    <aura:attribute name="cardList" type="object[]"/> 
+    <lightning:navigation aura:id="navService"/>
+    <aura:attribute name="ExistingDataList" type="List"/>
+    <aura:attribute name="FinalcardList" type="object[]"/>
+    <aura:attribute name="siteList" type="Site__c[]"/>
+    <aura:attribute name="depnedentFieldMap" type="Map" default="{!v.ParentAccountInstance.dependentMap}" /> 
+    <aura:handler name="change" value="{!v.cardList}" action="{!c.onCardListChange}"/>
+    <aura:handler name="change2" value="{!v.FinalcardList}" action="{!c.onCardListChange}"/>
+    
+    <aura:attribute name="sameAddress" type="Account" default="{!v.ParentAccountInstance.serviceAddressAccount}" />
+    
+    <aura:attribute name="ServiceAddressSame" type="boolean" default="{!v.ParentAccountInstance.serviceAddressAccount.Service_address_same_as_parent__c}"/>
+    
+    <div class="slds-box slds-box-vw" style="width:100%;margin:10px auto;">
+        <div class="slds-grid slds-wrap vw-header">
+            <div class="slds-col slds-size_3-of-12">
+                <!--<span>Parent:: {!v.ParentAccountInstance.parentAccountDetail.Name}</span>-->
+            </div>
+            <div class="slds-col slds-size_8-of-12">&nbsp;</div>            
+            <div class="slds-col slds-size_1-of-12 add-remove-btn">
+                <ul>
+                    <a onclick="{!c.openSiteCMP}" data-recid="{!v.ParentAccountInstance.serviceAddressAccount.Name}">
+                        <span class="link">ViewAll Sites</span>
+                    </a>
+                    <a onclick="{!c.removeRowParent}">
+                        <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                        <span class="slds-assistive-text">Delete Icon</span>
+                    </a>
+                    <aura:if isTrue="{!v.rowIndexParent+1 == 01 }">
+                        <a onclick="{!c.AddNewRowParent}">
+                            <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                            <span class="slds-assistive-text">Add Icon</span>
+                        </a> 
+                    </aura:if>
+                </ul>
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap vw-body-service">
+            <div class="slds-col slds-size_12-of-12">
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+                    <thead>
+                        <tr class="slds-text-title_caps">                                    
+                            <th scope="col">
+                                <div class="slds-truncate" title="First Name">{!$Label.c.AddLocation}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Business Size">{!$Label.c.MarketLabel}</div>
+                            </th>                                
+                            <th scope="col">
+                                <div class="slds-truncate slds-cell-wrap" title="Annual Gas Volume">{!$Label.c.SAMEASBILLINGADDRESS}</div>
+                            </th>                                    
+                            <th scope="col">
+                                <div class="slds-truncate" title="Street Address">{!$Label.c.Street_Address_Label}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="City">{!$Label.c.CITY}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Province/Sate">{!$Label.c.PROVINCE_STATE}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="PostalCode/Zip">{!$Label.c.POSTALCODE_ZIP}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Country">{!$Label.c.COUNTRY}</div>
+                            </th>
+                        </tr>
+                    </thead>   
+                    <tbody>
+                        <tr class="slds-text-title_caps">                                    
+                            <td id="{!v.rowIndexParent}">
+                                <ui:inputText class="slds-input" aura:id="aaa{!v.rowIndexParent}"  value="{!v.ParentAccountInstance.serviceAddressAccount.Name}"/>
+                            </td>
+                            <td class='hideLabel market__C'>
+                                <lightning:inputField  fieldName="Market__c" value="{!v.ParentAccountInstance.serviceAddressAccount.Market__c}" />
+                            </td>
+                            <td class='hideLabel'>
+                                <lightning:input aura:id="ServiceSameAddress" type="checkbox" label="SAME AS BILLING ADDRESS" checked="{!v.ParentAccountInstance.serviceAddressAccount.Service_address_same_as_parent__c}" onchange="{!c.sameddress}"   />
+                            </td>                                    
+                            <td>
+                                <ui:inputText aura:id="ShippingStreet" class="slds-input" value="{!v.sameAddress.ShippingStreet}" disabled="{!v.ServiceAddressSame}" />
+                            </td>
+                            <td >
+                                <ui:inputText class="slds-input wdth" value="{!v.sameAddress.ShippingCity}" disabled="{!v.ServiceAddressSame}" />
+                            </td>
+                            <td>
+                                <ui:inputText class="slds-input" value="{!v.sameAddress.ShippingState}" disabled="{!v.ServiceAddressSame}"/>
+                            </td>
+                            <td>
+                                <ui:inputText class="slds-input" value="{!v.sameAddress.ShippingPostalCode}" disabled="{!v.ServiceAddressSame}"/>
+                            </td>
+                            <td>
+                                <ui:inputText class="slds-input" value="{!v.sameAddress.ShippingCountry}" disabled="{!v.ServiceAddressSame}"/>
+                            </td>
+                            
+                        </tr>     
+                    </tbody>
+                </table>
+                <!--
+                        <div class="slds-truncate" style="float:left;">Service::</div>                    
+                        <div class="slds-truncate" title="Parent" style="float:left;margin-left:10px;" ><lightning:input type="checkbox" label="BILLING SAME AS PARENT"    /></div>
+                        <div class="slds-truncate" title="First Name" style="float:left;margin-left:10px;"><lightning:input type="checkbox" label="SERVICE SAME AS PARENT"    /></div>
+                 -->
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap vw-body">
+            
+            <div class="slds-col slds-size_12-of-12">
+                <table class="sites slds-table slds-table_bordered slds-table_cell-buffer"> 
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="First Name">{!$Label.c.SITEID}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Type">{!$Label.c.TYPE}</div>
+                            </th>
+                            
+                            <th scope="col">
+                                <div class="slds-truncate" title="Volume">{!$Label.c.VOLUME}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Unit of Measure">{!$Label.c.UNITOFMEASURE}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Action">{!$Label.c.ACTION}</div>
+                            </th>
+                        </tr>
+                    </thead>   
+                    <tbody>
+                        <aura:iteration items="{!v.siteList}" var="site" indexVar="index">
+                            <c:AddSiteAccountItemPagination 
+                                                            siteInstance="{!site}" 
+                                                            rowIndex="{!index}" 
+                                                            lengthOfList="{!v.siteList.length}"
+                                                            cardList="{!v.cardList}" 
+                                                            rowIndexParent="{!v.rowIndexParent}"
+                                                            types="{!v.typeslist}"
+                                                            units="{!v.units}"
+                                                            depnedentFieldMap = "{!v.depnedentFieldMap}"
+                                                            />
+                        </aura:iteration>
+                    </tbody>
+                </table> 
+            </div>
+        </div>
+    </div> 
+</aura:component>

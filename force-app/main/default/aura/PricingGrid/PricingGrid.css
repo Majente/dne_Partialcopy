@@ -1,0 +1,43 @@
+.THIS {
+}
+.THIS.cPricingGrid{
+    text-align: center;
+    width: 75%;
+    margin: auto;
+}
+.THIS .opt-grp-first label{
+	width:100%!important;
+	margin-left:0px!important;  
+}
+.THIS .opt-grp-first .slds-grow {
+   margin-left:0px!important;   
+}
+.THIS .opt-grp label{
+    width: 97%;
+    background: #fff;    
+    border-radius: 2px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+.THIS .opt-grp{
+    float:left;
+}
+
+.THIS .slds-grow {    
+    margin-left: 10px;
+}
+.THIS .data-row{
+    width: 16%;
+}
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}
+.THIS .slds-tabs_scoped__content{
+    overflow-x:scroll;
+}
+.THIS .slds-radio{
+    width:10%!important;
+    float:left;
+}

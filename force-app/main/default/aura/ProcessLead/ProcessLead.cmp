@@ -1,0 +1,12 @@
+<aura:component controller="ProcessLeadClass" implements="force:lightningQuickAction,force:hasRecordId" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:html tag="style">
+   .slds-backdrop {
+    background: rgba(43, 40, 38, 0) !important;  
+    }
+    .slds-fade-in-open {
+    display:none !important;
+   }
+    </aura:html>
+</aura:component>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>Latest__c</columns>
+    <columns>NAME</columns>
+    <columns>Product_Code__c</columns>
+    <columns>Market__c</columns>
+    <columns>Supplier__c</columns>
+    <columns>Type__c</columns>
+    <columns>Size__c</columns>
+    <columns>Term__c</columns>
+    <columns>List_Price__c</columns>
+    <columns>Currency_ISO_Code__c</columns>
+    <columns>Is_Valid__c</columns>
+    <columns>Month_Year__c</columns>
+    <columns>Effective_From__c</columns>
+    <columns>Effective_To__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Effective_From__c</field>
+        <operation>equals</operation>
+        <value>7/9/2019 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>NAME</field>
+        <operation>equals</operation>
+        <value>Gas</value>
+    </filters>
+    <filters>
+        <field>Term__c</field>
+        <operation>equals</operation>
+        <value>60</value>
+    </filters>
+    <filters>
+        <field>Supplier__c</field>
+        <operation>contains</operation>
+        <value>Direct Energy</value>
+    </filters>
+    <filters>
+        <field>Month_Year__c</field>
+        <operation>equals</operation>
+        <value>November 2019</value>
+    </filters>
+    <label>All</label>
+</ListView>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Job_Knowledge__c</fullName>
+    <externalId>false</externalId>
+    <label>Job Knowledge</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Applies standard procedures</fullName>
+                <default>false</default>
+                <label>Applies standard procedures</label>
+            </value>
+            <value>
+                <fullName>Maintains technical proficiency</fullName>
+                <default>false</default>
+                <label>Maintains technical proficiency</label>
+            </value>
+            <value>
+                <fullName>Serves as a job resource for others</fullName>
+                <default>false</default>
+                <label>Serves as a job resource for others</label>
+            </value>
+            <value>
+                <fullName>Documents work processes</fullName>
+                <default>false</default>
+                <label>Documents work processes</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

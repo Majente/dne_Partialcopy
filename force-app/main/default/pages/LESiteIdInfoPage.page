@@ -1,0 +1,53 @@
+<apex:page showHeader="false" sidebar="false" cache="false" contentType="text/xml" applyHtmlTag="true" controller="LESiteInfoPageController" action="{!init}">
+    
+ 
+    <block>
+        <table font-family="Times New Roman">
+            <apex:variable value="{!1}" var="i"/>
+            <table-body>
+                <table-row border="1px solid black">
+                    <table-cell padding="5" number-columns-spanned="3" background-color="#eff0f2" >
+                        <block text-align="center" font-weight="bold"><apex:outputText >Site ID Information</apex:outputText></block>
+                    </table-cell>
+                </table-row>
+                <apex:repeat var="tier" value="{!quoteLineItemList}">
+                <table-row  border="1px solid black" background-color="{!IF(mod(i,2)==0, '#eff0f2', 'white')}">
+                    <table-cell padding="5" border="1px solid black" width="40px">
+                        <block font-size="12px" ><apex:outputText >Site #{!tier.SBQQ__Number__c} ID:{!tier.Site__r.Name} </apex:outputText></block>
+                    </table-cell>
+                    <table-cell padding="5" width="40px">
+                        <block font-size="12px"><apex:outputText >Annual Consumption : {!tier.Annual_Volume__c}</apex:outputText></block>
+                    </table-cell>
+                    <table-cell padding="2" margin-right="2" width="20px" text-align="right" font-size="11px">
+                        <block>
+                            <apex:outputText rendered="{!tier.SBQQ__ProductFamily__c != 'Gas'}">
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!tier.SBQQ__ProductFamily__c == 'Gas'}">
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qx&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            <apex:outputText >Natural Gas</apex:outputText>
+                        </block>
+                        <block text-align="right" margin-right="7" font-size="11px">
+                            <apex:outputText rendered="{!tier.SBQQ__ProductFamily__c != 'Electricity'}">
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!tier.SBQQ__ProductFamily__c == 'Electricity'}">
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qx&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            <apex:outputText >Electricity</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row border="1px solid black" background-color="{!IF(mod(i,2)==0, '#eff0f2', 'white')}">
+                    <table-cell padding="5" number-columns-spanned="3">
+                        <block font-size="12px"><apex:outputText > Full Service Address :{!tier.Site_Address__c} </apex:outputText></block>
+                        <block font-size="7px"><apex:outputText > (Inc. Street Address, City, Area Code)</apex:outputText></block>
+                    </table-cell>
+                </table-row>
+                    <apex:variable value="{!i+1}" var="i" />
+                </apex:repeat>
+            </table-body>
+        </table>
+    </block>
+</apex:page>

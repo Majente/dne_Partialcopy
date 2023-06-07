@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Service_Internal_External__c</fullName>
+    <externalId>false</externalId>
+    <label>Customer Service (Internal &amp; External)</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Understands customer needs</fullName>
+                <default>false</default>
+                <label>Understands customer needs</label>
+            </value>
+            <value>
+                <fullName>Responds to customer needs</fullName>
+                <default>false</default>
+                <label>Responds to customer needs</label>
+            </value>
+            <value>
+                <fullName>Gives complete &amp; timely responses</fullName>
+                <default>false</default>
+                <label>Gives complete &amp; timely responses</label>
+            </value>
+            <value>
+                <fullName>Exceeds expectations</fullName>
+                <default>false</default>
+                <label>Exceeds expectations</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

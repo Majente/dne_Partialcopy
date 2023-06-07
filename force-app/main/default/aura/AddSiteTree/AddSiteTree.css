@@ -1,0 +1,23 @@
+.THIS {
+}
+
+.THIS .slds-modal__container{
+    max-width: 70rem !important;
+    width:80% !important;
+}
+.THIS .slds-grid_align-end{
+    justify-content:flex-start!important;
+}
+
+.THIS .savesitebtn{
+    margin-top:20px!important;
+    
+    
+}
+.THIS .slds-scrollable_x{
+    overflow-x:hidden!important;
+}
+.THIS .slds-is-relative{
+    
+    height:50px!important;
+}

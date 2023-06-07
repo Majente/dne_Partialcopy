@@ -1,0 +1,286 @@
+<aura:component controller="PaginationController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:attribute name="sObjectName" type="String" default="Account" />
+    <ltng:require scripts="{!$Resource.jQuery}" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    
+    <!--Event handler for Add and Delete Row Event which is fire from Child Component-->    
+    <aura:handler name="DeleteAccountSiteEvtParent" event="c:DeleteAccountSiteEvtParent" action="{!c.removeDeletedRowParent}"/>
+    <aura:handler name="AddNewAccountSiteEvtParent" event="c:AddNewAccountSiteEvtParent" action="{!c.addNewRowParent}"/>
+   
+    
+    <!--Aura Attribute for store Contact Object List as Array--> 
+    <aura:attribute name="cardList" type="object[]" />
+    <aura:attribute name="cardListFinal" type="object[]" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="ServerData" type="List[]" />
+    <aura:attribute name="accountDetails" type="Account" />  
+    <aura:attribute name="ResultData" type="List" />
+    <aura:attribute name="ColumnData" type="List" />
+    <aura:registerEvent name="updateSiteListDatas" type="c:updateSiteListDatas"/>
+    <aura:attribute name="loaded" type="Boolean" default="false"/>
+    <aura:attribute name="ParentAccountInstance" type="object" />
+    <aura:attribute name="rowIndexParent" type="Integer" />
+    
+    <!-- Attribute Declration For Pagination -->
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageList" type="List"/>
+    <aura:attribute name="ResultDataPagination" type="List" />
+    <aura:attribute name="FinalcardList" type="object[]" />
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalPages" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
+    <aura:attribute name="pageSizeList" type="List" default="[5,10,15,25]"/>
+    <aura:attribute name="selectedLocation" type="String" />
+    <aura:attribute name="selectedMarket" type="String" />
+    <aura:attribute name="selectedCity" type="String" />
+    <aura:attribute name="LocationPicklist" type="List" />
+    <aura:attribute name="MarketPicklist" type="List" />
+    <aura:attribute name="CityPicklist" type="List" />
+    <aura:attribute name="ExistingDataList" type="List" />
+    <aura:attribute name="currentPage" type="String" />
+   
+    
+    <!-- Attribute Declration For Pagination End-->
+     
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        position:absolute!important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        } 
+        .slds-modal__content{
+        overflow-y:scroll !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+        .modal {    
+        left: 0;
+        position: fixed;
+        top:5%;
+        width: 100%;
+        }
+        .slds-form{
+        max-height:430px !important;
+        padding: 12px;
+        padding-top: 0px;
+        }
+        .slds-modal__close{
+        z-index: 9999!important;
+        position: absolute!important;
+        top: -22.4rem!important;
+        right: -1px !important;
+        }
+        .slds-modal__close2{
+        z-index:9999!important;
+        position:absolute!important;
+        top:0.5rem!important; 
+        right:4px;
+        background:rgba(27, 82, 151, 1);
+        }
+        .exampleHolder{
+        display: inline-block;
+        width: 55px;
+        vertical-align: middle;
+        white-space: nowrap;
+        }
+        .slds-modal__container{
+        max-width: 80rem !important;
+        width:80% !important;
+        }
+    </aura:html> 
+    <div class="modal" >
+        <div class="modal-header slds-modal__header slds-size_1-of-1">
+            <h4 class="title slds-text-heading--medium">Add Location Name - {!v.accountDetails.Name} </h4> 
+        </div>
+        
+        <aura:if isTrue="{! v.loaded }">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>
+        
+        <div class="slds-modal__content slds-p-around--x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative" style="padding-top: 0px;">
+            <lightning:recordEditForm aura:id="recordViewForm" objectApiName="Account"> 
+                
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_10-of-12">
+                        <h1 style="font-weight: bold;padding-top: 40px;">
+                            <span>Filter Section: </span>  
+                        </h1>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12">
+                        <div style="padding: 10px 0px 10px 0px;">
+                            <lightning:select name="select" label="Select page size" onchange="{!c.setPageSize}" value="{!v.pageSize}" class="pickLable">
+                                <aura:iteration items="{!v.pageSizeList}" var="page" >
+                                    <option value="{!page}" selected="{!page == v.pageSize}" text="{!page}"></option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="padding-block-end: 19px;">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" style="border: 1px solid #cfcdcd;border-radius: 3px;">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Location">Location</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Market">Market</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="City">City</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="slds-line-height_reset">
+                                <td style="width: 1rem;">
+                                    <lightning:select  value="{!v.selectedLocation}" onchange="{!c.handleValueOnChange}">
+                                        <option value="">--None--</option>
+                                        <aura:iteration items="{!v.LocationPicklist}" var="loc" indexVar="key">
+                                            <option text="{!loc}" value="{!loc}" selected="{!loc==v.selectedLocation}" />
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </td>
+                                <td style="width: 1rem;">
+                                    <lightning:select  value="{!v.selectedMarket}" onchange="{!c.handleValueOnChange}">
+                                        <option value="">--None--</option>
+                                        <aura:iteration items="{!v.MarketPicklist}" var="mark" indexVar="key">
+                                            <option text="{!mark}" value="{!mark}" selected="{!mark==v.selectedMarket}" />
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </td>
+                                <td style="width: 1rem;"> 
+                                    <lightning:select value="{!v.selectedCity}" onchange="{!c.handleValueOnChange}">
+                                        <option value="">--None--</option>
+                                        <aura:iteration items="{!v.CityPicklist}" var="city" indexVar="key">
+                                            <option text="{!city}" value="{!city}" selected="{!city==v.selectedCity}" />
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h1 style="font-weight: bold;">
+                    If you want to add Site's from CSV,<span>Please Insert the CSV in the following format: </span>  
+                </h1>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" style="border: 1px solid #cfcdcd;border-radius: 3px;">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column A">A</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column B">B</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column C">C</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column D">D</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column E">E</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column F">F</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column G">G</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column H">H</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column I">I</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column J">J</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Column K">K</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.ColumnData}" var="Column">
+                            <td scope="row" class="slds-cell-wrap" data-label="">
+                                <ui:outputText  value="{!Column}" />     
+                            </td>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                <aura:iteration items="{!v.cardList}" var="AccountSiteWapper" indexVar="index">  
+                    <c:AddSiteAccountPagination ParentAccountInstance="{!AccountSiteWapper}" 
+                                                recordId="{!v.recordId}" 
+                                                rowIndexParent="{!index}" 
+                                                cardList="{!v.cardList}"
+                                                accountDetails="{#v.accountDetails}"
+                                                ExistingDataList = "{!v.ExistingDataList}"
+                                                FinalcardList = "{!v.FinalcardList}"
+                                                
+                                                />
+                </aura:iteration>
+                
+            </lightning:recordEditForm>
+        </div>
+        <div class="modal-footer slds-modal__footer slds-size_1-of-1">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_8-of-12" style="padding-top: 8px;">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-12" style="text-align: justify;">
+                            <lightning:buttonIcon iconName="utility:jump_to_left" variant="brand" alternativeText="First Page" name="1" 
+                                                  title="First Page" disabled="{! v.currentPageNumber == 1}" onclick="{!c.processMe}"/>
+                            <lightning:buttonIcon iconName="utility:arrow_left" variant="brand" alternativeText="previous Page" name="{! v.currentPageNumber - 1}" 
+                                                  title="previous Page" disabled="{! v.currentPageNumber == 1}" onclick="{!c.processMe}"/>
+                        </div>
+                        <div class="slds-col slds-size_8-of-12">
+                            <div style="margin-top: 7px;display: flex;justify-content: center;">
+                                <span class="slds-p-horizontal_xxx-small" id="nav">
+                                    <a onclick="{!c.processMe}" name="1" class="{!(v.currentPageNumber == 1) ? 'selected' : ''}" style="{!v.currentPageNumber == 1 ? 'background-color: #0176d3;color: white':''}">1</a>
+                                </span>
+                                
+                                <aura:iteration items="{!v.pageList}" var="item" >
+                                    <span class="slds-p-horizontal_xxx-small" id="nav">
+                                        <a  onclick="{!c.processMe}" name="{!item}" class="{!(v.currentPageNumber == item) ? 'selected' : ''}" style="{!v.currentPageNumber == item ? 'background-color: #0176d3;color: white':''}">{!item}</a>
+                                    </span>
+                                </aura:iteration>
+                                
+                                <span class="slds-p-horizontal_xxx-small" >
+                                    <a style="text-decoration: none;color: black;font-weight: 700;"><b>...</b></a>
+                                </span>
+                                <span class="slds-p-horizontal_xx-small" id="nav"> 
+                                    <a onclick="{!c.processMe}" name="{!v.totalPages}" class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}" style="{!v.currentPageNumber == v.totalPages ? 'background-color: #0176d3;color: white':''}">{!v.totalPages}</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_2-of-12" style="text-align: initial;">
+                            <lightning:buttonIcon iconName="utility:arrow_right" variant="brand" alternativeText="Next Page" name="{! v.currentPageNumber + 1}" 
+                                                  title="Next Page" disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.processMe}"/>
+                            <lightning:buttonIcon name="{!v.totalPages}" title="Last Page" alternativeText="Last Page" variant="brand" iconName="utility:jump_to_right"
+                                                  disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.processMe}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_4-of-12">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_6-of-12" style="padding: 0.5rem;padding-top: 0.9rem;">
+                            <input type="file" accept=".csv" contentType="text/csv" class="slds-file-selector__input" aura:id="file" onchange="{!c.showFileData}"/>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12" style="padding: 0.5rem;">
+                            <lightning:button disabled="{!v.totalPages-1 > v.endPage}" variant="Brand" class="slds-button" label="Save" onclick="{!c.Save}"/>
+                            <lightning:button variant="Neutral" class="slds-button" label="Cancel" onclick="{!c.handleClose}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

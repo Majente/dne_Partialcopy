@@ -1,0 +1,94 @@
+<apex:page showHeader="false" sidebar="false" cache="false" contentType="text/xml" applyHtmlTag="true" controller="LESiteInfoPageController" action="{!chooseplan}">
+    <block>
+        <table>
+        <table-body>
+            <table-row  border="1px solid black">
+                <table-cell  padding="5" number-columns-spanned="10" background-color="#ef590e" color="white">
+                    <block text-align="center" font-size="10px" font-weight="bold"><apex:outputText >PRODUCT INFORMATION</apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="10" border=" 1px solid black" padding="5px" >
+                    <block><apex:outputText >Seller supplies the Customer with Electricity at the Standard Supply Service, as indicated below, plus the Administration Fee. Standard Supply Service (SSS) means the price of Electricity paid by consumers that are not on the Regulated Price Plan, with respect to the sale of Electricity in accordance with the provisions of Section 29 of the Electricity Act, 1998 (Ontario) or any successor legislation. The Customer will pay for all Electricity consumed. Eligibility: This product is available to all consumers who consume more than 180,000 kWh/year</apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="2" vertical-align="middle" border=" 1px solid black" padding="5px" >
+                    <block font-weight="bold" padding-top="15px" >Contract Term (months)</block>
+                </table-cell>
+                <table-cell number-columns-spanned="1" border=" 1px solid black" padding="5px">
+                    <block padding-top="15px" >{!Subscriptionterm}</block>
+                </table-cell>
+                <table-cell number-columns-spanned="2" border=" 1px solid black" padding="5px">
+                    <block font-weight="bold" padding-top="15px" >Contract Price (cents/kWh)</block>
+                </table-cell>
+                <table-cell number-columns-spanned="1" border=" 1px solid black" padding="5px">
+                    <block font-weight="bold" padding-top="15px" >SSS</block>
+                </table-cell>
+                <table-cell number-columns-spanned="3" border=" 1px solid black" padding="5px">
+                    <block font-weight="bold" >Administration Fee (cents/kWh)</block>
+                    <block font-size="8px;"> (means the amount that the Customer will pay to Seller as an fee for the index based Transaction) </block>
+                </table-cell>
+                <table-cell number-columns-spanned="1" border=" 1px solid black" padding="5px">
+                    <block padding-top="15px" >¢{!sellingPrice}/ kWh</block>
+                </table-cell>
+            </table-row>
+            
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="10" border=" 1px solid black" padding="5px">
+                    <block font-size="9px"><apex:outputText >The Contract Price excludes Local Distribution Company Third Party Charges and Taxes that are or may be the responsibility of Customer.</apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="3" border=" 1px solid black" padding="5px">
+                
+                    <block>
+                        <table>
+                            <table-body>
+                            <table-row>
+                                <table-cell number-columns-spanned="1">
+                                    <block font-weight="bold" font-size="9px">
+                                        Flow Date: 
+                                    </block>
+                                </table-cell>
+                                <table-cell number-columns-spanned="2">
+                                    <block font-size="9px">
+                                        <apex:outputText >{!flowdate} (m/d/y)</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            </table-body>
+                       </table>
+                   </block>
+                </table-cell>
+                <table-cell number-columns-spanned="7" border=" 1px solid black" padding="5px">
+                    
+                    <block>
+                        <table>
+                            <table-body>
+                            <table-row>
+                                <table-cell number-columns-spanned="3">
+                                    <block font-weight="bold" font-size="9px">
+                                        Estimated Annual Contract Quantities: 
+                                    </block>
+                                </table-cell>
+                                <table-cell number-columns-spanned="4">
+                                    <block font-size="9px">
+                                        <apex:outputText >{!annualVolume}</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            <table-row>
+                                <table-cell number-columns-spanned="7">
+                                    <block font-size="8px"><apex:outputText > (means the quantities of Electricity the Customer has committed to purchase from Seller, refer to Schedule A for more details)  </apex:outputText></block>
+                                </table-cell>
+                            </table-row>
+                            </table-body>
+                       </table>
+                   </block>
+                </table-cell>
+            </table-row>
+        </table-body>
+        </table>
+    </block>
+</apex:page>

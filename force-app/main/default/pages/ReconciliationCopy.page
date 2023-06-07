@@ -1,0 +1,323 @@
+<apex:page controller="ReconciliationControllerCopy" docType="html-5.0"  >
+    <head>
+        <apex:includescript value="https://code.jquery.com/jquery-3.3.1.js" />
+        <apex:includescript value="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" />
+        <apex:stylesheet value="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />        
+    </head>
+    <style type="text/css">
+        table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align:center !important;
+        
+        }
+        body{
+        width:150% !important;
+        margin-top:.5% !important;
+        margin-right:.5% !important;
+        margin-left:.5% !important;
+        }
+        .maindiv{
+        width:100%;
+        }
+        
+        .popupBackground{
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 20);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9998;
+        }
+        .custPopup{
+        background-color: white;
+        border-width: 0.5px;
+        border-style: solid;
+        z-index: 9999;
+        width: 20% !important;
+        left: 60% !important;
+        padding:10px;
+        position: absolute;
+        width: 600px;
+        margin-left: -300px;
+        top:100px;
+        }
+        
+    </style>
+    
+    
+    
+    
+    <apex:form id="frm">
+        <apex:pageMessages rendered="true"/>
+        <script>
+        var length = 100;
+        $(document).ready( function () {
+            initializeDatatable();
+        });
+        
+        function initializeDatatable(){
+            DonorIds='';
+            var contactTable = $('#dataTable').DataTable({
+                responsive: true,
+                "searching": false,
+                "language": {
+                    "sProcessing":     "Traitement en cours...",
+                    "sSearch":         "Rechercher :",
+                    "sLengthMenu":     "Number _MENU_ of entries",
+                    "sInfo":           "Showing the item _START_ to _END_ from total _TOTAL_ ",
+                    "sInfoEmpty":      "Showing the item 0 to 0 from total 0 ",
+                    "sInfoFiltered":   "(filtré de _MAX_ éléments au total)",
+                    "sInfoPostFix":    "",
+                    "sLoadingRecords": "Loading...",
+                    "sZeroRecords":    "Aucun élément à afficher",
+                    "sEmptyTable":     "No data available",
+                    "oPaginate": {
+                        "sFirst":      "First",
+                        "sPrevious":   "Previous",
+                        "sNext":       "Next",
+                        "sLast":       "Last"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": activate to sort the column in ascending order",
+                        "sSortDescending": ": activate to sort the column in descending order"
+                    },
+                    "select": {
+                        "rows": {
+                            _: "%d lignes séléctionnées",
+                            0: "Aucune ligne séléctionnée",
+                            1: "1 ligne séléctionnée"
+                        }  
+                    }
+                },
+                "pageLength": length,
+                columnDefs: [
+                    
+                ],
+                initComplete: function () { // After DataTable initialized
+                    var table = $('#donorTable').dataTable();
+                    // Page length change event
+                    $('#donorTable').on( 'length.dt', function ( e, settings, len ) {
+                        //DonorIds = '';
+                        //length = len;
+                        //getDonors();
+                        //getFilterDonors();
+                    } );
+                    // Page ReDraw Event
+                    $('#donorTable').on( 'draw.dt', function () {
+                        
+                    });
+                } //initComplete function
+                
+            });
+        }
+        function differencePercent(){
+            percentChange();
+        }
+        </script>
+        <style>
+            
+            body .bPageTitle { padding : 0px;} 
+            .custPopup{ border-width: 0px; border-radius:10px; z-index: 9999; left: 50%; padding:20px; position: fixed; top:40%;}
+            /* These are the 3 css properties you will need to change so the popup displays in the center of the screen. First set the width. Then set margin-left to negative half of what the width is. You can add the height property for a fixed size pop up if you want.*/ 
+            .popupBackground{ background-color:rgba(158, 158, 158, 0.34); opacity: 1.0; filter: alpha(opacity = 30); position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 9998; } 
+        </style>
+        <apex:actionFunction name="percentChange" action="{!changeDifferencePercent}" reRender="div3Id"/>
+        <apex:actionFunction name="sendValues"  reRender="frm" action="{!getSearchData}" oncomplete="" status="myStatus"/>
+        <apex:actionstatus id="myStatus">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                    <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                        <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+                        <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+                    </div>
+                </div>           
+            </apex:facet>
+        </apex:actionstatus>
+        <div class="maindiv">
+            <apex:pageBlock >
+                <div style="width:67%">
+                    <apex:pageBlockSection title="Select Supplier" collapsible="false" columns="5">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputPanel >
+                                <apex:outputLabel style="margin-left:-65%"> Supplier </apex:outputLabel><br/>
+                                <apex:actionFunction name="fetchInvoice" status="myStatus" action="{!getSearchData}" reRender="frm"/> 
+                                <apex:inputField value="{!inv.Supplier__c}"  styleClass="inputClass" style="margin-left:5px;"/><!--onchange="fetchInvoice()"-->
+                            </apex:outputPanel>
+                            <apex:outputPanel >
+                                <apex:outputLabel style="margin-left:-28%">Reconciliation Status</apex:outputLabel><br/>
+                                <apex:selectList id="mypicklist" value="{!selectStatus}" multiselect="false" size="1" onchange="differencePercent();">
+                                    <apex:selectOptions value="{!StatusOption}" />
+                                </apex:selectList>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputPanel >
+                                <apex:outputLabel style="margin-left:-28%">Case Filter</apex:outputLabel><br/>
+                                <apex:selectList value="{!caseFilter}" multiselect="false" size="1">
+                                    <apex:selectOptions value="{!CaseFilterOption}" />
+                                </apex:selectList>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputPanel >
+                                <apex:outputLabel value="Select Month"/><br/>
+                                <apex:selectList value="{!selectedMonth}" multiselect="false" size="1"  >
+                                    <apex:selectOptions value="{!MonthOptions}" />
+                                </apex:selectList>
+                            </apex:outputPanel>
+                            <apex:outputPanel >
+                                <apex:outputLabel value="Select Year" /><br/>
+                                <apex:selectList value="{!selectedYear}" multiselect="false" size="1" >
+                                    <apex:selectOptions value="{!YearsOptions}"/>
+                                </apex:selectList>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputPanel >
+                                <apex:outputLabel style="float:left;margin-left:1%;" value="Dispute Status"  />
+                                <apex:selectList value="{!disputeStatus}" multiselect="false" size="1" >
+                                    <apex:selectOptions value="{!DisputeOption}" />
+                                </apex:selectList>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputPanel id="div3Id">
+                                <apex:outputLabel style="float:left;margin-left:5%;">% Difference more than </apex:outputLabel><br/>
+                                <apex:input value="{!diffMargin}" type="text" styleClass="inputClass" style="margin-left:5px;"/>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                </div>    
+                <div>
+                    {!dataLimit} {!$Label.ReconcilePageLimitMessage}
+                    <apex:commandButton value="Search" style="margin-left:10%;margin-top:.5%;" status="myStatus" reRender="frm" action="{!getSearchData}" />
+                    <apex:commandButton value="Download As CSV" style="margin-left:1%;margin-top:.5%;"  status="myStatus"  reRender="frm"  action="{!DownloadSelected}" oncomplete="window.location.href='/servlet/servlet.FileDownload?file={!docId}';;" /><!--Rendered="{!HasInvoices}"-->
+                    <apex:commandButton value="Create cases for all" style="margin-left:10%;margin-top:.5%;"  reRender="frm"  action="{!showPopupForAllCase}" rendered="{!HasInvoices}"/>
+                    <apex:commandButton value="Create cases for selected" style="margin-left:1%;margin-top:.5%;"  reRender="frm" action="{!createCasesForSelected}"  rendered="{!HasInvoices}"/><!--for pop-up use this action::  showPopupForSelectedCase-->
+                </div>
+            </apex:pageBlock>
+        </div>
+        
+        <apex:pageBlock >
+            
+            
+            <!-- <apex:pageBlockSection id="filter" title="Select Month" rendered="{!inv.Supplier__c != null}">-->
+            
+            <!--  </apex:pageBlockSection>-->
+            
+            <table style="width:100%;" id="dataTable">
+                <thead>
+                    <tr style="background-color:grey;color:white;">
+                        <th></th>
+                        <th>Contract </th>
+                        <th>Subscription</th>
+                        <th>Account Name</th>
+                        <th>Invoice Number</th>
+                        <th>Total Amount</th>
+                        <th>Received Amount</th>
+                        <th>Outstanding Amount</th>
+                        <th>Payment Month</th>
+                        <th>Dispute Status</th>
+                        <th>Expected Adder</th>
+                        <th>Received Adder</th>
+                        <th>Expected volume</th>
+                        <th>Received volume</th>
+                        <th>% Difference Amount</th>
+                        <th>Reconciliation Status</th>                                                
+                    </tr>
+                    
+                </thead>
+                <tbody>
+                    <!--     <apex:variable var="diffAmount" value="{!0}"/> -->
+                    <apex:variable value="{!0}" var="index"/>
+                    <apex:repeat value="{!revenueList}" var="data">
+                        <tr>
+                            <td rowspan="{!data.rowSpan+1}"><apex:inputCheckbox value="{!data.isSelected}"/></td>
+                            <td rowspan="{!data.rowSpan+1}">
+                                <apex:outputLink value="/{!data.contractId}" target="_blank">
+                                    <apex:outputText value="{!data.Name}" />
+                                </apex:outputLink> 
+                            </td>
+                            <apex:repeat value="{!data.contractInvoice}" var="invoiceDatas">
+                                <tr>
+                                    <td>
+                                        <apex:outputLink value="/{!invoiceDatas.Subscription__r.Id}" target="_blank">
+                                            <apex:outputText value="{!invoiceDatas.Subscription__r.Site__r.Name}" />
+                                        </apex:outputLink>
+                                    </td>
+                                    <td>{!invoiceDatas.Contract__r.Account.Name}</td>
+                                    <td>
+                                        <apex:outputLink value="/{!invoiceDatas.Id}" target="_blank">
+                                            <apex:outputText value="{!invoiceDatas.Name}" />
+                                        </apex:outputLink>
+                                    </td>
+                                    <td>
+                                        <apex:outputText value="{0, number, 00.00}">
+                                            <apex:param value="{!invoiceDatas.Amount__c}"/>
+                                        </apex:outputText>
+                                    </td>
+                                    <td id="ReceivedAmount">{!invoiceDatas.Received_Amount__c}</td>
+                                    <td id="OutstandingAmount">{!invoiceDatas.Outstanding_Amount__c}</td>
+                                    <td><apex:outputText value="{0,date,MM/dd/yy}">
+                                        <apex:param value="{!invoiceDatas.Payment_Month__c}"/>
+                                        </apex:outputText>
+                                    </td>
+                                    <td>{!invoiceDatas.Dispute_Status__c}</td>
+                                    <td>{!invoiceDatas.Expected_Adder__c}</td>
+                                    <td>{!invoiceDatas.Received_Adder__c}</td>
+                                    <td>{!invoiceDatas.Expected_Volume__c}</td>
+                                    <td>{!invoiceDatas.Received_Volume__c}</td>
+                                    <td>
+                                        <apex:outputText value="{0, number, 00.00}">
+                                            <apex:param value="{!invoiceDatas.Difference_Amount__c}"/>
+                                        </apex:outputText>
+                                    </td>
+                                    <td colspan="1" style="background-color:{!If(invoiceDatas.Flag__c =='Invoice Not Exist','red',If(invoiceDatas.Flag__c =='','',
+                                                           If(invoiceDatas.Flag__c =='Revenue greater Than Expected Amount','#00ffff',
+                                                           If(invoiceDatas.Flag__c =='Payment Not Received','#ffe6b8',
+                                                           If(invoiceDatas.Flag__c =='Revenue Less Than Expected Amount  ','#ffc794','#FE840E')))))};">
+                                        {!invoiceDatas.Flag__c}</td>
+                                </tr>
+                            </apex:repeat>
+                        </tr>
+                        <apex:variable var="index" value="{!index+1}" />
+                    </apex:repeat>
+                </tbody>
+            </table>
+            
+            <apex:outputPanel id="tstpopup" rendered="{!OR(showPopupForSelected,showPopupForAll)}">
+                <apex:outputPanel styleClass="popupBackground" layout="block" />
+                <apex:outputPanel styleClass="custPopup" layout="block" >
+                    <apex:pageMessages />
+                    <center>
+                        <div >
+                             <apex:outputPanel rendered="{!showPopupForAll}">
+                            <h1 id="header43">  Are you sure you want to create cases for all shown contracts?</h1>
+                            </apex:outputPanel>
+                             <apex:outputPanel rendered="{!!showPopupForAll}">
+                                  <h1 id="header43">  Are you sure with the clicked button?</h1>
+                            </apex:outputPanel>
+                        </div>
+                        
+                        <br/><br/>
+                        <apex:commandButton value="No"  action="{!hidePopup}" status="myStatus"  styleClass="slds-button slds-button_neutral" reRender="frm"/>&nbsp;&nbsp;
+                        <apex:outputPanel rendered="{!showPopupForSelected}">
+                            <apex:commandButton value="Yes" action="{!createCasesForSelected}"  status="myStatus" styleClass="slds-button slds-button_brand"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!showPopupForAll}">
+                            <apex:commandButton value="Yes" action="{!createCasesForAll}"  status="myStatus" styleClass="slds-button slds-button_brand"/>
+                        </apex:outputPanel>
+                    </center>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            
+        </apex:pageBlock> 
+    </apex:form>
+</apex:page>

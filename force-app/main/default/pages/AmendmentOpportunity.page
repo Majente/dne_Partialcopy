@@ -1,0 +1,340 @@
+<apex:page showHeader="true" sidebar="true" standardController="Opportunity" extensions="AmendmentOpportunityController" lightningStylesheets="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <style>
+            #loading{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            margin: -75px 0 0 -75px;
+            border: 16px solid #d4d2d2;
+            border-radius: 50%;
+            border-top: 16px solid #3463db;
+            width: 85px;
+            height: 85px;
+            animation: spin 5s linear infinite;
+            }
+            
+            @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+            }
+        </style>
+        <apex:slds />
+        
+        <apex:form id="frm">
+            <apex:actionStatus id="actStatusId" >
+                <apex:facet name="start" >
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only" id="loading"></span>
+                            
+                        </div>
+                    </div>                    
+                </apex:facet>
+            </apex:actionStatus>
+            <apex:outputPanel id="pageMessage">
+                <apex:pageMessages />
+            </apex:outputPanel>          
+            <apex:outputPanel rendered="{!noAmend}">
+                <div id="noAmend">
+                    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" style="background-color:white;">
+                        <div class="slds-modal__container" >
+                            <header class="slds-modal__header">
+                                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                                    <b>{!$Label.AmendOpportunityWithoutProduct}</b>
+                                </h2>
+                                <div class="slds-align_absolute-center slds-p-vertical_xx-large">
+                                    <apex:commandButton value="Go back to Opportunity" action="{!Cancel}" styleClass="slds-button slds-button_neutral" />    
+                                </div>
+                            </header>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel >
+                <div class="slds-page-header">
+                    <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                            <div class="slds-media">
+                                <div class="slds-media__body">
+                                    <div class="slds-page-header__name">
+                                        <div class="slds-page-header__name-title">
+                                            <h3>
+                                                <span class="slds-page-header__title slds-truncate"
+                                                      title="Add Opportunity">{!$Label.Amend_with_Updated_Values}</span>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_striped slds-p-top_x-small">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="Margin">Margin</div>
+                            </th>
+                            <th scope="col"> </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Supplier Price">Supplier Price</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Type">Type</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Monthly Site Admin Fee">Monthly Site Admin Fee</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Daily Site Admin Fee">Daily Site Admin Fee</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td >
+                                <div class="slds-truncate" title="">
+                                    <apex:inputText styleClass="slds-input" value="{!OpportunityMargin}" /> 
+                                </div>
+                            </td>
+                            <td></td>
+                            <td >
+                                <div class="slds-truncate" title="">
+                                    <apex:inputText styleClass="slds-input" value="{!OpportunitySPrice}" /> 
+                                </div>
+                            </td> 
+                            <td>
+                                <div class="slds-truncate" title="">
+                                    <apex:inputField styleClass="slds-input" value="{!oppRec.Commodity_Type__c }" /> 
+                                </div>
+                            </td>
+                            <td>
+                            	<div class="slds-truncate" title="">
+                                    <apex:inputText styleClass="slds-input" value="{!OpportunityMSAFee}"/> 
+                                </div>
+                            </td>
+                            <td>
+                            	<div class="slds-truncate" title="">
+                                    <apex:inputText styleClass="slds-input" value="{!OpportunityDSAFee}"/> 
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </apex:outputPanel>
+            <apex:outputPanel id="panel2" rendered="{!subWrapper.size > 0}">                
+                <div class="slds-page-header">
+                    <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                            <div class="slds-media">
+                                <div class="slds-media__body">
+                                    <div class="slds-page-header__name">
+                                        <div class="slds-page-header__name-title">
+                                            <h3>
+                                                <span class="slds-page-header__title slds-truncate"
+                                                      title="Add Opportunity">{!$Label.AmendExistingSites}</span>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_striped slds-p-top_x-small">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="Site Name">Site Name</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Market">Market</div>
+                            </th>                            
+                            <th scope="col">
+                                <div class="slds-truncate" title="Margin">Margin</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Supplier Price">Supplier Price</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Type">Type</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Remaining Term(Months)">Remaining Term(Months)</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Volume">Volume</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <apex:variable value="{!0}" var="oliIndex"/>
+                        <apex:repeat value="{!subWrapper}" var="data">
+                            <tr>
+                                
+                                <td>
+                                    <div class="slds-truncate" title="{!data.site.name}">
+                                        <apex:inputCheckbox value="{!data.isSelected}" />
+                                        <a href="/{!data.site.name}" 
+                                           onclick="setValueToLookupField('{!data.site.name}','{!data.site.Id}')"
+                                           tabindex="-1">{!data.site.name}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputField styleClass="slds-input" value="{!data.site.Market__c}" /> 
+                                    </div>
+                                </td>                                
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputText value="{!data.adderMargin}" html-disabled="true"/> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputText value="{!data.supplier_Price}" html-disabled="true"/> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputField value="{!data.site.Type__c}" /> 
+                                    </div>
+                                </td> 
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputText value="{!data.subRemainingTerm}" /> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputText styleClass="slds-input" value="{!data.annualVolume}" /> 
+                                    </div>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+            </apex:outputPanel>
+            <apex:outputPanel id="panel3" rendered="{!wrrapperList.size > 0}">
+                <div class="slds-page-header">
+                    <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                            <div class="slds-media">
+                                <div class="slds-media__body">
+                                    <div class="slds-page-header__name">
+                                        <div class="slds-page-header__name-title">
+                                            <h3>
+                                                <span class="slds-page-header__title slds-truncate"
+                                                      title="Add Opportunity">{!$Label.AddNewSite}</span>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_striped slds-p-top_x-small">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="Site Name">Site Name</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Market">Market</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Margin">Margin</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Offered Supplier Price">Offered Supplier Price</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Today Supplier Price">Today Supplier Price</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Type">Type</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Remaining Term(Months)">Remaining Term(Months)</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Volume">Volume</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!wrrapperList}" var="data">
+                            <tr>
+                                
+                                <td>
+                                    <div class="slds-truncate" title="{!data.site.name}">
+                                        <apex:inputCheckbox value="{!data.isSelected}" />
+                                        <a href="/{!data.site.id}" 
+                                           onclick="setValueToLookupField('{!data.site.name}','{!data.site.id}')"
+                                           tabindex="-1">{!data.site.name}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputField styleClass="slds-input" value="{!data.site.Market__c}" /> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputText value="{!data.margin}" /> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputText value="{!data.supplierPrice}" /> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputText value="{!data.listPrice}" /> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputField styleClass="slds-input" value="{!data.site.Type__c}" /> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputText value="{!remainingTerm}" /> 
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField styleClass="slds-input" value="{!data.site.Volume__c}" /> 
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                        </apex:repeat>
+                    </tbody>                    
+                </table>                                    
+            </apex:outputPanel>
+            <apex:outputPanel >                
+                <table style="margin-top: 1%;">
+                    <tr>
+                        <td style="text-align: right;">
+                            <apex:commandButton value="Cancel" action="{!Cancel}" styleClass="slds-vf-button_neutral" style="margin: 2px;"/> 
+                        </td>
+                        <td>
+                            <apex:commandButton value="Save" action="{!saveOLI}"  styleClass="slds-vf-button_brand" reRender="frm" status="actStatusId"/>
+                            
+                        </td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+        </apex:form>
+    </html>
+</apex:page>

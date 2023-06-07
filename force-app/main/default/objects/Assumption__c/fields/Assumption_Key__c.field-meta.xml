@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assumption_Key__c</fullName>
+    <externalId>false</externalId>
+    <formula>Market__c &amp; &apos;~&apos; &amp; Supplier__c &amp; &apos;~&apos; &amp; TEXT(Commodity__c) &amp; &apos;~&apos; &amp; TEXT(Business_Size__c) &amp; &apos;~&apos; &amp; TEXT(Type__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Assumption Key</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

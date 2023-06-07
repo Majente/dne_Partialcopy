@@ -1,0 +1,224 @@
+<aura:component controller="PaginationController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader,lightning:isUrlAddressable" access="global" >    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="recordId" type="String" default="001f400001KZx02AAD"/>
+    <aura:attribute name="siteInstance" type="Site__c" default="{'sobjectType' : 'Site__c'}"/>
+    <!--Aura Attribute for store Contact Object List as Array-->    
+    <aura:attribute name="accountDetails" type="Object" />  
+    <aura:attribute name="siteList" type="List" />
+    <aura:attribute name="cardList" type="object" />
+    <aura:attribute name="loaded" type="Boolean"/>
+    <aura:attribute name="accId" type="String" default=""/>
+    <aura:attribute name="listControllingValues" type="list" default="[]" description="to store controller field values"/>
+    <aura:attribute name="listDependingValues" type="list" default="['--- None ---']" description="to store dependent field values"/>
+    <aura:attribute name="depnedentFieldMap" type="map" description="map to store dependent values with controlling value"/>
+    <aura:attribute name="bDisabledDependentFld" type="boolean" default="true"/> 
+    <aura:attribute name="controllingFieldAPI" type="string" default="Type__c" description="store field API name of Controller field"/>
+    <aura:attribute name="dependingFieldAPI" type="string" default="Unit_of_Measure__c" description="store field API name of dependent field"/>
+    <!-- Attribute Declration For Pagination -->
+    <aura:attribute name="siteListLength" type="Integer"/>
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="oldPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageList" type="List"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalPages" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
+    <!-- Attribute Declration For Pagination End-->  
+    <aura:attribute name="ServiceAddressSame" type="boolean" default="{!v.ParentAccountInstance.serviceAddressAccount.Service_address_same_as_parent__c}"/>        
+    <div class="modal" >
+        <div class="modal-header slds-modal__header slds-size_1-of-1">
+            <h4 class="title slds-text-heading--medium">Add Location Name - {!v.accountDetails.Name} </h4>
+        </div>
+        <div class="slds-modal__content slds-p-around--x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative">
+            <lightning:recordEditForm aura:id="recordViewForm" objectApiName="Account">
+                <div class="exampleHolder">
+                    <aura:if isTrue="{!v.loaded}">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:if>
+                </div>
+                
+                <div style="padding-block-end: 19px;">
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                        <thead>
+                            <tr class="slds-text-title_caps">                                    
+                                <th scope="col">
+                                    <div class="slds-truncate" title="First Name">{!$Label.c.AddLocation}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Business Size">{!$Label.c.MarketLabel}</div>
+                                </th>                                
+                                <th scope="col">
+                                    <div class="slds-truncate slds-cell-wrap" title="Annual Gas Volume">{!$Label.c.SAMEASBILLINGADDRESS}</div>
+                                </th>                                    
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Street Address">{!$Label.c.Street_Address_Label}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="City">{!$Label.c.CITY}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Province/Sate">{!$Label.c.PROVINCE_STATE}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="PostalCode/Zip">{!$Label.c.POSTALCODE_ZIP}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Country">{!$Label.c.COUNTRY}</div>
+                                </th>
+                            </tr>
+                        </thead>                        
+                        <tbody>
+                            <tr class="slds-text-title_caps">                                    
+                                <td id="{!v.rowIndexParent}">
+                                    <ui:inputText class="slds-input" aura:id=""  value="{!v.accountDetails.Name}"/>
+                                </td>
+                                <td class='hideLabel market__C'>
+                                    <lightning:inputField  fieldName="Market__c" value="{!v.accountDetails.Market__c}" />
+                                </td>
+                                <td class='hideLabel'>
+                                    <lightning:input aura:id="ServiceSameAddress" type="checkbox" label="SAME AS BILLING ADDRESS" checked="{!v.accountDetails.Service_address_same_as_parent__c}" onchange="{!c.sameddress}"   />
+                                </td>                                    
+                                <td>
+                                    <ui:inputText aura:id="ShippingStreet" class="slds-input" value="{!v.accountDetails.ShippingStreet}" disabled="{!v.ServiceAddressSame}" />
+                                </td>
+                                <td >
+                                    <ui:inputText class="slds-input wdth" value="{!v.accountDetails.ShippingCity}" disabled="{!v.ServiceAddressSame}" />
+                                </td>
+                                <td>
+                                    <ui:inputText class="slds-input" value="{!v.accountDetails.ShippingState}" disabled="{!v.ServiceAddressSame}"/>
+                                </td>
+                                <td>
+                                    <ui:inputText class="slds-input" value="{!v.accountDetails.ShippingPostalCode}" disabled="{!v.ServiceAddressSame}"/>
+                                </td>
+                                <td>
+                                    <ui:inputText class="slds-input" value="{!v.accountDetails.ShippingCountry}" disabled="{!v.ServiceAddressSame}"/>
+                                </td>
+                                
+                            </tr>    
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!--===============================================================-->
+                <table class="sites slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="First Name">{!$Label.c.SITEID}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Type">{!$Label.c.TYPE}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Volume">{!$Label.c.VOLUME}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Unit of Measure">{!$Label.c.UNITOFMEASURE}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Action">{!$Label.c.ACTION}</div>                              
+                            </th>
+                        </tr>
+                    </thead>  
+                    <!--===================================================================-->
+                    <tbody>  
+                        <aura:iteration items="{!v.siteList}" var="site" indexVar="index">
+                            <tr>
+                                <td>        
+                                    <lightning:input name="" value="{!site.Name}" />
+                                </td>
+                                <td>
+                                    <lightning:select aura:id="cntrlFld"
+                                                      name="{!index}"
+                                                      value="{!site.Type__c}"
+                                                      onchange="{!c.onControllerFieldChangeforValue}">
+                                        <aura:iteration items="{!v.listControllingValues}" var="val">
+                                            <option value="{!val}" selected="{!if(val == site.Type__c,site.Type__c,null)}">{!val}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </td>
+                                <td>
+                                    <ui:inputNumber class="slds-input" value="{!site.Volume__c}"/>
+                                </td>	
+                                <td>  
+                                    <lightning:select name="dependentFld"
+                                                      value="{!site.Unit_of_Measure__c}">
+                                        <aura:iteration items="{!site.UnitTypeMeasureList}" var="val">
+                                            <option value="{!val}" selected="{!if(val == site.Unit_of_Measure__c,site.Unit_of_Measure__c,null)}">{!val}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </td> 
+                                <td>
+                                    <a onclick="{!c.removeRow}" name="{!index}">
+                                        <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                        <span class="slds-assistive-text">Delete Icon</span>
+                                    </a>                    
+                                </td>
+                                <td>
+                                    <aura:if isTrue="{!index == v.siteListLength}">
+                                        <a onclick="{!c.AddNewRow}" value="{!index}">
+                                            <lightning:icon variant="error" iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                                            <span class="slds-assistive-text">Add Icon</span>
+                                        </a>
+                                    </aura:if>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>                    
+                </table>                                
+                <!--===============================================================-->
+                <div class="modal-footer slds-modal__footer slds-size_1-of-1">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-12">
+                                    <lightning:buttonIcon iconName="utility:jump_to_left" variant="brand" alternativeText="First Page" name="1" 
+                                                          title="First Page" disabled="{! v.currentPageNumber == 1}" onclick="{!c.processMe}"/>
+                                    <lightning:buttonIcon iconName="utility:arrow_left" variant="brand" alternativeText="previous Page" name="{! v.currentPageNumber - 1}" 
+                                                          title="previous Page" disabled="{! v.currentPageNumber == 1}" onclick="{!c.processMe}"/>
+                                </div>
+                                <div class="slds-col slds-size_8-of-12">
+                                    <div style="margin-top: 7px;display: flex;justify-content: center;">
+                                        <span class="slds-p-horizontal_xxx-small" id="nav">
+                                            <a onclick="{!c.processMe}" name="1" class="{!(v.currentPageNumber == 1) ? 'selected' : ''}" style="{!v.currentPageNumber == 1 ? 'background-color: #0176d3;color: white':''}">1</a>
+                                        </span>
+                                        
+                                        <aura:iteration items="{!v.pageList}" var="item" >
+                                            <span class="slds-p-horizontal_xxx-small" id="nav">
+                                                <a  onclick="{!c.processMe}" name="{!item}" class="{!(v.currentPageNumber == item) ? 'selected' : ''}" style="{!v.currentPageNumber == item ? 'background-color: #0176d3;color: white':''}">{!item}</a>
+                                            </span>
+                                        </aura:iteration>
+                                        
+                                        <span class="slds-p-horizontal_xxx-small" >
+                                            <a style="text-decoration: none;color: black;font-weight: 700;"><b>...</b></a>
+                                        </span>
+                                        <span class="slds-p-horizontal_xx-small" id="nav"> 
+                                            <a onclick="{!c.processMe}" name="{!v.totalPages}" class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}" style="{!v.currentPageNumber == v.totalPages ? 'background-color: #0176d3;color: white':''}">{!v.totalPages}</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-12" style="text-align: initial;">
+                                    <lightning:buttonIcon iconName="utility:arrow_right" variant="brand" alternativeText="Next Page" name="{! v.currentPageNumber + 1}" 
+                                                          title="Next Page" disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.processMe}"/>
+                                    <lightning:buttonIcon name="{!v.totalPages}" title="Last Page" alternativeText="Last Page" variant="brand" iconName="utility:jump_to_right"
+                                                          disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.processMe}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_6-of-12" style="padding: 0.5rem;">
+                                    <lightning:button disabled="{!v.totalPages-1 > v.endPage}" variant="Brand" class="slds-button" label="Save" onclick="{!c.Save}"/>
+                                    <lightning:button variant="Neutral" class="slds-button" label="Cancel" onclick="{!c.handleClose}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--===============================================================-->
+            </lightning:recordEditForm>
+        </div>
+        
+    </div>
+    <br/>
+</aura:component>

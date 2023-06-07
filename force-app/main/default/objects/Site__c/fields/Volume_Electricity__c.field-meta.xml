@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Volume_Electricity__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( ISBLANK( Account__r.Id) , null,  
+ VALUE(TEXT(Account__r.Total_Annual_Volume_ElectrictIy__c)))</formula>
+    <label>Volume(Electricity)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

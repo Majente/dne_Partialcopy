@@ -1,0 +1,101 @@
+<aura:component controller="AddSiteAccountController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+   	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <aura:handler name="change" value="{!v.cardList}" action="{!c.onCardListChange}"/>
+    
+    
+    <aura:attribute name="siteInstance" type="Site__c"/>
+    
+    <aura:attribute name="site" type="Site__c"/>
+	    
+    <aura:attribute name="rowIndexParent" type="Integer"/>
+    <aura:attribute name="rowIndex" type="Integer"/>
+    <aura:attribute name="lengthOfList" type="Integer"/>
+    
+    <!--<aura:attribute name="parentAccountList" type="List" />-->
+    
+    <!-- Register 2 Lightning Event for handle add or Delete rows on Parent Component  --> 
+    <aura:registerEvent name="DeleteAccountSiteEvt" type="c:DeleteAccountSiteEvt"/> 
+    <aura:registerEvent name="AddNewAccountSiteEvt" type="c:AddNewAccountSiteEvt"/> 
+    <aura:attribute name="cardList" type="object[]" />
+    
+    <aura:attribute name="types" type="List" />
+     
+    <aura:attribute name="units" type="List" /> 
+    
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+    <aura:attribute name="listControllingValues" type="list" default="[]" description="to store controller field values"/>
+    <aura:attribute name="listDependingValues" type="list" default="['--- None ---']" description="to store dependent field values"/>
+    <aura:attribute name="depnedentFieldMap" type="map" description="map to store dependent values with controlling value"/>
+    <aura:attribute name="bDisabledDependentFld" type="boolean" default="true"/> 
+    
+   <!-- <aura:attribute name="objDetail" type="Site__c" default="{'sobjectType' : 'Site__c'}"/>-->
+    <aura:attribute name="controllingFieldAPI" type="string" default="Type__c" description="store field API name of Controller field"/>
+    <aura:attribute name="dependingFieldAPI" type="string" default="Unit_of_Measure__c" description="store field API name of dependent field"/>
+        
+    <tr>
+        
+        <td>
+            <ui:inputText class="{!if(v.siteInstance.Error,v.siteInstance.Error+' slds-input ',' slds-input ')}" value="{!v.siteInstance.Name}"/>
+        	<aura:if  isTrue="{!v.siteInstance.errorMessage}">
+                <br /><span class="errorMessage">{!v.siteInstance.errorMessage}</span>
+        	</aura:if>
+        	
+        </td>
+        <td class='hideLabel'>
+            <!--<lightning:inputField fieldName="Business_Size__c"  value="{!v.siteInstance.Business_Size__c}" />-->
+           <!-- <lightning:inputField fieldName="Type__c"  value="{!v.siteInstance.Type__c}" />-->
+        
+        <!--    <lightning:select name="Type__c" value="{!v.siteInstance.Type__c}">
+                <aura:iteration items="{!v.types}" var="type">
+                    <option value="{!type.value}" selected="{! type.value == v.siteInstance.Type__c}">{!type.label}</option>
+                </aura:iteration>
+            </lightning:select> -->
+            <lightning:select name="controllerFld"
+                          value="{!v.siteInstance.Type__c}"
+                          onchange="{!c.onControllerFieldChangeforValue}">
+                <aura:iteration items="{!v.listControllingValues}" var="val" >
+                    <option value="{!val}" selected="{!if(val == v.siteInstance.Type__c,v.siteInstance.Type__c,null)}">{!val}</option>
+                </aura:iteration>
+            </lightning:select>
+            
+        </td>        
+        <td>
+            <ui:inputNumber   class="slds-input" value="{!v.siteInstance.Volume__c}"/>
+        </td>
+        <td>
+            <!-- <lightning:inputField fieldName="Unit_of_Measure__c"  value="{!v.siteInstance.Unit_of_Measure__c}" />-->
+           
+        <!--    <lightning:select name="Unit_of_Measure__c" value="{!v.siteInstance.Unit_of_Measure__c}" >
+                <aura:iteration items="{!v.units}" var="unit">
+                    <option value="{!unit.value}" selected="{!unit.value == v.siteInstance.Unit_of_Measure__c}">{!unit.label}</option>
+                </aura:iteration>
+            </lightning:select> -->
+            <lightning:select name="dependentFld"
+                          value="{!v.siteInstance.Unit_of_Measure__c}"
+                          disabled="{!v.bDisabledDependentFld}">
+            <aura:iteration items="{!v.listDependingValues}" var="val">
+                <option value="{!val}" selected="{!if(val == v.siteInstance.Unit_of_Measure__c,v.siteInstance.Unit_of_Measure__c,null)}">{!val}</option>
+            </aura:iteration>
+        </lightning:select>
+            
+        </td>        
+        <td>
+             
+             <a onclick="{!c.removeRow}">
+                <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                <span class="slds-assistive-text">Delete Icon</span>
+            </a>
+            <aura:if isTrue="{! v.rowIndex+1 == v.lengthOfList}">
+                <a onclick="{!c.AddNewRow}">
+                  <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                  <span class="slds-assistive-text">Add Icon</span>
+                </a>    
+            </aura:if>
+        </td> 
+    </tr>
+    
+    
+    
+</aura:component>

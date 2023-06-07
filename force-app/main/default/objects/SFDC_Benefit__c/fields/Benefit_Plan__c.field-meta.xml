@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Benefit_Plan__c</fullName>
+    <externalId>false</externalId>
+    <label>Benefit Plan</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Benefit_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>PPO</fullName>
+                <default>false</default>
+                <label>PPO</label>
+            </value>
+            <value>
+                <fullName>HMO</fullName>
+                <default>false</default>
+                <label>HMO</label>
+            </value>
+            <value>
+                <fullName>Health Savings</fullName>
+                <default>false</default>
+                <label>Health Savings</label>
+            </value>
+            <value>
+                <fullName>Medicaid</fullName>
+                <default>false</default>
+                <label>Medicaid</label>
+            </value>
+            <value>
+                <fullName>Medicare</fullName>
+                <default>false</default>
+                <label>Medicare</label>
+            </value>
+            <value>
+                <fullName>CHiP</fullName>
+                <default>false</default>
+                <label>CHiP</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Health Insurance</controllingFieldValue>
+            <valueName>PPO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Health Insurance</controllingFieldValue>
+            <valueName>HMO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Health Insurance</controllingFieldValue>
+            <valueName>Health Savings</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Health Insurance</controllingFieldValue>
+            <valueName>Medicaid</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Health Insurance</controllingFieldValue>
+            <valueName>Medicare</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Health Insurance</controllingFieldValue>
+            <valueName>CHiP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Health Insurance</controllingFieldValue>
+            <controllingFieldValue>Dental Insurance</controllingFieldValue>
+            <controllingFieldValue>Vision Insurance</controllingFieldValue>
+            <controllingFieldValue>Life Insurance</controllingFieldValue>
+            <controllingFieldValue>401k</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

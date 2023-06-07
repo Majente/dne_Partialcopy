@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>To store the information related to supplier rates, for example email address of email service etc. May be in future we need some more fields</description>
+    <enableFeeds>false</enableFeeds>
+    <label>Supplier_Rate_Config</label>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,272 @@
+<apex:page showHeader="false" sidebar="false" cache="false" contentType="text/xml" applyHtmlTag="true" controller="LESiteInfoPageController" action="{!chooseplan}">
+    <block>
+        <table font-family="open sans">
+        <table-body>
+            <table-row  border="1px solid black">
+                <table-cell  padding="5" number-columns-spanned="8" background-color="#ef590e" color="white">
+                    <block text-align="center" font-size="13px" font-family= "open sans" font-weight="bold"><apex:outputText >PRODUCT INFORMATION</apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="8" border=" 1px solid black" padding="5px" >
+                    <block font-size="10px" font-family="Arial,sans-serif"><apex:outputText >Seller supplies your Electricity at the Power Pool Price for the duration of the Term plus a Transaction Administration Fee. You will pay for all the Electricity you consume. Eligibility: This product is available to Customers who consume more than 250,000 kWhs of Electricity per year and whose Sites are not serviced by Rural Electrification Associations or a municipally-owned electric utility that would restrict the provision of the services outlined here.</apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="2" border=" 1px solid black" padding="5px" >
+                    <block font-weight="bold" font-family="open sans" font-size="10px" padding-top ="5px"><apex:outputText >Contract Term</apex:outputText></block>
+                </table-cell>
+                
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" text-align="center" color="black">
+                    <block text-align="center">
+                        <table font-family="Open sans" font-size="10px"  display-align="center" text-align="center">
+                        <table-body>
+                            <table-row>
+                                <table-cell display-align="right">
+                                    <block>
+                                        <apex:outputText rendered="{!amount1 == null}">
+                                            <external-graphic  src="{!baseUrl}/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk" content-width="15px"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!amount1 != null}">
+                                            <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4r2&oid=00D030000008jPk" content-width="15px"/>
+                                        </apex:outputText>
+                                    </block>
+                                </table-cell>
+                                <table-cell display-align="left">
+                                    <block>
+                                        <apex:outputText >1 year</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            
+                        </table-body>
+                    </table>
+                   </block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" color="black">
+                    <block text-align="center">
+                       
+                       <table font-family="Open sans" font-size="10px">
+                        <table-body>
+                            <table-row>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText rendered="{!amount2 == null}">
+                                            <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk" content-width="15px"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!amount2 != null}">
+                                            <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4r2&oid=00D030000008jPk" content-width="15px"/>
+                                        </apex:outputText>
+                                    </block>
+                                </table-cell>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText >2 year</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            
+                        </table-body>
+                    </table>
+                        
+                  </block>      
+                        
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" color="black">
+                    <block text-align="center">
+                    <table font-family="Open sans" font-size="10px">
+                        <table-body>
+                            <table-row>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText rendered="{!amount3 == null}">
+                                            <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk" content-width="15px"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!amount3 != null}">
+                                            <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4r2&oid=00D030000008jPk" content-width="15px"/>
+                                        </apex:outputText>
+                                    </block>
+                                </table-cell>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText >3 year</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            
+                        </table-body>
+                    </table>
+                    </block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" color="black">
+                    <block text-align="center">
+                       <table font-family="Open sans" font-size="10px">
+                        <table-body>
+                            <table-row>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText rendered="{!amount4 == null}">
+                                            <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk" content-width="15px"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!amount4 != null}">
+                                            <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4r2&oid=00D030000008jPk" content-width="15px"/>
+                                        </apex:outputText>
+                                    </block>
+                                </table-cell>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText >4 year</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            
+                        </table-body>
+                    </table>
+                        </block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" color="black">
+                    <block text-align="center">
+                       <table font-family="Open sans" font-size="10px">
+                        <table-body>
+                            <table-row>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText rendered="{!amount5 == null}">
+                                            <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk" content-width="15px"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!amount5 != null}">
+                                            <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4r2&oid=00D030000008jPk" content-width="15px"/>
+                                        </apex:outputText>
+                                    </block>
+                                </table-cell>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText >5 year</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                        </table-body>
+                    </table>
+                        </block>
+                </table-cell>
+                
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" color="black">
+                    <block text-align="center">
+                        <apex:outputText rendered="{!amount6 == null}">
+                            <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk" content-width="15px"/>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!amount6 != null}">
+                                <external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=015f4000002s4r2&oid=00D030000008jPk" content-width="15px"/>
+                            </apex:outputText>
+                        <apex:outputText ></apex:outputText>
+                    </block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                    <table-cell number-columns-spanned="8" border=" 1px solid black" padding="5px">
+                        <block font-size="9px"><apex:outputText >For the purpose of clarification, if the Term is expressed in months and days, the number of days represent the days remaining in the first month of the Term</apex:outputText></block>
+                    </table-cell>
+                </table-row>
+            
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="2" border=" 1px solid black" padding="5px" >
+                    <block font-weight="bold" font-family="open sans" font-size="10px"><apex:outputText >Transaction Administration Fee ($/kWh):</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block font-size="9px" text-align="center"><apex:outputText > ${!amount1} / kWh</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block font-size="9px" text-align="center"><apex:outputText > ${!amount2} / kWh</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block font-size="9px" text-align="center"><apex:outputText > ${!amount3} / kWh</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block font-size="9px" text-align="center"><apex:outputText > ${!amount4} / kWh</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block font-size="9px" text-align="center"><apex:outputText > ${!amount5} / kWh</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block font-size="9px" text-align="center"><apex:outputText > ${!amount6} / kWh</apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="8" border=" 1px solid black" padding="5px">
+                    <block font-size="9px"><apex:outputText >Contract Price – In the case of interval meters: Power Pool Price plus Transaction Administration Fee. In the case of cumulative meters: Power Pool Price plus Transaction Administration Fee will be charged by applying a net system load shape (as provided by the wire services provider) to the consumption at the Sites.</apex:outputText></block>
+                    <block font-size="9px"><apex:outputText >The Contract Price excludes Local Distribution Company Third Party Charges and Taxes that are or may be the responsibility of Customer.</apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="2" border=" 1px solid black" padding="5px">
+                
+                    <block>
+                        <table>
+                            <table-body>
+                            <table-row>
+                                <table-cell number-columns-spanned="1">
+                                    <block font-weight="bold" font-size="9px">
+                                        Flow Date: 
+                                    </block>
+                                </table-cell>
+                                <table-cell number-columns-spanned="2">
+                                    <block font-size="9px">
+                                        <apex:outputText >{!flowdate} (m/d/y)</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            </table-body>
+                       </table>
+                   </block>
+                </table-cell>
+                <table-cell number-columns-spanned="3" border=" 1px solid black" padding="5px">
+                    
+                    <block>
+                        <table>
+                            <table-body>
+                            <table-row>
+                                <table-cell number-columns-spanned="4">
+                                    <block font-weight="bold" font-size="9px">
+                                        Estimated Annual Contract Quantities: 
+                                    </block>
+                                </table-cell>
+                                <table-cell number-columns-spanned="1">
+                                    <block font-size="9px">
+                                        <apex:outputText >{!annualVolume}</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            <table-row>
+                                <table-cell number-columns-spanned="5">
+                                    <block font-size="9px"><apex:outputText >(means the quantities of Electricity the Customer has committed to purchase from Seller, refer to Schedule A for more details)</apex:outputText></block>
+                                </table-cell>
+                            </table-row>
+                            </table-body>
+                       </table>
+                   </block>
+                </table-cell>
+                <table-cell number-columns-spanned="3" border=" 1px solid black" padding="5px">
+                    <block>
+                        <table>
+                            <table-body>
+                            <table-row>
+                                <table-cell>
+                                    <block font-weight="bold" font-size="9px">
+                                        Site Administration Fee:
+                                    </block>
+                                </table-cell>
+                                <table-cell>
+                                    <block font-size="9px">
+                                        <apex:outputText >$3.00</apex:outputText> per month, per Site
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            </table-body>
+                       </table>
+                   </block>
+                </table-cell>
+            </table-row>
+        </table-body>
+        </table>
+    </block>
+</apex:page>

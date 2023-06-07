@@ -1,0 +1,135 @@
+<apex:page Controller="ShowDuplicateAccounts" lightningStylesheets="true"> 
+    <apex:slds />
+    <apex:sectionHeader title="Account" subtitle="Master Account Details"/>
+    <head>
+        <apex:includescript value="//code.jquery.com/jquery-1.11.1.min.js"/>
+        <apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"/>
+        <apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css"/>
+        <script>
+        j$ = jQuery.noConflict();
+        j$(document).ready( function () {	
+            if(j$('.selectRec').prop('checked') == true){
+                j$('.selectRec').closest('tr').find('input.disa').first().attr('checked', false);                
+            }
+            j$('.selectRec').click(function(){
+                if(j$(this).prop('checked') == true){
+                    j$(this).closest('tr').find('input.disa').attr('checked',false);
+                }               
+                j$('.selectRec').prop('checked',false)
+                j$(this).prop('checked',true)
+                j$(this).closest('table').find('input.disa').removeAttr('disabled');
+                j$(this).closest('tr').find('input.disa').attr('disabled','disabled');
+                 j$('input.disa').each(function () {                 	
+                    if(j$(this).attr('disabled') == 'disabled'){
+                    	j$(this).prop('checked',false)
+                    }else{
+                    	j$(this).prop('checked',true)
+                    }
+                 });
+            })           
+            var accTable = j$('[id$="accTable"]').DataTable({                
+            })              
+            })
+        
+        var rst;
+        var Ids;
+        
+        </script>
+    </head>
+    <style>
+        .slds-scope table {
+        width: 100%;
+        table-layout: fixed;
+        }
+        #loading{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            margin: -75px 0 0 -75px;
+            border: 16px solid #d4d2d2;
+            border-radius: 50%;
+            border-top: 16px solid #3463db;
+            width: 50px;
+            height: 50px;
+            animation: spin 5s linear infinite;
+            }
+         @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+            }
+    </style>
+    
+    <apex:form id="frmId">   
+        <apex:actionStatus id="actStatusId" >
+                <apex:facet name="start" >
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only" id="loading"></span>
+                            
+                        </div>
+                    </div>                    
+                </apex:facet>
+            </apex:actionStatus>
+            <apex:outputPanel id="pageMessage">
+                <apex:pageMessages />
+            </apex:outputPanel>
+        <!--<apex:actionStatus id="pageStatus">
+            <apex:facet name="start">
+                <apex:outputPanel >
+                    <img src="/img/loading32.gif" width="25" height="25" />
+                    <apex:outputLabel value="Loading..."/>
+                </apex:outputPanel>            
+            </apex:facet>
+        </apex:actionStatus>-->
+        <apex:pageBlock title="Duplicate Accounts" id="BlockId">
+            
+            <table border="1" id="accTable" style="display:inline-table;width: -webkit-fill-available;">
+                <thead>
+                    <th style="width: 1px;"></th>
+                    <th>DuplicateAccountId</th>
+                    <th>Duplicate Account Name</th>
+                    <th style="width: 1px;">Select Duplicates</th>
+                    <th>Duplicate Accounts</th>
+                    <th>No of opportunity</th>
+                    <th>Last Activity</th>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!WrapperList}" var="adl">
+                        <tr>
+                            <td>
+                                <apex:inputCheckbox value="{!adl.isMaster}" styleClass="selectRec">
+                                    <apex:actionSupport event="onchange" action="{!getSelectedMaster}" rerender="accTable"/>
+                                </apex:inputCheckbox>
+                            </td>
+                             
+                            <td>
+                                <apex:outputLabel value="{!adl.RecId}"/>
+                            </td>
+                            <td><apex:outputLink value="/{!adl.RecId}" target="_blank">{!adl.Name}</apex:outputLink></td>
+                            <td>
+                                <apex:inputCheckbox id="mainBox" value="{!adl.isSelected}" styleClass="disa" disabled="{!adl.isMaster}"/>
+                                 
+                            </td>
+                            <td><apex:outputLink value="/{!adl.RecId}" target="_blank">{!adl.Name}</apex:outputLink></td>
+                            <td><apex:outputLabel value="{!adl.NoOfOpps}"></apex:outputLabel></td>
+                            <td><apex:outputLabel value="{!adl.LastActivityDate}"></apex:outputLabel></td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            
+            <br/>
+            <div>
+                <span style="text-align: center;display: block;"><b>Do You Want Change Master Account And Their Duplicate Accounts?</b></span><br/>
+                
+                <div style="text-align: center;">
+                    <span>
+                        <apex:commandButton style="background:#0176d3;border-color:#0176d3;color:white" value="Process"  action="{!changeMasterAccount}"   reRender="frmId" status="actStatusId"/>
+                    </span>
+                   
+                </div>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

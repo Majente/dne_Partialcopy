@@ -1,0 +1,26 @@
+<apex:page showHeader="false" sidebar="false" cache="false" contentType="text/xml" applyHtmlTag="true" controller="LESiteInfoPageController" action="{!siteCountVolume}">
+    
+ 
+    <block>
+        <table font-family="open sans">
+            <table-body>
+                <table-row border="1pt solid black" width="100%">
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                        <block text-align="left"> <apex:outputText value="Aggregated Electricity Volume (kWh): {!AggregatedElectricityVolume}" ></apex:outputText></block>
+                    </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                        <block text-align="left"> <apex:outputText value="Number of Electricity Sites: {!NoOfElectricitySites}" ></apex:outputText> </block>
+                    </table-cell>
+                </table-row>
+                <table-row border="1pt solid black" width="100%">
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                        <block text-align="left"> <apex:outputText value="Aggregated Gas Volume (m 3 , GJ, therms, Ccf): {!AggregatedGasVolume}" ></apex:outputText> </block>
+                    </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                        <block text-align="left"> <apex:outputText value="Number of Gas Sites: {!NoOfGasSites}" ></apex:outputText> </block>
+                    </table-cell>
+                </table-row>
+            </table-body>
+        </table>
+    </block>
+</apex:page>

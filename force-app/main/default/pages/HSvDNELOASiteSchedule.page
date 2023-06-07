@@ -1,0 +1,36 @@
+<apex:page showHeader="false" sidebar="false" cache="false" contentType="text/xml" applyHtmlTag="true" controller="LESiteInfoPageController" action="{!init}">
+    
+ 
+    <block>
+        <table font-family="open sans">
+            <apex:variable value="{!1}" var="i"/>
+            <table-body>
+                <table-row border="1pt solid black" font-weight="bold" width="100%">
+                    <table-cell number-columns-spanned="1" padding="4px" border=" 1px solid black">
+                        <block text-align="left"> SITE ID </block>
+                    </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                        <block text-align="left"> SITE ADDRESS </block>
+                    </table-cell>
+                    <table-cell number-columns-spanned="1" padding="4px" border=" 1px solid black">
+                        <block text-align="left"> Annual Volume </block>
+                    </table-cell>
+                </table-row>
+                <apex:repeat var="tier" value="{!quoteLineItemList}">
+                    <table-row border="1pt solid black" width="100%">
+                        <table-cell number-columns-spanned="1" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> <apex:outputText >{!tier.Site__r.Name} </apex:outputText> </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> <apex:outputText > {!tier.Site_Address__c} </apex:outputText> </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="1" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> <apex:outputText >{!tier.Annual_Volume__c}</apex:outputText> </block>
+                        </table-cell>
+                    </table-row>
+                    <apex:variable value="{!i+1}" var="i" />
+                </apex:repeat>
+            </table-body>
+        </table>
+    </block>
+</apex:page>

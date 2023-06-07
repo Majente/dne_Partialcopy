@@ -1,0 +1,56 @@
+<apex:page id="SortPage" controller="AccountDupes"  showHeader="false" lightningStylesheets="true">
+    <apex:slds />
+    <!--added for pagination-->
+    <head>
+        <apex:includescript value="//code.jquery.com/jquery-1.11.1.min.js" />
+            <apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
+            <apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
+            <script>
+            j$ = jQuery.noConflict();
+            j$(document).ready( function () {
+                var contactTable = j$('[id$="contacttable"]').DataTable({
+                    
+                });
+            });
+            </script>
+        </head>
+        <!---End of Pagination--->
+        
+        <apex:form id="myForm">
+            
+           
+            
+            <apex:pageBlock >
+                <apex:pageBlockSection title="DupesAccount Records" collapsible="false" columns="1"/>
+                <br/>
+            <body>                
+                <table id="contacttable" class="display">       
+                    <thead>
+                        <tr>
+                            <th >Select</th>
+                            <th style="20px;">Account Name</th>
+                            <th style="75px;">Master Account</th> 
+                            <th style="75px;">Duplicate Account</th>
+                            <th style="75px;">Number Of Opportunity </th>
+                            <th style="47px;">Last Activity Date </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!listofDupesWrapper}" var="Dupsfowrp" id="tableInd">
+                            <apex:repeat value="{!Dupsfowrp}" var="dup">
+                                <tr >
+                                    <td><apex:inputCheckbox value="{!dup.checked}"/></td>
+                                    <td>{!dup.dObj.Name}</td>
+                                    <td>{!dup.dObj.Master_Account__r.Name}</td>
+                                    <td>{!dup.dObj.Duplicate_Account__r.Name}</td>
+                                    <td>{!dup.dObj.Number_of_Opportunity__c}</td>
+                                    <td>{!dup.dObj.Last_Activity_Date__c}</td>
+                                </tr>
+                            </apex:repeat>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+            </body>
+        </apex:pageBlock>  
+    </apex:form>
+</apex:page>

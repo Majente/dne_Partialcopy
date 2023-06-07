@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quality_of_Work__c</fullName>
+    <externalId>false</externalId>
+    <label>Quality of Work</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Follows instruction carefully</fullName>
+                <default>false</default>
+                <label>Follows instruction carefully</label>
+            </value>
+            <value>
+                <fullName>Work is thorough and accurate</fullName>
+                <default>false</default>
+                <label>Work is thorough and accurate</label>
+            </value>
+            <value>
+                <fullName>Implements process improvements</fullName>
+                <default>false</default>
+                <label>Implements process improvements</label>
+            </value>
+            <value>
+                <fullName>Analyzes and dev effective solutions</fullName>
+                <default>false</default>
+                <label>Analyzes and dev effective solutions</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

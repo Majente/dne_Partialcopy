@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ethnicity__c</fullName>
+    <externalId>false</externalId>
+    <label>Ethnicity</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Caucasion</fullName>
+                <default>false</default>
+                <label>Caucasion</label>
+            </value>
+            <value>
+                <fullName>Afican-American</fullName>
+                <default>false</default>
+                <label>Afican-American</label>
+            </value>
+            <value>
+                <fullName>Indian</fullName>
+                <default>false</default>
+                <label>Indian</label>
+            </value>
+            <value>
+                <fullName>Asian</fullName>
+                <default>false</default>
+                <label>Asian</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

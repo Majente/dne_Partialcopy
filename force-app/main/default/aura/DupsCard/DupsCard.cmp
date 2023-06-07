@@ -1,0 +1,32 @@
+<aura:component controller="DupsListController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="DupsList" type="Account_Dups__c[]" />
+    <aura:attribute name="title" type="String" default="Dups-Accounts"/>
+    <aura:attribute name="recordId" type="String" />
+    <!--<aura:attribute name="TempId" type="string"/>-->
+    <!--<Span>
+        <b style="font-size: 28px;text-align: center;display: block;padding-top: 15px;padding-bottom: 20px;">Account-Dups</b>
+    </Span>-->
+    <aura:registerEvent name="navEvt" type="force:navigateToSObject"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-p-around_small">
+        <aura:iteration items="{!v.DupsList}" var="dup">
+            <lightning:card title="{!'Name : '+dup.Name}" iconName="action:new_person_account">
+                <aura:set attribute="actions">
+                    <button class="slds-button slds-button_neutral" onclick="{!c.navigate}" id="{!dup.Id}">View-Details</button>
+                    <!--<lightning:button label="View-Details"  id="{!dup.Id}"/>-->
+                </aura:set>
+                
+                <p class="slds-p-horizontal_small">
+                    <span>&nbsp;&nbsp;<b>Master Account Name &nbsp; : </b> &nbsp;&nbsp;&nbsp; <span style="font-size: 14px;"><a href="{!'/'+dup.Master_Account__c}">{!dup.Master_Account__r.Name}</a></span></span><br/><br/>
+                    <span>&nbsp;&nbsp;<b>Duplicate Account Name &nbsp; : </b> &nbsp;&nbsp;&nbsp; <span style="font-size: 14px;"><a href="{!'/'+dup.Duplicate_Account__c}">{!dup.Duplicate_Account__r.Name}</a></span></span><br/><br/>
+                    <span>&nbsp;&nbsp;<b>Number of Opportunity &nbsp; : </b> &nbsp;&nbsp;&nbsp; <span style="font-size: 14px;">{!dup.Number_of_Opportunity__c}</span></span><br/><br/>
+                    <span>&nbsp;&nbsp;<b>Last Activity Date &nbsp; : </b> &nbsp;&nbsp;&nbsp; <span style="font-size: 14px;">{!dup.Last_Activity_Date__c}</span></span>
+                </p>
+                <footer class="slds-card__footer">
+                    <b>Do You Want Change Parent Account ?</b><br/><br/>
+                    <lightning:button variant="brand" label="Process" title="Primary action" class="slds-m-left_x-small"></lightning:button>
+                </footer>
+            </lightning:card>
+        </aura:iteration>
+    </div>
+</aura:component>

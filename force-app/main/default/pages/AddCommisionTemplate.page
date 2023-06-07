@@ -1,0 +1,17 @@
+<apex:page id="AddCommissionTemplate" standardController="DNE_Commission_Hierarchy__c" extensions="AddCommisionTemplateController">
+    <apex:includeScript value="/lightning/lightning.out.js" />
+    <!--<apex:includeLightning />-->
+
+    <div id="LcDisplayId"></div>
+
+    <script>
+        $Lightning.use("c:AddCommissionTemplatesApp", function() {
+            $Lightning.createComponent(
+                "c:AddCommissionTemplatesCmp",
+                {},
+                "LcDisplayId",
+                function(component) {}
+            );
+        });
+    </script>
+</apex:page>

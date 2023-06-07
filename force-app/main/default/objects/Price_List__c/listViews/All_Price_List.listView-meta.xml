@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Price_List</fullName>
+    <columns>Latest__c</columns>
+    <columns>NAME</columns>
+    <columns>Product_Code__c</columns>
+    <columns>Market__c</columns>
+    <columns>Supplier__c</columns>
+    <columns>Type__c</columns>
+    <columns>Size__c</columns>
+    <columns>Term__c</columns>
+    <columns>List_Price__c</columns>
+    <columns>Currency_ISO_Code__c</columns>
+    <columns>Is_Valid__c</columns>
+    <columns>Month_Year__c</columns>
+    <columns>Effective_From__c</columns>
+    <columns>Effective_To__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Product_Code__c</field>
+        <operation>equals</operation>
+        <value>Gas-Small fixed</value>
+    </filters>
+    <label>All Price List</label>
+</ListView>

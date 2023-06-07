@@ -1,0 +1,246 @@
+<apex:page showHeader="false" sidebar="false" cache="false" contentType="text/xml" applyHtmlTag="true" controller="LESiteInfoPageController" action="{!chooseplan}">
+    <block>
+        <table>
+        <table-body>
+            <table-row  border="1px solid black">
+                <table-cell  padding="4" number-columns-spanned="8" background-color="#ef590e" color="white">
+                    <block text-align="center" font-size="12px" font-weight="bold"><apex:outputText >PRODUCT INFORMATION</apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="8" border=" 1px solid black" padding="5px" >
+                    <block><apex:outputText >Seller supplies the Customer with natural gas and the Customer is billed a fixed Contract Price based on its natural gas consumption for the duration of the Term.   Compressor fuel required to deliver the natural gas to the Distribution Company is included in the fixed Contract Price. Eligibility: This product is available to customers who consume more than 50,000 m3’s but less than 1,168,000 cubic metres (“m3”) of natural gas per year per account metre. Seller may waive at its discretion without notice. Furthermore, this product is only available to customers served by Énergir.</apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="2" border=" 1px solid black" padding="5px" >
+                    <block font-weight="bold" padding-top ="5px"><apex:outputText >Contract Term</apex:outputText></block>
+                </table-cell>
+                
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" text-align="center" color="black">
+                    <block text-align="center">
+                        <table display-align="center" text-align="center">
+                        <table-body>
+                            <table-row>
+                                <table-cell display-align="right">
+                                    <block>
+                                        <apex:outputText rendered="{!amount1 == null}">
+                                            <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!amount1 != null}">
+                                            <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qx&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </apex:outputText>
+                                    </block>
+                                </table-cell>
+                                <table-cell display-align="left">
+                                    <block>
+                                        <apex:outputText >1 year</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            
+                        </table-body>
+                    </table>
+                   </block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" color="black">
+                    <block text-align="center">
+                       
+                       <table >
+                        <table-body>
+                            <table-row>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText rendered="{!amount2 == null}">
+                                            <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!amount2 != null}">
+                                            <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qx&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </apex:outputText>
+                                    </block>
+                                </table-cell>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText >2 year</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            
+                        </table-body>
+                    </table>
+                        
+                  </block>      
+                        
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" color="black">
+                    <block text-align="center">
+                    <table >
+                        <table-body>
+                            <table-row>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText rendered="{!amount3 == null}">
+                                            <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!amount3 != null}">
+                                            <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qx&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </apex:outputText>
+                                    </block>
+                                </table-cell>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText >3 year</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            
+                        </table-body>
+                    </table>
+                    </block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" color="black">
+                    <block text-align="center">
+                       <table>
+                        <table-body>
+                            <table-row>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText rendered="{!amount4 == null}">
+                                            <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!amount4 != null}">
+                                            <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qx&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </apex:outputText>
+                                    </block>
+                                </table-cell>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText >4 year</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            
+                        </table-body>
+                    </table>
+                        </block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" color="black">
+                    <block text-align="center">
+                       <table>
+                        <table-body>
+                            <table-row>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText rendered="{!amount5 == null}">
+                                            <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!amount5 != null}">
+                                            <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qx&oid=00Df4000004kCT3" content-width="15px"/>
+                                        </apex:outputText>
+                                    </block>
+                                </table-cell>
+                                <table-cell>
+                                    <block>
+                                        <apex:outputText >5 year</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            
+                        </table-body>
+                    </table>
+                        </block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" display-align="center" color="black">
+                    <block text-align="center">
+        
+                            <apex:outputText rendered="{!amount6 == null}">
+                                <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!amount6 != null}">
+                                <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qx&oid=00Df4000004kCT3" content-width="15px"/>
+                            </apex:outputText>
+                    </block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="2" border=" 1px solid black" padding="5px" >
+                    <block font-weight="bold"><apex:outputText >Contract Price (¢/m³):</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block text-align="center"><apex:outputText > ¢{!amount1Cents} / m³</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block text-align="center"><apex:outputText > ¢{!amount2Cents} / m³</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block text-align="center"><apex:outputText > ¢{!amount3Cents} / m³</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block text-align="center"><apex:outputText > ¢{!amount4Cents} / m³</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block text-align="center"><apex:outputText > ¢{!amount5Cents} / m³</apex:outputText></block>
+                </table-cell>
+                <table-cell border=" 1px solid black" padding="5px" >
+                    <block text-align="center"><apex:outputText > ¢{!amount6Cents} / m³</apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="8" border=" 1px solid black" padding="5px">
+                    <block><apex:outputText >The Contract Price excludes Local Distribution Company Third Party Charges and Taxes that are or may be the responsibility of Customer. </apex:outputText></block>
+                </table-cell>
+            </table-row>
+            <table-row border="1px solid black">
+                <table-cell number-columns-spanned="3" border=" 1px solid black" padding="5px">
+                
+                    <block>
+                        <table>
+                            <table-body>
+                            <table-row>
+                                <table-cell number-columns-spanned="1">
+                                    <block font-weight="bold">
+                                        Flow Date: 
+                                    </block>
+                                </table-cell>
+                                <table-cell number-columns-spanned="3">
+                                    <block>
+                                        <apex:outputText >{!flowdate} (m/d/y)</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            </table-body>
+                       </table>
+                   </block>
+                </table-cell>
+                <table-cell number-columns-spanned="5" border=" 1px solid black" padding="5px">
+                    
+                    <block>
+                        <table>
+                            <table-body>
+                            <table-row>
+                                <table-cell number-columns-spanned="3">
+                                    <block font-weight="bold">
+                                        Estimated Annual Contract Quantities: 
+                                    </block>
+                                </table-cell>
+                                <table-cell number-columns-spanned="3">
+                                    <block>
+                                        <apex:outputText >{!annualVolume}</apex:outputText>
+                                    </block>
+                                </table-cell>
+                            </table-row>
+                            <table-row>
+                                <table-cell number-columns-spanned="6">
+                                    <block font-size="7.5px"><apex:outputText > (means the quantities of natural gas the Customer has committed to purchase from Seller, refer to Schedule A for more details) </apex:outputText></block>
+                                </table-cell>
+                            </table-row>
+                            </table-body>
+                       </table>
+                   </block>
+                </table-cell>
+               
+            </table-row>
+        </table-body>
+        </table>
+    </block>
+</apex:page>

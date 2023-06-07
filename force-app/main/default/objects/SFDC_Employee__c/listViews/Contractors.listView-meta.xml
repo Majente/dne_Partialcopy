@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contractors</fullName>
+    <columns>NAME</columns>
+    <columns>Employee_Status__c</columns>
+    <columns>Hire_Date__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Employee_Type__c</field>
+        <operation>equals</operation>
+        <value>Contract</value>
+    </filters>
+    <label>Contractors</label>
+</ListView>

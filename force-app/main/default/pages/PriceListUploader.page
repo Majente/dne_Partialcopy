@@ -1,0 +1,232 @@
+<apex:page recordSetVar="r" standardcontroller="Price_List__c" extensions="PriceListUploaderController" title="Price List Uploader" docType="html-5.0">
+    <style>
+        .controlPanel td{
+        width:200px;
+        }
+        .controlPanel{
+        margin-top:20px;
+        }
+    </style>
+    <script>function setFocusOnLoad() {}</script>
+    <apex:form >    
+        <apex:pageMessages />
+        <apex:pageBlock id="controlPanel">                        
+            <table class="controlPanel fromFile">
+                <tr>
+                <td>Effective From</td>
+                <td><apex:inputField value="{!mockPL.Effective_From__c}" /></td>
+                </tr>
+                <tr>
+                    <td>Effective To</td>
+                    <td><apex:inputField value="{!mockPL.Effective_To__c}" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Upload a CSV file to save its contents as Price List records</b></td>
+                </tr>
+                <tr>
+                    <td>Upload CSV file</td>
+                    <td>
+                        <input type="file" id="CSV" accept=".csv" contentType="text/csv" class="slds-file-selector__input"/>
+                        <apex:inputHidden id="csvHidden" value="{!csvFileBody}" />
+                        <apex:inputHidden id="csvFileNameHidden" value="{!documentName}" />
+                        <apex:actionfunction name="insertLeadAFJS" status="myStatus" action="{!readFromFile}" reRender="dataPanel" oncomplete="processCSVBatch();" />
+                        <apex:actionfunction name="addLastBatchData" status="myStatus" action="{!addLastBatchRecord}" reRender="dataPanel"/>
+                    </td>         
+                </tr>
+                <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <apex:commandButton value="Upload CSV" status="myStatus"  onclick="parseCSV(); return false;" styleClass="slds-button slds-button_brand"/>
+                        </td>
+                </tr>
+            </table>                                                             
+        </apex:pageBlock>
+        <apex:actionstatus id="myStatus">
+            <apex:facet name="start">
+                <div class="demo-only popupBackground" id="myStatus1">
+                    <div role="status" class="custPopup slds-spinner slds-spinner_medium slds-spinner_brand">
+                         <img src="/img/loading.gif"/> 
+                        <span class="slds-assistive-text">Please wait...</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionstatus>                        
+        <apex:pageBlock id="dataPanel">
+            <apex:outputtext rendered="{!priceListDataLines.size>0}"> Total Records {!priceListDataLines.size} </apex:outputtext>
+         <!--   <apex:pageblocktable value="{!priceListToUpsert}" var="pl">
+                <apex:repeat value="{!priceListFieldNames}" var="fieldName">
+                    <apex:column value="{!pl[fieldName]}" />
+                </apex:repeat>                
+            </apex:pageblocktable>  -->
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save Prices" action="{!saveData}" rendered="{!readSuccess}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>   
+
+    <script>
+    	var startIndex = 0;
+	    var allLeadArray = [];
+	    var batchSize = 0;
+	    var fileName ;
+	    function parseCSV(){
+	        var fileToLoad  = document.getElementById("CSV").files[0];
+	        fileName = fileToLoad.name ;
+    	    console.log(fileName);
+	        var fileReader = new FileReader();
+	        fileReader.onload = function(fileLoadedEvent){
+	            var textFromFileLoaded = fileLoadedEvent.target.result;  
+	            //console.log(textFromFileLoaded);
+	            var finalResult = CSVToArray(textFromFileLoaded,",");     
+	            //console.log(finalResult);
+	            var headerColumns = finalResult[0];
+	            
+	            allLeadArray = [];
+	            var totalRow = (finalResult.length-1)>1000?1000:(finalResult.length-1);
+            	console.log('totalRow==='+totalRow);
+            	for(var i=1;i<finalResult.length;i++){ // Records will starts from 2nd row (first row is header row) thats why i = 1
+	                var dataRow = finalResult[i];
+	                if((dataRow+'').replace(new RegExp(',', 'g'),'').trim().length == 0){
+    	                continue; // Skipping blank rows
+        	        } 
+            	    
+                	var leadRecord = {
+	                    'Name':dataRow[0],
+	                    'Size':dataRow[1],
+	                    'Type':dataRow[2],
+	                    'Market':dataRow[3],
+	                    'Supplier':dataRow[4],
+	                    'Term':dataRow[5],
+	                    'List_Price':dataRow[6],
+	                    'Month':dataRow[7],
+	                    'Year':dataRow[8]
+    	            } ;
+        	        
+            	    console.log('########> JSON ARRAY ' + JSON.stringify(leadRecord));
+                	var leadRecordObj = JSON.parse(JSON.stringify(leadRecord));
+	                allLeadArray.push(leadRecordObj);
+    	            
+        	    }
+            	batchSize = (allLeadArray.length)/1000;
+	            console.log('######> batchSize ' + batchSize );
+    	        processCSVBatch();
+        	};
+	        fileReader.readAsText(fileToLoad, "UTF-8");  
+    	}
+    	function processCSVBatch(){
+            
+	        if(batchSize > 0){
+    	        var leadArrayTemp = [];
+        	    var tempIndex = 0;
+            	for(var i = startIndex; i < startIndex+1000 && i < allLeadArray.length; i++){  
+	                leadArrayTemp[tempIndex++] = allLeadArray[i];
+    	        }
+                console.log(JSON.stringify(leadArrayTemp));
+                console.log(allLeadArray.length);
+        	    var csvLeadJSON =  JSON.stringify(leadArrayTemp);
+                console.log("batchSize::"+batchSize);
+                 console.log("csvLeadJSON::"+csvLeadJSON);
+            	document.getElementById('j_id0:j_id2:controlPanel:csvHidden').value = csvLeadJSON;
+	            document.getElementById('j_id0:j_id2:controlPanel:csvFileNameHidden').value = fileName;
+            
+    	        batchSize -= 1;
+        	    startIndex += 1000;
+            	insertLeadAFJS();
+	        }else{
+    	        document.getElementById('j_id0:j_id2:controlPanel:csvHidden').value = '';
+        	    document.getElementById('j_id0:j_id2:controlPanel:csvFileNameHidden').value = fileName;
+            	batchSize = 0;
+	            startIndex = 0;
+    	        // All batches are processed.
+                addLastBatchData(); // Getting all inserted leads
+        	}	
+    	}
+    
+	    // ref: http://stackoverflow.com/a/1293163/2343
+    	// This will parse a delimited string into an array of
+	    // arrays. The default delimiter is the comma, but this
+    	// can be overriden in the second argument.
+    	function CSVToArray( strData, strDelimiter ){
+        	// Check to see if the delimiter is defined. If not,
+        	// then default to comma.
+        	strDelimiter = (strDelimiter || ",");
+        
+        	// Create a regular expression to parse the CSV values.
+        	var objPattern = new RegExp(
+            	(
+	                // Delimiters.
+    	            "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+        	        
+            	    // Quoted fields.
+                	"(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+	                
+    	            // Standard fields.
+        	        "([^\"\\" + strDelimiter + "\\r\\n]*))"
+            	),
+            	"gi"
+        	);
+        
+	        // Create an array to hold our data. Give the array
+	        // a default empty first row.
+    	    var arrData = [[]];
+	        
+	        // Create an array to hold our individual pattern
+	        // matching groups.
+	        var arrMatches = null;
+	        
+	        
+	        // Keep looping over the regular expression matches
+	        // until we can no longer find a match.
+	        while (arrMatches = objPattern.exec( strData )){
+	            
+	            // Get the delimiter that was found.
+	            var strMatchedDelimiter = arrMatches[ 1 ];
+            
+	            // Check to see if the given delimiter has a length
+    	        // (is not the start of string) and if it matches
+        	    // field delimiter. If id does not, then we know
+	            // that this delimiter is a row delimiter.
+    	        if (
+        	        strMatchedDelimiter.length &&
+            	    strMatchedDelimiter !== strDelimiter
+            	){
+                
+                	// Since we have reached a new row of data,
+	                // add an empty row to our data array.
+    	            arrData.push( [] );
+        	        
+            	}
+            
+	            var strMatchedValue;
+    	        
+        	    // Now that we have our delimiter out of the way,
+            	// let's check to see which kind of value we
+            	// captured (quoted or unquoted).
+	            if (arrMatches[ 2 ]){
+    	            
+        	        // We found a quoted value. When we capture
+            	    // this value, unescape any double quotes.
+	                strMatchedValue = arrMatches[ 2 ].replace(
+    	                new RegExp( "\"\"", "g" ),
+        	            "\""
+            	    );
+                
+            	} else {
+                
+	                // We found a non-quoted value.
+	                strMatchedValue = arrMatches[ 3 ];
+    	            
+        	    }
+            
+            	// Now that we have our value string, let's add
+	            // it to the data array.
+    	        arrData[ arrData.length - 1 ].push( strMatchedValue );
+	        }
+        
+    	    // Return the parsed data.
+        	return( arrData );
+	    }
+    </script>
+</apex:page>

@@ -1,0 +1,45 @@
+<apex:page standardController="Opportunity" extensions="AmendedOppForCancellationController" docType="html-5.0" >
+    <apex:form id="frmId">
+        <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+            <head>
+                <apex:slds />
+            </head>
+            
+        </html>
+        <body>
+            <div class="slds-scope">
+                
+                <apex:actionFunction name="goToBack" action="{!cancel}"  />
+                <apex:actionFunction name="saveSites" action="{!saveSitesForCancellation}" reRender="frmId"/>
+                <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal--medium">
+                    <div class="modal-container slds-modal__container">
+                        <div class="slds-modal__header">
+                            <apex:outputPanel rendered="{!isContractAvailable}">
+                                <apex:pageMessages />
+                            
+                            <h2 id="header43" class="slds-text-heading--medium">Select Cancellation Date</h2>
+                                </apex:outputPanel>
+                        </div>
+                        <apex:outputPanel rendered="{!isContractAvailable}">
+                            <div class="slds-modal__content slds-p-around--medium">
+                                Cancellation Date: <apex:input type="date"  value="{!cancellationDate}"/>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! !isContractAvailable}">
+                            <div class="slds-modal__content slds-p-around--medium">
+                                <apex:pageMessages />
+                            </div>
+                        </apex:outputPanel>
+                        <div class="slds-modal__footer">
+                            <button  class="slds-button slds-button_neutral" onclick="goToBack();return false;">Cancel </button>
+                            <apex:outputPanel rendered="{!isContractAvailable}">
+                                <button  class="slds-button slds-button_brand" onclick="saveSites();return false;">Save</button>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-backdrop slds-backdrop--open"></div>                
+            </div>
+        </body>
+    </apex:form>
+</apex:page>

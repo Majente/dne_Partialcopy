@@ -1,0 +1,84 @@
+<apex:page showHeader="false" sidebar="false" cache="false" controller="HScSiteSchedule" contentType="text/xml" applyHtmlTag="true" >
+    <block>
+        <table font-family="open sans">
+            <table-body>
+                <table-row>
+                    <table-cell  padding="5" number-columns-spanned="1">
+                        <block text-align="center" font-size="13px" font-family= "open sans" font-weight="bold"><apex:outputText > Annexe A – Liste des sites et du volume contractuel</apex:outputText></block>
+                    </table-cell>
+                </table-row>
+            </table-body>
+        </table>
+        
+        <table width="100%">
+            <table-body>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block font-style="italic" font-size="10px" padding-bottom="5px">
+                            <apex:outputText > Veuillez indiquer le nombre total de pages de la liste des sites et du volume contractuel : 1 de </apex:outputText> 
+                        </block>
+                    </table-cell>
+                </table-row>
+            </table-body>
+        </table>
+       
+       
+        <table table-layout="fixed" width="100%" border-bottom-style="solid" border-collapse="collapse">
+            <table-body>
+                    <table-row border="1px solid black">
+                        <table-cell number-columns-spanned="10"  padding="4px" border=" 1px solid black">
+                           <block>Le nom tel qu'il apparaît sur la facture (A) et le code postal de facturation (B) sont requis seulement si les factures ne sont pas présentées ou si les sites sont actuellement inscrits auprès du vendeur.</block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="22" background-color="silver" padding="4px" border=" 1px solid black">
+                            <block></block>
+                        </table-cell>
+                    </table-row>
+                    <table-row border="1pt solid black" font-weight="bold" width="100%">
+                        <table-cell number-columns-spanned="6" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> Nom tel qu'il apparaît sur la facture (A) </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="4" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> Code postal de facturation (B) </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="5" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> No de compte </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="8" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> Adresse complète du site (y compris le code postal) </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="5" padding="4px" border=" 1px solid black" >
+                            <block text-align="left"> Société de distribution </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="4" padding="4px" border="1px solid black" width="80px" >
+                            <block text-align="left"> Quantités contractuelles annuelles (m3)</block>
+                        </table-cell>
+                    </table-row>
+                <apex:repeat value="{!siteScheduleList}" var="site">
+                    <table-row border="1pt solid black" width="100%">
+                        <table-cell number-columns-spanned="6" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> {!site.SiteLocationName} </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="4" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="5" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> {!site.SiteName}  </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="8" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> {!site.ServiceAddress} </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="5" padding="4px" border=" 1px solid black" width="80px">
+                            <block text-align="left"> </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="4" padding="4px" border=" 1px solid black">
+                            <block text-align="left"> {!site.AnnualConsumption}</block>
+                        </table-cell>
+                    </table-row>
+                </apex:repeat>
+            </table-body>
+        </table>
+        
+      
+
+    </block>
+</apex:page>

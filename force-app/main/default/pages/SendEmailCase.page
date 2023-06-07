@@ -1,0 +1,19 @@
+<apex:page standardController="Case"  lightningStylesheets="true" showHeader="false" sidebar="false" docType="html-5.0">
+   <apex:includeLightning />
+<div  id="EmailComp" />
+
+   <script>
+       var recordid ="{!$CurrentPage.parameters.Id}";
+        $Lightning.use("c:CaseEmailComponentApp", function() {
+            $Lightning.createComponent("c:CaseEmailComponent",
+                    {
+                         "recordId" : recordid
+                    },
+                    "EmailComp",
+                    function(cmp) {
+                       
+                        console.log('>>>>> App is hosted');
+                    });
+        });
+    </script>
+</apex:page>

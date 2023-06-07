@@ -1,0 +1,62 @@
+<aura:component description="AddCommissionTemplatesCmp" controller="AddCommisionTemplateController">
+	<aura:attribute name="commissionHierarchyList" type="DNE_Commission_Hierarchy__c[]"/>
+    <aura:attribute name="picklistsOptionsMap" type="Object" />
+    <aura:attribute name="typeOptions" type="Object[]"/>
+    <aura:attribute name="disableRemoveRowButton" type="Boolean" default="true"/>
+    <aura:attribute name="pageMessage" type="String"/>
+
+    <!--<aura:registerEvent name="saveAllEvent" type="c:SaveAllCommissionHierarchies_Event"/>-->
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+
+	<div class="slds-p-top_small slds-align_absolute-center"> 
+        
+        <!--<div class="slds-text-heading_medium  slds-align_absolute-center slds-p-top_small">
+            <div aura:id="pageMessageDiv">{!v.pageMessage}</div>
+        </div>-->
+		
+        <table class="slds-table slds-table- -bordered slds-table- -cell-buffer slds-no-row-hover">
+        	<tr>
+        		<td>
+        			<div aura:id="pageMessageDiv">{!v.pageMessage}</div>
+        		</td>
+        	</tr>
+            <aura:iteration items="{!v.commissionHierarchyList}" var="ch" indexVar="index">
+                <tr>
+                	<c:CommissionTemplatesCmp commissionHierarchy="{!ch}" no="{!index + 1}" typeOptions='{!v.typeOptions}'/>
+                </tr>
+            </aura:iteration>
+            <tr>
+                <td>
+                    <lightning:button variant="brand"
+                          label="Add Row"
+                          iconName="action:join_group" 
+                          iconPosition="left"
+                          title="Add Row"
+                          onclick="{! c.addRow }"/>
+
+                    <lightning:button variant="destructive"
+                          label="Remove Row"
+                          iconName="action:delete" 
+                          iconPosition="left"
+                          title="Remove Row"
+                          disabled="{! v.disableRemoveRowButton}"
+                          onclick="{! c.removeRow }"/>
+                </td>
+            </tr>
+            <!--<tr>
+            	<td colspan="6">
+            		<div class="slds-align_absolute-center">
+            			<lightning:button class="slds-m-top_small slds-m-horizontal_large slds-theme_brand"
+                                          iconName="utility:approval" 
+                                          variant="success" 
+                                          type="button" 
+                                          label="Save All"
+                                          onclick="{!c.saveAllJSC}" />
+                    </div>
+                </td>
+            </tr>-->
+        </table>
+    </div>
+</aura:component>

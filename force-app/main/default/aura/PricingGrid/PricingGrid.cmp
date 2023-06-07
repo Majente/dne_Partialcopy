@@ -1,0 +1,243 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" 
+                controller="PricingGridController" >
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="monthsTab" type="String[]" />
+    <aura:attribute name="marketOptions" type="Market__c[]" />
+    <aura:attribute name="commodityOptions" type="String[]" />
+    <aura:attribute name="sizeOptions" type="String[]" />
+    <aura:attribute name="selectedMarket" type="String" />
+    <aura:attribute name="selectedCommodity" type="String" />
+    <aura:attribute name="selectedSize" type="String" />
+    <aura:attribute name="supplierOpts" type="String[]" />
+    <aura:attribute name="supplierValue" type="List"/>
+    <aura:attribute name="AccountsList" type="List"/>
+    <aura:attribute name="tabId" type="String"/>
+    <aura:attribute name="supplierPricebyMonth" type="Map" />
+    <aura:attribute name="today" type="Date" />
+
+ <aura:attribute name="supplierPricebyMonthObject" type="object[]" />
+    
+    <aura:attribute name="spinner" type="boolean" default="false"/>
+    <!--aura handler with waiting and donewaiting events-->
+    <!--<aura:handler event="aura:waiting" action="{!c.showSpinner}"/>-->
+    <!--<aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>-->
+    
+    
+    <aura:attribute name="norecord" default="false" type="Boolean" />
+    
+    <aura:attribute name="supplierOptions" type="List" default="[
+                                                                {'label': 'Fixed', 'value': 'Fixed'},
+                                                                {'label': 'Variable', 'value': 'Variable'}
+                                                                ]"/>
+    <aura:attribute name="value" type="String" default="fixed"/>
+    
+    <!--loading spinner start-->
+    <aura:if isTrue="{!v.spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <!-- Loading spinner end-->
+    
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-account" title="Pricing Grid">
+                        <span class="slds-assistive-text">Pricing Grid</span>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Pricing Grid">
+                            <span>Pricing Grid</span>
+                        </a>
+                    </h2>
+                </div>
+            </header>
+        </div>
+    </article>
+    
+    <div class="slds-col slds-size_8-of-8 " style="margin-bottom:20px;position:relative;"> 
+        <div class="slds-col slds-size_2-of-6 opt-grp opt-grp-first">
+            <lightning:select label="Commodity" name="commodity_opt" value="{!v.selectedCommodity}" aura:id="commodity_opt" onchange="{!c.onGetSupplier}">
+                <aura:iteration items="{!v.commodityOptions}" var="commodity">
+                    <option value="{!commodity}">{!commodity}</option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+        <div class="slds-col slds-size_2-of-6 opt-grp">
+            <lightning:select label="Market" name="market_opt" value="{!v.selectedMarket}" aura:id="market_opt" onchange="{!c.onGetSupplier}">
+                <aura:iteration items="{!v.marketOptions}" var="market">
+                    <option value="{!market.Id}">{!market.Name}</option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+        <div class="slds-col slds-size_2-of-6 opt-grp">
+            <lightning:select label="Size" name="size_opt" value="{!v.selectedSize}" aura:id="size_opt" onchange="{!c.onGetSupplier}">
+                <aura:iteration items="{!v.sizeOptions}" var="size">
+                    <option value="{!size}">{!size}</option>
+                </aura:iteration>
+            </lightning:select>  
+        </div>
+    </div>
+    
+    <div class="slds-col slds-size_8-of-8 " style="margin-bottom:20px;overflow:hidden;"> 
+      <lightning:radioGroup name="radioGroup"
+                              aura:id="supplier_opt1"
+                              label=""
+                              options="{! v.supplierOptions }"
+                              value="{! v.value }"
+                              onchange="{!c.onGetSupplier }"
+                              type="radio"/>
+        
+    </div>	
+    
+    <!-- Generate Tab No Records -->
+    
+    <aura:if isTrue="{!!v.norecord}" >        
+        <div class="slds-col slds-size_8-of-8 " style="margin-top:10px;"> 
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-account" title="No Record found">
+                                <span class="slds-assistive-text">No Record found</span>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <span>No Record found</span>
+                            </h2>
+                        </div>
+                    </header>
+                </div>
+            </article>
+        </div>
+    </aura:if>    
+    <!-- Generate Tab -->
+    <aura:renderIf isTrue="{!v.norecord}" >        
+        <div class="slds-col slds-size_8-of-8 " style="margin-top:10px;">            
+            <lightning:tabset onselect="{! c.handleSelect }" aura:id="supplier_opt" selectedTabId="{!v.tabId}">
+                <aura:iteration items="{!v.AccountsList}" var="item" >
+                    <lightning:tab label="{!item.Name}" id="{!item.Id}">
+                        {!item.Id}
+                    </lightning:tab>
+                </aura:iteration>
+            </lightning:tabset>                
+            <lightning:tabset onselect="{! c.handleSelect }" variant="scoped" selectedTabId="{!v.tabId}">
+                <aura:iteration items="{! v.supplierOpts }" var="tab">
+                <lightning:tab label="{! tab.label }" id="{! tab.value }">
+                    <aura:if isTrue="{!empty(v.supplierPricebyMonthObject) }">
+                        <article class="slds-card">
+                            
+                                    <div class="slds-media__body">
+                                        <h2 class="slds-card__header-title">
+                                            <span>No price found for today</span>
+                                        </h2>
+                                    </div>
+                            
+                        </article>
+                    </aura:if>
+                   <aura:iteration items="{!v.supplierPricebyMonthObject}" indexVar="key" var="item">
+                        <aura:if isTrue="{!item.value}">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    
+                                    <th class="data-row" scope="col">
+                                        <div class="slds-truncate" title=""></div>
+                                    </th>
+                                    <th class="data-row" scope="col">
+                                        <div class="slds-truncate" title="12 month">12 month</div>
+                                    </th>
+                                    <th class="data-row" scope="col">
+                                        <div class="slds-truncate" title="24 month">24 month</div>
+                                    </th>
+                                    <th class="data-row" scope="col">
+                                        <div class="slds-truncate" title="36 month">36 month</div>
+                                    </th>
+                                    <th class="data-row" scope="col">
+                                        <div class="slds-truncate" title="48 month">48 month</div>
+                                    </th>
+                                    <th class="data-row" scope="col">
+                                        <div class="slds-truncate" title="60 month">60 month</div>
+                                    </th>
+                                    <aura:if isTrue="{!item.value[0].Effective_To__c >= v.today}">
+                                    <th class="data-row" scope="col">
+                                        <div class="slds-truncate" title="From">From</div>
+                                    </th>
+                                    <th class="data-row" scope="col">
+                                        <div class="slds-truncate" title="To">To</div>
+                                    </th>
+                                    </aura:if>
+                                    <aura:if isTrue="{!lessthan(item.value[0].Effective_To__c , v.today)}">
+                                    <th class="data-row" scope="col" style="color: red;">
+                                        <div class="slds-truncate" title="Expired">Expired On</div>
+                                    </th>
+                                    </aura:if>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                  <tr class="slds-hint-parent">
+                                      <aura:if isTrue ="{!item.value[0].Month_Year__r.Name ==NUll }">
+                                          <td ><b>Current Month</b></td>
+                                      </aura:if>
+                                      <aura:if isTrue ="{!item.value[0].Month_Year__r.Name !=NUll }">
+                                        <td>{!item.value[0].Month_Year__r.Name}</td>
+                                      </aura:if>                                      
+                                        
+                                      <td>                                                                                
+                                          <aura:if isTrue ="{!item.value[0].List_Price__c != 0 }">                                              
+                                              <lightning:formattedNumber value="{!item.value[0].List_Price__c}" style="decimal" maximumFractionDigits="4"/>                                              
+                                          </aura:if>
+                                      </td>
+                                      <td>                                                                                
+                                          <aura:if isTrue ="{!item.value[1].List_Price__c != 0 }">                                              
+                                              <lightning:formattedNumber value="{!item.value[1].List_Price__c}" style="decimal" maximumFractionDigits="4"/>                                              
+                                          </aura:if>
+                                      </td>
+                                      <td>                                                                                
+                                          <aura:if isTrue ="{!item.value[2].List_Price__c != 0 }">                                              
+                                              <lightning:formattedNumber value="{!item.value[2].List_Price__c}" style="decimal" maximumFractionDigits="4"/>                                              
+                                          </aura:if>
+                                      </td>
+                                      <td>                                                                                
+                                          <aura:if isTrue ="{!item.value[3].List_Price__c != 0 }">                                              
+                                              <lightning:formattedNumber value="{!item.value[3].List_Price__c}" style="decimal" maximumFractionDigits="4"/>                                              
+                                          </aura:if>
+                                      </td>
+                                      <td>                                                                                
+                                          <aura:if isTrue ="{!item.value[4].List_Price__c != 0 }">                                              
+                                              <lightning:formattedNumber value="{!item.value[4].List_Price__c}" style="decimal" maximumFractionDigits="4"/>                                              
+                                          </aura:if>
+                                      </td>
+                                      <aura:if isTrue="{!item.value[0].Effective_To__c >= v.today}">
+                                          <td><lightning:formattedDateTime value="{!item.value[0].Effective_From__c}" year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit" hour12="true"/></td>
+                                          <td><lightning:formattedDateTime value="{!item.value[0].Effective_To__c}" year="numeric" month="numeric" day="numeric" hour="2-digit"   minute="2-digit" hour12="true"/></td>
+                                      </aura:if>
+                                      <aura:if isTrue="{!lessthan(item.value[0].Effective_To__c , v.today)}">
+                                          <td><lightning:formattedDateTime value="{!item.value[0].Effective_To__c}" year="numeric" month="numeric" day="numeric" hour="2-digit"   minute="2-digit" hour12="true"/></td>
+                                      </aura:if>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                            <br></br><br></br>
+                        
+                        </aura:if>
+                    
+                    </aura:iteration>
+                </lightning:tab>
+            </aura:iteration> 
+                
+            </lightning:tabset>  
+        </div>  
+    </aura:renderIf>
+</aura:component>

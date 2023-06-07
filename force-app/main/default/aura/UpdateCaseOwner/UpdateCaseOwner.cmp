@@ -1,0 +1,16 @@
+<aura:component implements="force:appHostable,force:hasRecordId,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"  controller="UpdateCaseOwnerController" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="selectedValue" type="String" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="sObjectType" type="Case" default="{'sobjectType':'Case'}" />
+    Owner
+        <force:inputField value="{!v.sObjectType.OwnerId}" />
+        <lightning:button label="Update Case Owner" 
+                          class="slds-m-top--medium"
+                          variant="brand"
+                          onclick="{!c.updateOwner}"/>
+        <lightning:button label="Assign To Operation" 
+                          class="slds-m-top--medium"
+                          variant="brand"
+                          onclick="{!c.updateOwnerAsQueue}"/>
+</aura:component>

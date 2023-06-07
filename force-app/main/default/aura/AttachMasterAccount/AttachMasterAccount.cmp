@@ -1,0 +1,88 @@
+<aura:component controller="MasterAccountController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="accountName" type="String"/>
+    <aura:attribute name="masterAccountName" type="String"/>
+    <aura:attribute name="supplierData" type="List"/>
+    <aura:attribute name="SelectedAccount" type="String[]"/> 
+    <aura:attribute name="openPopup" type="Boolean" default="false"/>
+    <lightning:card class="slds-align_absolute-center">
+        <div>
+            <lightning:input
+                             aura:id="enter-search"
+                             name="enter-name"
+                             label="Search account name"
+                             type="search"
+                             value="{!v.accountName}"/>
+        </div>
+        <br/>
+        <div style="text-align:center">
+            <lightning:button variant="brand" label="Search" title="Search" onclick="{! c.handleSearch }" />
+        </div>
+    </lightning:card>
+    <aura:if isTrue="{!not(empty(v.supplierData))}">
+        <lightning:card>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <tr class="slds-text-title_caps" style="background-color:LightGray !important;font-weight: bold !important">
+                    <th class="" scope="col"><ui:inputCheckbox/></th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate " title="Name">Name</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Market">Market</div>
+                    </th>
+                </tr>
+                <tbody>
+                    <aura:iteration items="{!v.supplierData}" var="supp">
+                        <tr class="slds-hint-parent">
+                            <td class="slds-truncate">
+                                <!--<ui:inputCheckbox aura:id="checkbox" value="{!supp.id}" change="{!c.handleCheckbox}"/>-->
+                                <div class="slds-checkbox">
+                                    <input type="checkbox" name="chk" id="{!supp.Id}" onchange="{!c.handleCheckbox}"/>                            
+                                    <label class="slds-checkbox__label" for="{!supp.Id}">
+                                        <span class="slds-checkbox_faux"></span>                                
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="slds-truncate">{!supp.Name}</td>
+                            <td class="slds-truncate">{!supp.Market__r.Name}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+            <br/>
+            <div style="text-align:center">
+                <lightning:button variant="brand" label="Create" title="Create" onclick="{! c.handleCreate }" />
+            </div>
+        </lightning:card>
+        
+    </aura:if>
+    <aura:if isTrue="{!v.openPopup}">
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <lightning:buttonIcon iconName="utility:close"
+                                      onclick="{!c.closeModel}"
+                                      alternativeText="close"
+                                      variant="bare-inverse"
+                                      class="slds-modal__close"/>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Confirmation</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div>
+                        <lightning:input name="AccountName" value="{! v.masterAccountName }" placeholder="type your master account name..." label="Account Name" />
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning:button variant="neutral" 
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{!c.closeModel}"/>
+                    <lightning:button variant="brand" 
+                                      label="Create Master"
+                                      title="Create Master"
+                                      onclick="{!c.likenClose}"/>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+</aura:component>

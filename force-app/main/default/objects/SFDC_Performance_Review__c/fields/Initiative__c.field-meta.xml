@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Initiative__c</fullName>
+    <externalId>false</externalId>
+    <label>Initiative</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Accepts new tasks enthusiastically</fullName>
+                <default>false</default>
+                <label>Accepts new tasks enthusiastically</label>
+            </value>
+            <value>
+                <fullName>Assumes responsibility for tasks</fullName>
+                <default>false</default>
+                <label>Assumes responsibility for tasks</label>
+            </value>
+            <value>
+                <fullName>Works independently when appropriate</fullName>
+                <default>false</default>
+                <label>Works independently when appropriate</label>
+            </value>
+            <value>
+                <fullName>Actively seeks new assignments</fullName>
+                <default>false</default>
+                <label>Actively seeks new assignments</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

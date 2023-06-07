@@ -1,0 +1,14 @@
+<aura:component  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+
+   
+   <lightning:card >
+       <div class="slds-grid slds-gutters">
+           
+           <div class="slds-col">
+               <span><lightning:button class="slds-button slds-button_brand widthBtn" label="Add Site"  onclick='{!c.navigate}'  /></span><br/><br/>
+           </div>
+       </div>
+   </lightning:card>
+   
+   
+</aura:component>

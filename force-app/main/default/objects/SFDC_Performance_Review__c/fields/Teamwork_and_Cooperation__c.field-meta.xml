@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Teamwork_and_Cooperation__c</fullName>
+    <externalId>false</externalId>
+    <label>Teamwork and Cooperation</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Works with others toward success</fullName>
+                <default>false</default>
+                <label>Works with others toward success</label>
+            </value>
+            <value>
+                <fullName>Shows concern for others</fullName>
+                <default>false</default>
+                <label>Shows concern for others</label>
+            </value>
+            <value>
+                <fullName>Earns respect &amp; confidence of others</fullName>
+                <default>false</default>
+                <label>Earns respect &amp; confidence of others</label>
+            </value>
+            <value>
+                <fullName>Sets group success as priority</fullName>
+                <default>false</default>
+                <label>Sets group success as priority</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

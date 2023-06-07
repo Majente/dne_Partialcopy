@@ -1,0 +1,23 @@
+<aura:component controller="searchAccountController" >
+    <aura:attribute name="accountList" type="Account_Dups__c[]"/>    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-grid slds-wrap">
+    <aura:iteration var="acc" items="{!v.accountList}" >
+        <div class="slds-col slds-size_1-of-4 slds-p-around_small">
+    <lightning:card title="Duplicate Account Information" footer="Sample footer">
+        <aura:set attribute="actions">
+            <lightning:button label="Details"/>
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+        {!acc.Name}<br></br>
+        Duplicate Account Name : {!acc.Duplicate_Account__r.Name}<br></br>
+        Number of Opportunities : {!acc.Number_of_Opportunity__c}<br></br>            
+        Last Activity Date : {!acc.Last_Activity_Date__c}
+        </p>
+    </lightning:card>
+        </div> 
+
+
+    </aura:iteration>
+    </div>
+</aura:component>

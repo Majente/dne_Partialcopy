@@ -1,0 +1,525 @@
+<apex:page showHeader="true" sidebar="true" standardController="Lead" extensions="LeadChartController" lightningStylesheets="true"  docType="html-5.0">  
+    <apex:slds />
+    <apex:actionstatus id="myStatus">
+        <apex:facet name="start">
+            <div class="demo-only popupBackground" id="myStatus1">
+                <div role="status" class="custPopup slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">Please wait...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </apex:facet>
+    </apex:actionstatus>
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <style>
+                .custPopup{ border-width: 0px; border-radius:10px; z-index: 9999; left: 50%; padding:20px; position: fixed; top:40%;}
+        /* These are the 3 css properties you will need to change so the popup displays in the center of the screen. First set the width. Then set margin-left to negative half of what the width is. You can add the height property for a fixed size pop up if you want.*/ 
+        .popupBackground{ background-color:rgba(158, 158, 158, 0.34); opacity: 1.0; filter: alpha(opacity = 30); position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 9998; } 
+        
+        .expired{
+            color:red!important;
+        }
+            
+            #col1
+        {
+            width:24%;
+        }
+        #col2
+        {
+            width:74%;
+        }
+        #col1,#col2
+        {                
+            display:inline-block;
+            text-align: center;
+            padding-top: 20pt;
+            padding-bottom: 20pt;
+            padding-left: auto;
+            padding-right: auto;
+            margin-left: auto;
+            margin-right: auto;
+            vertical-align: top;
+            border: 2px solid grey;
+            border-radius: 10px 10px 10px 10px;
+            -moz-border-radius: 10px 10px 10px 10px;
+            -webkit-border-radius: 10px 10px 10px 10px;
+        }
+        div[class$="errorDiv"]
+        {
+            color: red;
+            font-size: 16pt;
+            display: block;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            margin-left: 0.5em;
+            margin-right: 0.5em;
+        }
+        
+        hr 
+        { 
+            display: block;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            margin-left: auto;
+            margin-right: auto;
+            border-style: inset;
+            border-width: 1px;
+        }
+        #pricingTable, #commentsTable
+        {
+            width: 95%;
+            text-align: center;
+            align-self: center;
+            padding-left: auto;
+            padding-right: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        td[class$="Left"]
+        {
+            text-align: left;
+            padding-bottom: 5pt;
+            padding-top: 5pt;
+        }
+        
+        div[class$="Left"]
+        {
+            text-align: left;
+            padding-bottom: 5pt;
+            padding-top: 5pt;
+        }
+        .radio-btn{
+            width:50%;
+        }
+        .radio-btn table{
+            margin-left:5%!important;  
+            width:100%!important;
+        }
+        .radio-btn table td{
+            width:20%!important;            
+        }
+        .radio-btn fieldset{
+            border: 1px solid!important; 
+            border-radius: 5px;
+            width: 50%;
+            margin-left: 10px;
+            padding: 5px;
+        }
+        </style>
+        </head>
+        <body>
+            <!--<apex:pageMessages ></apex:pageMessages> --> 
+            <apex:form >
+                <apex:pageBlock id="pbSection">
+                    <script  type="text/javascript">
+                        google.charts.load('current', {packages: ['corechart', 'line']});
+                        google.charts.setOnLoadCallback(drawBackgroundColor);
+                        
+                        function drawBackgroundColor() 
+                        {   
+                            var selectedCehckBox=document.getElementById('{!$Component.selectedSupplierValue}') != undefined ? document.getElementById('{!$Component.selectedSupplierValue}').value : '';
+                            var selectedChecboxId=selectedCehckBox.split(';');
+                            for(var checkIndex=0; checkIndex<selectedChecboxId.length;checkIndex++)
+                            {
+                                if(document.getElementById(selectedChecboxId[checkIndex])!=null)
+                                {
+                                    document.getElementById(selectedChecboxId[checkIndex]).checked=true;
+                                }
+                            }                         
+                         
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Contract Duration (years)');
+                            //  data.addColumn('number', 'Price/Year');
+                            //console.log(JSON.parse('{!supplierString}'));
+                            //console.log(JSON.parse('{!yearOfContractPricesString}'));
+                            //var apexResponse=JSON.parse('{!yearOfContractPricesString}');
+                            //var suppliers=JSON.parse('{!supplierString}');
+                            var apexResponse = '{!JSENCODE(yearOfContractPricesString)}'.length > 0 ? JSON.parse('{!yearOfContractPricesString}') : '';
+                            var suppliers= '{!JSENCODE(supplierString)}'.length > 0 ? JSON.parse('{!supplierString}') : '';
+                            var chartData=[];
+                            var maxValue=0;
+                            for (supplierKey in suppliers) 
+                            {
+                                data.addColumn('number', suppliers[supplierKey]);
+                            }
+                            // data.addColumn('number', 'Min');
+                            //if(suppliers.length==1){
+                            // data.addColumn('number', 'Max');
+                            //  }
+                            for (yearOfContractAskey in apexResponse) 
+                            {
+                                var nodeData=[]
+                                var yearOfContractData=apexResponse[yearOfContractAskey];
+                                maxValue=yearOfContractAskey>maxValue?Math.ceil(yearOfContractAskey):maxValue;
+                                nodeData.push(parseInt(yearOfContractAskey)*12+'');
+                                for(var i = 0; i < yearOfContractData.length; i++)
+                                {
+                                    nodeData.push(yearOfContractData[i]);
+                                }
+                                
+                                //  nodeData.push(parseFloat('{!Min}'));
+                                //if(suppliers.length==1){
+                                //nodeData.push(parseFloat('{!Max}'));
+                                // }
+                                //   nodeData.push('{!Min}');
+                                //   nodeData.push('{!Max}');
+                                chartData.push(nodeData);
+                            }
+                            
+                            data.addRows(chartData);
+                            console.log(chartData);
+                            var options = 
+                            {
+                                hAxis: 
+                                {
+                                    title: 'Months of contract',
+                                    gridlines: 
+                                    {
+                                        count: parseInt(maxValue),
+                                    }
+                                },
+                                vAxis: 
+                                {
+                                    title: 'Price'                        
+                                }
+                            };
+                            
+                            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                            chart.draw(data, options);
+                                        
+                            google.visualization.events.addListener(chart, 'select', selectHandler);
+                        
+                        function selectHandler() 
+                        { 
+                            var selection = chart.getSelection();
+                            if(selection==undefined || selection[0]==undefined || selection[0].row==null || selection[0].row==undefined)
+                            {
+                                return;
+                            }
+                            console.log(selection[0].column);
+                            var price = data.getFormattedValue(selection[0].row, selection[0].column);
+                            var years = data.getValue(chart.getSelection()[0].row, 0)
+                             //alert(suppliers[selection[0].column-1])
+                             console.log('***** suppliers'+suppliers);
+                            if(price > 0){
+                                document.getElementById('ZeroModal').style.display = 'none';
+                                ctrl_setPricingValues(price, years, suppliers[selection[0].column-1]);     
+                            }else{
+                                var objDiv = document.getElementById("ZeroModal");
+                                objDiv.style.display = 'block'; 
+                                if(document.getElementById('{! $Component.pbSection}'+':saveOfferId') != null){
+                                    document.getElementById('{! $Component.pbSection}'+':saveOfferId').disabled = true;   
+                                }
+                            }   
+                        }
+                    }            
+        </script>
+        <script>
+            function setSupplierValue(val)
+            {
+                var checkBoxes = document.getElementsByClassName('checkboxClass');
+                var selectedVal = '';
+                for(var i=0; i<checkBoxes.length; i++)
+                {
+                    if(checkBoxes[i].checked)
+                    {
+                        selectedVal += checkBoxes[i].value+';';
+                    }
+                }
+                selectedVal = selectedVal.substring(0, selectedVal.length-1);
+                document.getElementById('{!$Component.selectedSupplierValue}').value = selectedVal;
+            }        
+        </script>
+        <script>function setFocusOnLoad() {}</script>
+        
+        <!-- ======================================== --> 
+        
+        <apex:actionFunction action="{!setPricingValues}" name="ctrl_setPricingValues" status="myStatus"  reRender="pbSection" >
+            <apex:param id="priceParam" name="priceParam" value=""/>
+            <apex:param id="yearsParam" name="yearsParam" value=""/>
+            <apex:param id="supplierParam" name="supplierParam" value=""/>
+        </apex:actionFunction>
+        
+        <!-- ======================================== --> 
+        <div id="col1">
+            <apex:outputPanel rendered="{!!showSupplierList}">
+                <apex:outputPanel id="searchFields">
+                    <table id="pricingTable">
+                        <tr>
+                            <td class='tdLeft'>
+                                <apex:outputLabel value="Commodity: " />
+                            </td>
+                            <td class='tdLeft'>
+                                <apex:selectList value="{!selectedCommodity}" multiselect="false" size="1">
+                                    <!--<apex:actionSupport event="onchange" action="{!setCurrentPbm}" rerender="pbSection"/>-->
+                                    <apex:selectOptions value="{!commodityOptions}"/>
+                                </apex:selectList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='tdLeft'>
+                                <apex:outputLabel value="Market: "/>
+                            </td>
+                            <td class='tdLeft'>
+                                <apex:selectList value="{!selectedMarket}" multiselect="false" size="1">
+                                    <!--<apex:actionSupport event="onchange" action="{!setCurrentPbm}" rerender="pbSection"/>-->
+                                    <apex:selectOptions value="{!marketOptions}"/>
+                                </apex:selectList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='tdLeft'>
+                                <apex:outputLabel value="Size: "/>
+                            </td>
+                            <td class='tdLeft'>                                
+                                <apex:selectList value="{!selectedSize}"  multiselect="false" size="1">
+                                    <!--<apex:actionSupport event="onchange" action="{!setCurrentPbm}" rerender="pbSection"/>-->
+                                    <apex:selectOptions value="{!sizeOptions}"/>
+                                </apex:selectList>
+                            </td>
+                        </tr>
+                    </table>
+                </apex:outputPanel>
+                <apex:outputPanel >
+                    <div >
+                        <apex:commandButton styleClass="slds-vf-button_brand" action="{!getSupplierList}" status="myStatus" value="Search" rendered="{!!showSupplierList}" rerender="pbSection"/>
+            
+                        <apex:commandButton styleClass="slds-vf-button_brand" action="{!useLeadValues}" status="myStatus" value="Use Lead Values" rerender="searchFields"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            
+            <!-- ..................... -->
+            
+            <apex:outputPanel rendered="{!showSupplierList}">
+                <apex:outputPanel >
+                    <table id="pricingTable">
+                        <tr>
+                            <td class='tdLeft'>
+                                <apex:outputLabel value="Supplier: "/>
+                            </td>
+                            <td class='tdLeft'>
+                                <apex:inputHidden id="selectedSupplierValue" value="{!selectedSupplier}"/>
+                                <apex:repeat value="{!supplierOptions}" var="option">
+                                    <input type="Checkbox" value="{!option.value}" Class="checkboxClass" onchange="setSupplierValue();return false;" id='{!option.value}'/>{!option.Label}
+                                    <br/>
+                                </apex:repeat>
+                            </td>
+                        </tr>
+                    </table>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!showGraph}">
+                    <table>
+                        <tr>
+                            <td class='tdLeft' style="padding-left: 5pt;width: 31%;">
+                                <apex:outputLabel value="Starting Month: " />
+                            </td>
+                            <td class='tdLeft'>
+                                <apex:selectList value="{!selectedMonthYear}" multiselect="false" size="1">
+                                   <!-- <apex:actionSupport event="onchange" status="myStatus" action="{!getGraphData}" /> -->
+                                    <apex:selectOptions value="{!monthOptions}" />
+                                </apex:selectList>
+                            </td>
+                        </tr>
+                    </table>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!!noSuppliersFound}" >
+                    <div>
+                        <apex:commandButton styleClass="slds-vf-button_brand" action="{!getGraphData}" status="myStatus" value="Refresh Chart" rerender="pbSection" rendered="{!showGraph}"/>
+                        <apex:commandButton styleClass="slds-vf-button_brand" action="{!getGraphData}" status="myStatus" value="Show Chart" rerender="pbSection" rendered="{!!showGraph}"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            
+            <!-- ..................... -->
+            
+            <apex:outputPanel rendered="{!showGraph}">
+                <hr/>
+                <apex:pageMessages />
+                <table id="pricingTable">
+                    <tr>
+                        <td class='tdLeft'>
+                            <apex:outputLabel value="Supplier Name: " />
+                        </td>
+                        <td class='tdLeft'>
+                            <apex:outputText value="{!selectedSupplierFromChart}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='tdLeft'>
+                            <apex:outputLabel value="Selected Price: " />
+                        </td>
+                        <td class='tdLeft' style="padding-left:9px;">
+                            <span style='margin-left: -8px;position: absolute;'>$</span>
+                            <apex:outputText value="{!selectedPrice}" />
+                                
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='tdLeft'>
+                            <apex:outputLabel value="Margin Chosen (Min: {!minMargin} & Max: {!maxMargin})" />
+                        </td>
+                        <td class='tdLeft'>
+                            <apex:inputText value="{!marginChosen}">
+                                <apex:actionSupport event="onchange" status="myStatus" rerender="pbSection" action="{!calculateSellingPrice}"  />
+                            </apex:inputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='tdLeft'>
+                            <apex:outputLabel value="Custom Price: " />
+                        </td>
+                        <td class='tdLeft'>
+                            <apex:inputCheckbox value="{!isCustomPrice}">
+                                <apex:actionSupport event="onchange" action="{!recalculateMargin}"  />
+                            </apex:inputCheckbox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='tdLeft'>
+                            <apex:outputLabel value="Selling Price: " />
+                        </td>
+                        <td class='tdLeft' style="padding-left:9px;">
+                            <span style='margin-left: -8px;position: absolute;'>$</span>
+                            <apex:inputText value="{!sellingPrice}"  rendered="{!sellingPriceEditable}">
+                                
+                                <apex:actionSupport event="onchange" action="{!recalculateMargin}"  />
+                            </apex:inputText>
+                            <apex:outputText value="{!sellingPrice}" rendered="{!!sellingPriceEditable}"/>
+                                
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='tdLeft'>
+                            <apex:outputLabel value="Term: " />
+                        </td>
+                        <td class='tdLeft'>
+                            <apex:outputText value="{!selectedNbOfYears}" />
+                        </td>
+                    </tr>
+                    <!--
+                        Use in Above Section 10/5/2019
+                        <tr>
+                        <td class='tdLeft'>
+                            <apex:outputLabel value="Starting Month: " />
+                        </td>
+                        <td class='tdLeft'>
+                            <apex:selectList value="{!selectedMonthYear}" multiselect="false" size="1" >
+                                <apex:actionSupport event="onchange" action="{!getGraphData}" />
+                                <apex:selectOptions value="{!monthOptions}"/>
+                            </apex:selectList>
+                        </td>
+                    </tr>-->
+                </table>
+                <apex:outputPanel rendered="{!showSaveOfferButton}">
+                    <table id="commentsTable">
+                        <tr>
+                            <td class='tdLeft'>
+                                <apex:outputLabel value="Estimated Volume: " rendered="{!showSaveOfferButton}" />
+                            </td>
+                            <td class='tdLeft'>
+                                <apex:inputText value="{!leadEstimatedVolume}" style="width:90%;margin-left:11%" rendered="{!showSaveOfferButton}">
+                                    <apex:actionSupport event="onblur" status="myStatus" rerender="pbSection" action="{!calculateSellingPrice}"  />
+                                </apex:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='tdLeft'>
+                                <apex:outputLabel value="Total Deal: " />
+                            </td>
+                            <td class='tdLeft'>
+                                <apex:outputText style="margin-left:11%" value="{!totalDeal}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='tdLeft'>
+                                <apex:outputLabel value="Comments: " rendered="{!showSaveOfferButton}" />
+                            </td>
+                            <td class='tdLeft'>
+                                <apex:inputTextarea cols="50" style="width:90%;margin-left:11%" rows="5" value="{!taskComments}" rendered="{!showSaveOfferButton}" />
+                            </td>
+                        </tr>
+                        <!--tr>
+                            <td class='tdLeft'>
+                                <apex:outputLabel value="Offer Name: " rendered="{!showSaveOfferButton}" />
+                            </td>
+                            <td class='tdLeft'>
+                                <apex:inputText value="{!selectedOfferName}" rendered="{!showSaveOfferButton}" />
+                            </td>
+                        </tr-->
+                    </table>
+                </apex:outputPanel>
+                                
+                <apex:commandButton action="{!createOffer}" id="saveOfferId" styleClass="slds-vf-button_brand" value="Save Offer" rendered="{!showSaveOfferButton}"/>
+                <!--<apex:commandButton value="Save Lead" action="{!saveLead}"  rendered="{!showSaveOfferButton}" />-->
+             
+            </apex:outputPanel>
+              
+        </div>
+        
+        <!-- ======================================== --> 
+        
+        <div id="col2" style="margin-left:2px;">
+            <apex:outputPanel rendered="{!noSuppliersFound}">
+                <div class="errorDiv">No Supplier found for the selected criteria</div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!showGraph}">
+                <table>
+                        <tr>
+                            <td class="radio-btn">
+                                <apex:outputPanel >
+                                    <apex:selectRadio value="{!selectedPriceType}">
+                                        <apex:selectOption itemValue="Fixed" itemLabel="Fixed"></apex:selectOption>
+                                        <apex:selectOption itemValue="Variable" itemLabel="Variable"></apex:selectOption>                                    
+                                        <apex:actionSupport event="onchange" 
+                                                        action="{!getGraphData}" 
+                                                              status="myStatus" reRender="pbSection"/> 
+                                    </apex:selectRadio>
+                                </apex:outputPanel>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                <apex:outputPanel id="chartPanel">
+                    <apex:outputText value="{!Effective_String}" escape="false"/>
+                    <div class="demo-only" id='ZeroModal' style="height:4rem;display:none;">
+                    <div class="slds-notify_container slds-is-relative">
+                    <div class="slds-notify slds-notify_toast slds-theme_info" role="status">
+                    <span class="slds-assistive-text">info</span>
+                    <div class="slds-notify__content">
+                    <h2 class="slds-text-heading_small">
+                    Info: Invalid price data. 
+                    </h2>
+                    </div>
+                    <div class="slds-notify__close">
+                    <button class="slds-button slds-button_icon slds-button_icon-inverse" onclick="javascrit:document.getElementById('ZeroModal').style.display = 'none';return false;" title="Close">
+                    X
+                    <span class="slds-assistive-text">Close</span>
+                    </button>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div id="chart_div" style="width: 100%; height: 500px;"/>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </div>
+        
+        <!-- ======================================== --> 
+        
+        <apex:outputPanel >
+                    <div style="text-align: center !important;"> <br />
+            <apex:commandButton action="{!resetSearch}" styleClass="slds-vf-button_brand" value="New Search" rendered="{!showSupplierList}" rerender="pbSection"/>
+            <apex:commandButton action="{!backToRecord}" styleClass="slds-vf-button_brand" value="Back To Lead"/>
+            </div>
+        </apex:outputPanel>  
+        
+    </apex:pageBlock>
+</apex:form>       
+
+</body>
+
+</apex:page>

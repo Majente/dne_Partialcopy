@@ -1,0 +1,313 @@
+<apex:page showHeader="false" sidebar="false" cache="false" controller="HScSiteSchedule" contentType="text/xml" applyHtmlTag="true" >
+    <block>
+        <apex:variable var="cnt" value="{!0}" /> 
+        <apex:repeat value="{!siteScheduleList}" var="site">
+            <apex:variable var="cnt" value="{!cnt+1}"/>
+
+        <table font-family="open sans">
+            <table-body>
+                <table-row>
+                    <table-cell  padding="5" number-columns-spanned="1" border-bottom="2px solid black">
+                        <block text-align="center" font-size="13px" font-family= "open sans" font-weight="bold"><apex:outputText >Schedule C: Undertaking</apex:outputText></block>
+                    </table-cell>
+                </table-row>
+            </table-body>
+        </table>
+        
+        <table width="100%" margin-top="10px">
+            <table-body>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >Je,  {!site.LegalCustomerName}   [client], m’engage à acheter d’Énergir, s.e.c. (« Énergir »), si cette dernière agrée, tout le gaz naturel que je consommerai à mes installations du         {!site.ServiceAddress}        [adresse de service], à un prix fixe de     {!site.QSellingPrice}      [prix fixe convenu].. Je reconnais que ce prix fixe de fourniture de gaz naturel est celui consenti par  Direct Energy Business  [nom du fournisseur], représenté par   DNE Resources  [nom de l’employé ou de l’agent ou courtier représentant le fournisseur], à Énergir en considération de ma consommation. Je m’engage pour une période de     {!site.QLTerm}    [durée] années à compter de la date de la première livraison spécifique par ce fournisseur à Énergir en vertu du présent engagement.</apex:outputText> 
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            &#160;
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >À cette fin, j’autorise Énergir,   Direct Energy Business [nom du fournisseur], et le cas échéant,  DNE Resources [nom de l’agent ou du courtier représentant le fournisseur], à se communiquer entre eux les informations me concernant à titre de client de gaz naturel qu’ils détiennent ou pourraient détenir à savoir : notamment mes coordonnées actuelles et futures, les volumes de gaz consommés et projetés ainsi que mon historique de consommation permettant de déterminer mon éligibilité au service de fourniture à prix fixe.</apex:outputText> 
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            &#160;
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >De plus, je reconnais et accepte que si ce fournisseur fait défaut de livrer à Énergir aux conditions cidessus mentionnées, le gaz naturel que je consommerai à mes installations ci-dessus décrites, je paierai ce gaz au tarif du service de fourniture à prix variable approuvé par la Régie de l’énergie.</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            &#160;
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >
+                                <block>Je comprends que :</block>
+                            </apex:outputText>
+                        </block>
+                        <block>
+                            <list-block  provisional-distance-between-starts="0.50cm" provisional-label-separation="0.5cm" space-after="12pt" start-indent="0.75cm">
+                                <list-item>
+                                    <list-item-label  end-indent="label-end()">
+                                        <block>1)</block>
+                                    </list-item-label>
+                                    <list-item-body start-indent="body-start()">
+                                        <block>
+                                            Éles pages du site Internet d’Énergir présentent:
+                                            <list-block  provisional-distance-between-starts="0.75cm" provisional-label-separation="0.5cm" space-after="12pt" start-indent="1.50cm">
+                                                <list-item>
+                                                    <list-item-label  end-indent="label-end()">
+                                                        <block>&#8226;</block>
+                                                    </list-item-label>
+                                                    <list-item-body start-indent="body-start()">
+                                                        <block>
+                                                            L’historique du prix de gaz de réseau d’Énergir à l’adresse https://www.energir.com/fr/affaires/prix/prix-du-gaz/ dans la section « Évolution du prix du Gaz Naturel »
+                                                        </block>
+                                                    </list-item-body>
+                                                </list-item>
+                                                <list-item>
+                                                    <list-item-label  end-indent="label-end()">
+                                                        <block>&#8226;</block>
+                                                    </list-item-label>
+                                                    <list-item-body start-indent="body-start()">
+                                                        <block>Plus d’informations sur l’entente de fourniture de gaz naturel à prix fixe :</block>
+                                                        <list-block  provisional-distance-between-starts="0.75cm" provisional-label-separation="0.5cm" space-after="12pt" start-indent="2.25cm">
+                                                    
+                                                            <list-item>
+                                                                <list-item-label  end-indent="label-end()">
+                                                                    <block>&#8226;</block>
+                                                                </list-item-label>
+                                                                <list-item-body start-indent="body-start()">
+                                                                    <block>
+                                                                    à l’adresse https://www.energir.com/fr/affaires/prix/prix-du-gaz/, dans la section « Gaz naturel à prix fixe »
+                                                                    </block>
+                                                                </list-item-body>
+                                                            </list-item>
+                                                            <list-item>
+                                                                <list-item-label  end-indent="label-end()">
+                                                                    <block>&#8226;</block>
+                                                                </list-item-label>
+                                                                <list-item-body start-indent="body-start()">
+                                                                    <block>
+                                                                    à l’adresse https://www.energir.com/fr/faq/, dans la section « Gaz naturel à prix fixe » de la « Foire aux Questions »
+                                                                    </block>
+                                                                </list-item-body>
+                                                            </list-item>
+                                                        </list-block>
+                                                    </list-item-body>
+                                               </list-item>
+                                            </list-block>
+                                        </block>
+                                   </list-item-body>
+                                </list-item>
+      
+                                <list-item>
+                                    <list-item-label  end-indent="label-end()">
+                                        <block>2)</block>
+                                    </list-item-label>
+                                    <list-item-body start-indent="body-start()">
+                                        <block>É le présent document constitue mon contrat de fourniture de gaz naturel à prix fixe, à l’exclusion de tout autre contrat.</block>
+                                    </list-item-body>
+                                </list-item>
+                            </list-block>
+                        </block>   
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            &#160;
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block font-style="italic" font-size="10px" >
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                
+                <table-row>
+                    <table-cell number-columns-spanned="1" >
+                        <block font-style="italic" font-size="10px" >
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                
+            </table-body>
+        </table>
+        
+        
+        <table>
+            <table-body>
+                <table-row height="40px">
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">{!site.LegalCustomerName}</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">{!site.SiteName}</block>
+                        </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block font-weight="bold" text-align="left">Nom du client</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block font-weight="bold" text-align="left">Numéro de compte</block>
+                        </table-cell>
+                </table-row>
+                <table-row height="40px">
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">&#160;</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">&#160;</block>
+                        </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block font-weight="bold" text-align="left">Nom du signataire</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">&#160;</block>
+                        </table-cell>
+                </table-row>
+                <table-row height="40px">
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">&#160;</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left">&#160;</block>
+                        </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block font-weight="bold" text-align="left">Signature</block>
+                        </table-cell>
+                    <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block font-weight="bold" text-align="left">Date</block>
+                        </table-cell>
+                </table-row>
+            </table-body>
+        </table>
+        
+        
+        <table font-family="open sans">
+            <table-body>
+                <table-row height="25px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell  padding="5" number-columns-spanned="1">
+                        <block><apex:outputText >Signé en présence de :</apex:outputText></block>
+                    </table-cell>
+                </table-row>
+                <table-row height="30px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell padding="5" number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >______________________________________</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell padding="5" number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText >[agent ou courtier représentant le fournisseur, date]</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row>
+                    <table-cell padding="5" number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+            </table-body>
+        </table>
+        
+        <table font-family="open sans">
+            <table-body>
+                <table-row height="50px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row height="50px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row height="50px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row height="50px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row height="50px">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row height="{!IF(cnt == siteScheduleList.size, '20px', '80px') }">
+                    <table-cell number-columns-spanned="1" >
+                        <block>
+                            <apex:outputText ></apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+            </table-body>
+       </table>
+    
+    </apex:repeat>
+      
+
+    </block>
+</apex:page>

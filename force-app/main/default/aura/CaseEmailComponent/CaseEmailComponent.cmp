@@ -1,0 +1,228 @@
+<aura:component controller="CaseSendEmailCustom" implements="force:appHostable,force:hasRecordId,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" access="global" />
+    <aura:attribute name="email" type="string" default=""/>
+    <!--<aura:attribute name="recordId" type="String" />-->
+    <aura:attribute name="pills" type="List" default="[]"/>
+    <aura:attribute name="emailPills" type="boolean" default="false"/>
+        
+    <aura:attribute name="ccemail" type="string" default=""/>
+    <aura:attribute name="ccpills" type="List" default="[]"/>
+    <aura:attribute name="ccemailPills" type="boolean" default="false"/>
+        
+    <aura:attribute name="subject" type="string" default="" />
+    <aura:attribute name="subjectoriginal" type="string" default="" />
+    
+    <aura:attribute name="body" type="string" default="test body" />
+    
+    <aura:attribute name="attachmentName" type="string"/>
+    <aura:attribute name="mailStatus" type="boolean" default="false"/>
+    
+    
+    <aura:attribute name="isOpen" type="boolean" default="false"/>    
+    <aura:attribute name="accountList" type="List" />
+    <aura:attribute name="accountListCount" type="boolean" default="false" />
+    <aura:attribute name="accountListSigned" type="List" />
+    <aura:attribute name="accountListCountSigned" type="boolean" default="false" />
+    
+    <aura:attribute name="ContactEmail" type="List" />
+    <aura:attribute name="documentId" type="String[]" />
+    
+    <aura:attribute name="isOpenTemplate" type="boolean" default="false"/>
+    <aura:attribute name="templateList" type="EmailTemplate" />
+    <aura:attribute name="templateId" type="String" default=''/>
+    <aura:attribute name="emailBody" type="String" default=''/>
+        
+    <aura:attribute name="parentId" type="Id" default="0010o00002FuGZsAAN" />    
+    <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />    
+    <aura:attribute name="fileName" type="String" default="No File Selected.." />
+    
+    
+    <aura:attribute name="listOfItems" type="Object[]" />
+    <aura:attribute name="value" type="List" default="{!v.listOfItems}"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <div class="slds-m-around--medium slds-align_absolute-center">
+        <div class="slds-container--medium">
+            <div class="slds-form--stacked">
+               <aura:if isTrue="{!v.accountListCount}" > 
+                <div class="slds-box slds-form-element slds-m-top_x-small"> 
+                    <div class='allcheckbox slds-align_absolute-left slds-p-left_large'>
+                        <lightning:input type="checkbox" onchange="{!c.onSelectAllChange}" name="allAttachmentDocument" label="{!$Label.c.AR_Title}"  aura:id="allAttachmentDocument" class="slds-p-vertical_small" Checked="false" />
+                    </div>
+    				<aura:if isTrue="{!v.accountListCount}" >                             
+                            <aura:iteration items='{!v.accountList}' var='account'>
+                                <div class=' slds-align_absolute-left slds-m-left_large'>
+                                	<lightning:input type="checkbox" onchange="{!c.setDocumenValue}" name="attachmentDocument" label="{!account.Title}" value="{!account.Id}" aura:id="attachmentDocument" class="slds-p-vertical_small" Checked="false" />
+                                </div>                                 
+                            </aura:iteration>    
+                            <aura:set attribute="else">
+                                {!$Label.c.Attachment_are_not_available_in_this_record}                                
+                            </aura:set>
+                    </aura:if>
+                </div> 
+                </aura:if>         
+                <div class="slds-form-element slds-m-top_x-small">
+                    <label class="slds-form-element__label" for="CC">Supplier's Email<!--{!$Label.c.SignerEmail} --></label>
+                    <div aura:id="emailPContainer" class="slds-form-element__control emailPillerContainer">
+                        <input aura:id="email" type="email" class="slds-input emailPillerInput" placeholder="" value="" onkeyup="{!c.changeEmail}" onblur="{!c.changeEmailBlur}" />
+                        <aura:if isTrue="{!v.emailPills}" >
+                            <div class="slds-form-element__control">
+                                <lightning:pillContainer items="{!v.pills}" onitemremove="{!c.handleRemove}" class="emailPillerInput"  />
+                            </div>
+                        </aura:if>
+                    </div>
+                </div>
+                <div class="slds-form-element slds-m-top_x-small">
+                    <label class="slds-form-element__label" for="CC">{!$Label.c.Email_to_Cc}</label>
+                    <div class="slds-form-element__control emailPillerContainer">
+                        <input aura:id="ccemail" type="email" class="slds-input emailPillerInput" placeholder="" value="" onkeyup="{!c.changeCcEmail}" onblur="{!c.changeCcEmailBlur}"/>
+                        <aura:if isTrue="{!v.ccemailPills}" >
+                            <div class="slds-form-element__control">
+                                <lightning:pillContainer items="{!v.ccpills}" onitemremove="{!c.handleRemoveCC}" class="emailPillerInput"  />
+                            </div>
+                        </aura:if>
+                    </div>
+                </div>
+                
+              <div class="slds-form-element slds-m-top_x-small">                    
+                    <div class="slds-form-element__control">
+                        
+                        <!--<lightning:input aura:id="fileId" onchange="{!c.handleFilesChange}" type="file" name="file" label="Upload Attachment" multiple="false"/> -->
+                        
+                        <!-- <div class="slds-text-body_small slds-text-color_error">{!v.fileName} </div>  -->                      
+                        
+                        <!-- <lightning:button variant="brand"
+                                          label="Attach a File"
+                                          title="Attach a File"
+                                          onclick="{! c.openModel }" /> -->
+                        
+                      <lightning:button variant="brand"
+                                          label="{!$Label.c.Select_Email_Template}"
+                                          title="{!$Label.c.Select_Email_Template}"
+                                          class="green-button slds-button slds-button_success"
+                                          onclick="{! c.openModelTemplate }" /> 
+                        
+                    </div>
+                </div> 
+				<div class="slds-form-element slds-m-top_x-small">
+                    <label class="slds-form-element__label" for="CC">{!$Label.c.Subject}</label>
+                    <div class="slds-form-element__control" aura:id="subjectid">
+                            <ui:inputText class="slds-input" aura:id="subject"  value="{!v.subject}" placeholder="Subject" required="true"/>
+                    </div>
+                </div>                
+                <div class="slds-form-element slds-m-top_x-small">
+                    <label class="slds-form-element__label" for="textareaSample2">{!$Label.c.Body}</label>
+                    <div class="slds-form-element__control" aura:id="emailbody">
+                        <lightning:inputRichText aura:id="body" value="{!v.emailBody}" />
+                    </div>
+                </div>
+                <div class="slds-form-element slds-m-top_x-small">    
+                    <div class="slds-form-element__control">
+                        <button class="green-button slds-button slds-button_success" onclick="{!c.sendEmail}">{!$Label.c.Send_Email}</button>
+                        <button class="green-button slds-button slds-button_success" onclick="{!c.backOnRecord}">{!$Label.c.Go_Back}</button>
+                        
+                    </div>
+                    <!-- <button class="slds-button " onclick="{!c.doSave}">Send</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-m-around_xx-large">        
+        
+        <aura:if isTrue="{!v.isOpen}">            
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">                    
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Document</h2>
+                    	
+                        
+                    </header>                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">                        
+                        <aura:if isTrue="{!v.accountListCount}" >
+                            <div  >
+                                <lightning:input type="checkbox" onchange="{!c.onSelectAllChange}" name="allAttachmentDocument" label="Select All"  aura:id="allAttachmentDocument" class="slds-p-vertical_small" Checked="false" />
+                            </div>  
+                            
+                            <aura:iteration items='{!v.accountList}' var='account'>
+                                
+                                <lightning:input type="checkbox" onchange="{!c.setDocumenValue}" name="attachmentDocument" label="{!account.Title}" value="{!account.Id}" aura:id="attachmentDocument" class="slds-p-vertical_small" Checked="false" />
+                                
+                                <!--<lightning:button variant="neutral" 
+                                                      label="{!account.Title}"
+                                                      title="{!account.Id}"
+                                                      onclick="{!c.setDocumenValue}"/>-->
+                                
+                                
+                            </aura:iteration>    
+                            <aura:set attribute="else">
+                                Attachment are not available in this record.
+                            </aura:set>
+                        </aura:if>                         
+                        
+                        
+                    </div>                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Ok"
+                                          title="Ok"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand" 
+                                          label="Close"
+                                          title="Close"
+                                          onclick="{! c.likenClose }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>                       
+        </aura:if>
+    </div>
+    <div class="slds-m-around_xx-large">        
+       <aura:if isTrue="{!v.isOpenTemplate}">            
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">                    
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModelTemplate }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Template</h2>
+                    </header>                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">                        
+                        <aura:iteration items='{!v.templateList}' var='template'>
+                            <div>
+                                <!--<a href="#" class="slds-button slds-button_neutral" datasubject="{!template.Subject}" title="{!template.Id}" datavalue="aaaa" onclick="{!c.setTemplateValue}">{!template.Name}</a>-->
+                                <lightning:button variant="neutral" 
+                                                  label="{!template.Name}"
+                                                  title="{!template.Id}"
+                                                  value="{!template.HtmlValue}"
+                                                  name="{!template.Subject}"
+                                                  onclick="{!c.setTemplateValue}"/>
+                                &nbsp;<br />
+                            </div>
+                        </aura:iteration>                       
+                    </div>                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModelTemplate }"/>
+                        <lightning:button variant="brand" 
+                                          label="Close"
+                                          title="Close"
+                                          onclick="{! c.closeModelTemplate }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>                       
+        </aura:if>
+    </div>
+    
+    
+    
+</aura:component>

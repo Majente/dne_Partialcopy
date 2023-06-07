@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <decisions>
+        <name>InitialConditions</name>
+        <label>Initial Conditions</label>
+        <locationX>340</locationX>
+        <locationY>404</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Initial_Conditions_Meet</name>
+            <conditionLogic>(1 AND 2 AND 4) OR (3 AND 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>GetAmendmentOppSRecordType.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Amendment_reason__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NewAmendmentOpp</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Amendment_reason__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Opportunity_Name</targetReference>
+            </connector>
+            <label>Initial Conditions Meet</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>NewAmendmentOpp</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+ISNEW(),
+{!$Record.RecordType.Id} = {!GetAmendmentOppSRecordType.Id}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>OppName</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!$Record.Amendment_reason__c})+&quot; - &quot;+{!$Record.Account.Name}+&quot; - &quot;+TEXT({!$Record.CloseDate})</expression>
+    </formulas>
+    <interviewLabel>Amendment Opp Name {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Amendment Opp Name</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>GetAmendmentOppSRecordType</name>
+        <label>GetAmendmentOppSRecordType</label>
+        <locationX>170</locationX>
+        <locationY>402</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>InitialConditions</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Opportunity</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Amendment</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Opportunity_Name</name>
+        <label>Update Opportunity Name</label>
+        <locationX>608</locationX>
+        <locationY>398</locationY>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>OppName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>46</locationX>
+        <locationY>36</locationY>
+        <connector>
+            <targetReference>GetAmendmentOppSRecordType</targetReference>
+        </connector>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,19 @@
+<aura:component controller="RenewalOpportunitySync" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+  <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="spinner" type="Boolean" default="false" />
+    <!--loading spinner start-->
+    <aura:if isTrue="{!v.spinner}">
+        <div class="demo-only">
+            <div class="slds-spinner_container">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </div>
+        </aura:if>
+    <!-- Loading spinner end-->
+    <lightning:button variant="brand" label="Create Renewal Opportunity" title="Brand action" onclick="{!c.createRenewalOpp}" />
+    <lightning:button variant="brand" label="Sync Renewal Opportunity" title="Brand action" onclick="{!c.handleClick}" />  
+</aura:component>

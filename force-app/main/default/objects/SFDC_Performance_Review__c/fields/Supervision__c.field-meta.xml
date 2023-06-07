@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Supervision__c</fullName>
+    <externalId>false</externalId>
+    <label>Supervision</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>Manager_Status__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Encourages staff development</fullName>
+                <default>false</default>
+                <label>Encourages staff development</label>
+            </value>
+            <value>
+                <fullName>Provides motivation and guidance</fullName>
+                <default>false</default>
+                <label>Provides motivation and guidance</label>
+            </value>
+            <value>
+                <fullName>Clearly defines expectations</fullName>
+                <default>false</default>
+                <label>Clearly defines expectations</label>
+            </value>
+            <value>
+                <fullName>Understands and adheres to policy</fullName>
+                <default>false</default>
+                <label>Understands and adheres to policy</label>
+            </value>
+            <value>
+                <fullName>Treats problems with sensitivity</fullName>
+                <default>false</default>
+                <label>Treats problems with sensitivity</label>
+            </value>
+            <value>
+                <fullName>Demonstrates leadership</fullName>
+                <default>false</default>
+                <label>Demonstrates leadership</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Managing Others</controllingFieldValue>
+            <valueName>Encourages staff development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Managing Others</controllingFieldValue>
+            <valueName>Provides motivation and guidance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Managing Others</controllingFieldValue>
+            <valueName>Clearly defines expectations</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Managing Others</controllingFieldValue>
+            <valueName>Understands and adheres to policy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Managing Others</controllingFieldValue>
+            <valueName>Treats problems with sensitivity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Managing Others</controllingFieldValue>
+            <valueName>Demonstrates leadership</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

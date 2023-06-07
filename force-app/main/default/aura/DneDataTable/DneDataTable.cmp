@@ -1,0 +1,12 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="OpportunityController" access="global" >
+     <aura:attribute type="Opportunity[]" name="oppList"/>
+    <aura:attribute name="mycolumns" type="List"/>
+      
+     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+      
+    <lightning:datatable data="{! v.oppList }"
+                         columns="{! v.mycolumns }"
+                         keyField="id"
+                         hideCheckboxColumn="true"/>
+      
+</aura:component>

@@ -1,0 +1,39 @@
+<aura:component controller='AddSiteTree' implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="gridColumns" type="List" access="PRIVATE" />
+    <aura:attribute name="gridData" type="Object" />
+    <aura:attribute name="gridExpandedRows" type="List" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="applicantId" type="Id" />
+    
+    
+    <aura:attribute name="selectededRows" type="List" />
+    
+    <div style="padding:20px;">
+    	<!-- <a href='#' onclick='{!c.NavigateApplicant}'>Back To Opportunity</a> -->
+    </div>
+    <div style="padding:20px;">
+        
+        
+        <lightning:treeGrid
+                            aura:id="treegrid_async"
+                            columns="{! v.gridColumns }"
+                            data="{! v.gridData }"
+                            expandedRows="{! v.gridExpandedRows }"
+                            selectedRows="{!v.selectededRows }"
+                            keyField="name"
+                            isLoading="{! v.isLoading }"
+                            ontoggle="{! c.handleRowToggle }"
+                            onrowselection = "{!c.handleRowSelectionNew }"
+                            
+                            />
+      
+        
+    </div>
+    <div class="savesitebtn" style="margin:20px auto;text-align:center;">
+    	<lightning:button variant="Neutral" label="Add Sites to Opportunity" title="Add Sites to Opportunity" onclick="{!c.saveSites}"/>
+        
+        
+    </div>
+</aura:component>

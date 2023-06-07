@@ -1,0 +1,161 @@
+<aura:component controller="AddSiteAccountController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:attribute name="sObjectName" type="String" default="Account" />
+    <ltng:require scripts="{!$Resource.jQuery}" />
+    
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!--Init handler which is call doInit js function on component Load-->  
+    <!--<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+    
+    <!--Event handler for Add and Delete Row Event which is fire from Child Component-->    
+    <aura:handler name="DeleteAccountSiteEvtParent" event="c:DeleteAccountSiteEvtParent" action="{!c.removeDeletedRowParent}"/>
+    <aura:handler name="AddNewAccountSiteEvtParent" event="c:AddNewAccountSiteEvtParent" action="{!c.addNewRowParent}"/>
+    
+    <!--Aura Attribute for store Contact Object List as Array-->    
+    <aura:attribute name="cardList" type="object[]" />
+    <aura:attribute name="cardListFinal" type="object[]" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="ServerData" type="List[]" />
+    <aura:attribute name="accountDetails" type="Account" />  
+    <aura:attribute name="ResultData" type="List" />
+    <aura:attribute name="ColumnData" type="List" />
+    <aura:registerEvent name="updateSiteListDatas" type="c:updateSiteListDatas"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    
+    <aura:html tag="style">
+        
+        
+        .cuf-content {
+        	padding: 0 0rem !important;
+        	position:absolute!important;
+        }
+        .slds-p-around--medium {
+        	padding: 0rem !important;
+        } 
+        .slds-modal__content{
+        	overflow-y:scroll !important;
+        	height:unset !important;
+        	max-height:unset !important;
+        }
+        .modal {    
+            
+            left: 0;
+            position: fixed;
+            top:5%;
+            width: 100%;
+        }
+        .slds-form{
+        	max-height:500px !important;
+        }
+        .slds-modal__close{
+        	z-index:9999!important;
+        	position:absolute!important;
+        	top:-21.5rem!important; 
+        	right:4px;
+        	
+        	background:rgba(27, 82, 151, 1);
+        }
+        .slds-modal__close2{
+        	z-index:9999!important;
+        	position:absolute!important;
+        	top:0.5rem!important; 
+        	right:4px;
+        	background:rgba(27, 82, 151, 1);
+        }
+        .exampleHolder{
+    display: inline-block;
+    width: 55px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+    </aura:html> 
+    <div class="modal" >
+       
+        <div class="modal-header slds-modal__header slds-size_1-of-1">
+            
+            <h4 class="title slds-text-heading--medium">Add Location Name - {!v.accountDetails.Name} </h4> 
+            <lightning:buttonIcon iconName="utility:close"
+                                      onclick="{! c.redirectToListView }"
+                                      alternativeText="close"
+                                      variant="bare-inverse"
+                                      class="slds-modal__close"/>
+        </div>
+        
+        <div class="slds-modal__content slds-p-around--x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative">
+            
+            <lightning:recordEditForm aura:id="recordViewForm" objectApiName="Account"> 
+                <div class="exampleHolder">
+        <aura:if isTrue="{! v.loaded }">
+                <lightning:spinner alternativeText="Loading" />
+        </aura:if>
+    </div>
+                <h1 style="font-weight: bold;">
+                    If you want to add Site's from CSV,<span>Please Insert the CSV in the following format: </span>  
+        </h1>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column A">A</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column B">B</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column C">C</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column D">D</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column E">E</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column F">F</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column G">G</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column H">H</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column I">I</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column J">J</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Column K">K</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.ColumnData}" var="Column">
+                        <td scope="row" class="slds-cell-wrap" data-label="">
+                            <ui:outputText  value="{!Column}" />     
+                        </td>
+                </aura:iteration>
+            </tbody>
+        </table>
+                <aura:iteration items="{!v.cardList}" var="AccountSiteWapper" indexVar="index">  
+                    <c:AddSiteAccount ParentAccountInstance="{!AccountSiteWapper}" 
+                                      recordId="{!v.recordId}" 
+                                      rowIndexParent="{!index}" 
+                                      cardList="{!v.cardList}" 
+                                      accountDetails="{#v.accountDetails}"
+                                      />
+                </aura:iteration>
+                
+            </lightning:recordEditForm>
+        </div>
+        <div class="modal-footer slds-modal__footer slds-size_1-of-1">
+            <input type="file" accept=".csv" contentType="text/csv" class="slds-file-selector__input" aura:id="file" onchange="{!c.showFileData}"/> 
+            <lightning:button variant="Brand" class="slds-button" label="Save" onclick="{!c.Save}"/>
+            <lightning:button variant="Neutral" class="slds-button" label="Cancel" onclick="{!c.handleClose}"/>
+        </div>
+    </div>
+    <br />
+    	
+    
+</aura:component>

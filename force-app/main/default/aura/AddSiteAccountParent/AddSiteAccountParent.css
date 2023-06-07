@@ -1,0 +1,32 @@
+.THIS {
+}
+.THIS .slds-table th{
+    padding:5px 5px!important;
+}
+.THIS .slds-table td{
+    padding:5px 5px!important;
+}
+.THIS .sites td{
+    padding:5px 5px!important;
+    vertical-align:top;
+}
+.THIS .slds-input{    
+    padding:0px 2px 0px 5px!important;
+}
+.THIS .market__C .slds-input{
+    padding:0px 30px!important;
+}
+.THIS .slds-form-element__label{
+    display:none!important;
+}
+.THIS .slds-box{
+        padding: 10px 10px 0px 10px!important;
+        margin: 2px auto!important;
+}
+.THIS .Error{
+    border:1px solid red!important;
+}
+.THIS .errorMessage{
+    color:red;
+    font-size:9px;
+}

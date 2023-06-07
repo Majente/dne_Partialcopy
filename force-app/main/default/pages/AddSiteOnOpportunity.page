@@ -1,0 +1,488 @@
+<apex:page showHeader="true" sidebar="true" standardController="Opportunity" extensions="AddSiteOnOpprtunityController" lightningStylesheets="true" docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />
+        <head>
+            <apex:includeScript value="{!URLFOR($Resource.bootree, 'bootree/jquery-3.3.1.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.bootree, 'bootree/bootree.min.js')}"/>   
+        </head>
+        
+        <body>
+            <div class="container">
+                <apex:outputPanel id="errorMessage">
+                	<apex:messages />
+                </apex:outputPanel>
+                <apex:outputPanel >
+                    <div class="slds-page-header" style="text-align:center;background:#a7dbf0!important;border-radius:0px!important;">
+                        <div class="slds-page-header__row">
+                            <div class="slds-page-header__col-title">
+                                <div class="slds-media">
+                                    <div class="slds-media__body">
+                                        <div class="slds-page-header__name">
+                                            <div class="slds-page-header__name-title">
+                                                <h3>
+                                                    <span class="slds-page-header__title slds-truncate"
+                                                          title="Add Opportunity">{!$Label.Add_Sites_to_Opportunity}</span>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div data-role="wrapper" class="header-con">
+                        <div style="width:62px;float:left;margin-left:15px;margin-top:10px;">
+                            <label class="bt-checkbox-bootstrap bt-checkbox-glyphicons">
+                                <input type="checkbox" class="check-all" data-type="checkbox" data-checkbox="false" />
+                                <span></span>
+                            </label>
+                        </div>
+                        <div class='row-item header-row'>
+                            <div class='account'>{!$Label.SERVICE_ADDRESS}</div>
+                            <div class='market'>{!$Label.MARKET1}</div>
+                            <div class='volume'>{!$Label.VOLUME1}</div>
+                            <div class='type'>{!$Label.TYPE1}</div>
+                            <div class='unitofmeasure'>{!$Label.UNIT_OF_MEASURE1}</div>
+                            <div class='actionSection'>{!$Label.ACTION1}</div>
+                        </div>                            
+                    </div>
+                    <apex:actionStatus id="getTreeStatus">
+                        <apex:facet name="start">
+                            <div style="position: relative; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: #fff;">
+                                <div style="position: relative; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 0% 45%">
+                                    <div class="demo-only demo-only demo-only_viewport" style="height: 6rem;"><div role="status" class="slds-spinner slds-spinner_medium"><span class="slds-assistive-text">Loading</span><div class="slds-spinner__dot-a"></div><div class="slds-spinner__dot-b"></div></div></div>
+                                </div>
+                            </div>
+                        </apex:facet>
+                    </apex:actionStatus>
+                    <apex:outputPanel id="treeComponent">
+                        <div id="lightningonSite" >
+                            <div class="row"> 
+                                <div id="tree"></div>
+                                <div id="treeNoRecordFound" style="margin-top:10px;text-align:center;display:none;color:#ff0000;"> Site not available for this Opportunity</div>
+                            </div>
+                            <script type="text/javascript">
+                            $(document).ready(function () {
+                                
+                                var addressSiteMap = JSON.parse('{!jsonDataForAddressSite}') ;
+                                console.log(addressSiteMap.length);
+                                console.log(addressSiteMap);
+                                var dataSource = [];
+                                var checkboxDisable = [];
+                                $.each(addressSiteMap,function(key,value){                                            
+                                    
+                                    var id = value.addressAccount.Id ;
+                                    var text = createParentRow(value.addressAccount) ;
+                                    var children = [];
+                                    
+                                    var childData = value.siteWrap;
+                                    $.each(childData,function(keySite,valueSite){
+                                        var site = { id:valueSite.site.Id, isAdded: valueSite.isAddedSite, text: createChildRow(valueSite.site, valueSite.isAddedSite) };
+                                        children.push(site);
+                                        if(!valueSite.isAddedSite){
+                                            checkboxDisable.push(valueSite.site.Id);
+                                        }
+                                    });
+                                    
+                                    if(children.length==0){
+                                        // If site is not available than dont show address
+                                    }else{
+                                        
+                                        dataSource.push({ 
+                                            id: id,
+                                            text: text, 
+                                            children: children,
+                                            style: {
+                                                item: 'list-group-item gbd sansi'
+                                            }
+                                        });
+                                    }
+                                });
+                                if(dataSource.length  > 0 ){
+                                    $("#treeNoRecordFound").hide() ;
+                                    $("#tree").show() ;
+                                }else{
+                                    $("#treeNoRecordFound").show() ;
+                                    $("#tree").hide() ;
+                                }   
+                                var tree = $('#tree').tree({
+                                    primaryKey: 'id',
+                                    uiLibrary: 'bootstrap',
+                                    //dataSource: '/Locations/Get',
+                                    // dataSource: [ { id: 12, text: 'foo', children: [ { id: 23, text: 'bar' } ] } ]
+                                    dataSource: dataSource,
+                                    checkboxes: true
+                                    
+                                });
+                                $('#btnSave').on('click', function () {
+                                    var checkedIds = tree.getCheckedNodes();
+                                    alert(checkedIds);
+                                    return false ;
+                                });
+                                
+                                for(var i=0; i<checkboxDisable.length; i++){
+                                    var checkboxes = $(document).find('#tree [data-id="'+checkboxDisable[i]+'"] [data-role="checkbox"]');
+                                    console.log('checkboxes === '+JSON.stringify(checkboxes));
+                                    checkboxes.css('visibility','hidden');
+                                }
+                                function createParentRow(rowData){
+                                    //console.log(rowData);
+                                    var account = "<div class='account'><a href='/"+ rowData.Id+"'>"+ rowData.Name+"</a></div>";
+                                    var market = "<div class='market'>"+ rowData.Market__r.Name+"</div>";
+                                    var volume = "<div class='volume'>&nbsp;</div>";
+                                    var type = "<div class='type'>&nbsp;</div>";
+                                    var unitofmeasure = "<div class='unitofmeasure'>&nbsp;</div>";
+                                    var actionBtn = '<div class="actionSection">&nbsp;</div>';
+                                    var row = "<div class='row-item dispmarket "+rowData.Market__c+" '>"+account+market+volume+type+unitofmeasure+actionBtn+"</div>";
+                                    return row;
+                                }
+                                function createChildRow(rowData, isAddedSiteFlag){
+                                    //console.log(rowData);
+                                    var account = "<div class='account'><a href='/"+ rowData.Id+"'>"+ rowData.Name+"</a></div>";
+                                    var market = "<div class='market'>&nbsp;</div>";
+                                    var volume = "<div class='volume'>"+ rowData.Volume__c+"</div>";
+                                    var type = "<div class='type'>"+ rowData.Type__c+"</div>";
+                                    var unitofmeasure = "<div class='unitofmeasure'>"+ rowData.Unit_of_Measure__c+"</div>";
+                                    var svgUrl = "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#delete')}";
+                                    var svgUrlAdd = "{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#add')}";
+                                    var actionBtn = '<div class="actionSection">';
+                                    if(!isAddedSiteFlag){
+                                        actionBtn += '<button class="slds-button slds-button_neutral" onclick="deleteSite(\''+rowData.Id+'\');"><svg class="slds-button__icon svgDelete" aria-hidden="true"><use xlink:href= "'+svgUrl+'"></use></svg></button>';
+                                    }
+                                    actionBtn += '</div>';
+                                    var row = "<div class='row-item  "+rowData.Market__c+" '>"+account+market+volume+type+unitofmeasure+actionBtn+"</div>";
+                                    return row;
+                                }
+                                
+                                $(document).on('click',".check-all",function(){
+                                    if($(this).is(":checked")){
+                                        checkboxes = $(document).find('#tree [data-role="checkbox"] input[type="checkbox"]');
+                                        $.each(checkboxes, function () {
+                                            var checkbox = $(this);
+                                            checkbox.checkbox('state', 'checked');
+                                            
+                                        });
+                                    }else{
+                                        checkboxes = $(document).find('#tree [data-role="checkbox"] input[type="checkbox"]');
+                                        $.each(checkboxes, function () {
+                                            var checkbox = $(this);
+                                            
+                                            checkbox.checkbox('state', 'unchecked');
+                                        });
+                                    }              
+                                });
+                                
+                                $(document).find('li [data-role="checkbox"] input[type="checkbox"]').on('click',function(){
+                                    checkboxes = $(document).find('#tree [data-role="checkbox"] input[type="checkbox"]');
+                                    var checkAll = true ; 
+                                    $.each(checkboxes, function () {
+                                        var checkbox = $(this);
+                                        if (checkbox.checkbox('state') === 'checked') {
+                                            
+                                        }else{
+                                            checkAll = false ;
+                                        }
+                                        $(".check-all").prop('checked',checkAll);
+                                    });
+                                    
+                                })
+                                
+                            });
+                            </script>
+                            
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>    
+                
+                <apex:outputPanel >
+                    <div style="text-align:center;margin-top:20px; margin-bottom:10px;">
+                        <button class="slds-button slds-button_neutral" onclick="CancelJS();" >Cancel</button>
+                        <button  class="searchResult slds-vf-button_brand" >Add Sites</button>
+                        <script>
+                        $(document).on('click','.searchResult',function(){
+                            var childAcctIds = document.getElementById('j_id0:frm:childAccounts');
+                            console.log(childAcctIds);
+                            var result = [],
+                                checkboxes = $(document).find('li [data-role="checkbox"] input[type="checkbox"]');
+                            $.each(checkboxes, function () {
+                                var checkbox = $(this);
+                                if (checkbox.checkbox('state') === 'checked') {
+                                    result.push(checkbox.closest('li').data('id'));
+                                }
+                            });                                                
+                            childAcctIds.value = result;
+                            console.log('result = '+JSON.stringify(result));
+                            if(result.length >0){
+                                searchResult();
+                            }else{
+                                if(checkboxes.length>0){
+                                    alert("Please select any site");
+                                }else{
+                                    alert("Site not available for this Opportunity");
+                                }
+                            }
+                            return false ;                                                
+                        })                                        
+                        function redirectToOpportunity(){
+                            console.log('fter complete');
+                            return false ;
+                        }
+                        
+                        function reloadThePage(){
+                            alert('reload the page');
+                               window.location.reload(true);
+						}
+                        </script>
+                    </div>
+                </apex:outputPanel>
+                <apex:form id="frm">
+                    <apex:inputHidden value="{!siteIds}" Id="childAccounts" />
+                    <apex:actionFunction action="{!saveOpportunitySite}" name="searchResult" oncomplete="redirectToOpportunity" reRender="errorMessage">
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!deleteSiteMethod}" oncomplete="reloadThePage()" name="deleteSite">
+                        <apex:param name="siteIdToDelete" value="" assignTo="{!siteIdToDelete}" />
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!Cancel}" name="CancelJS" />
+                </apex:form>
+                
+            </div> 
+        </body>
+        
+        <style>
+            .header-con{
+            border:1px solid #c1b9b9!important;
+            }
+            .container{
+            width: 90%;
+            margin: auto;
+            border: 1px solid #c1c1c1;
+            }
+            
+            td[class$="Left"] {
+            text-align: left;
+            padding-bottom: 5pt;
+            padding-top: 5pt;
+            }
+            
+            div[class$="Left"] {
+            text-align: left;
+            padding-bottom: 5pt;
+            padding-top: 5pt;
+            }
+            .slds-scope .slds-page-header{
+            padding:5px!important;
+            border-radius:5px;
+            }
+            .slds-scope .slds-page-header__title{
+            font-size:17px!important;   
+            }
+            .row {
+            margin-right: 0px!important;
+            margin-left:  0px!important;
+            }
+            .list-group-item{
+            border:1px solid #c1b9b9!important;
+            }
+            .account,.market,.volume,.type,.unitofmeasure,.actionSection{
+            width:16%;
+            float:left;
+            }
+            
+            .header-row{
+            display:flex;
+            margin:10px 10px 10px 62px;
+            }
+            .header-row .account{
+            text-align:left!important;
+            
+            }
+            .glyphicon-plus{
+            font-size:25px!important;
+            font-weight:bold!important;
+            }
+            .glyphicon-minus{
+            font-size: 25px!important;
+            font-weight: bold!important;
+            }
+            [data-type="tree"] ul li [data-role="expander"].bt-tree-glyphicons-expander {
+            width: 24px;
+            }
+            
+            ul.bt-list li [data-role="expander"] {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            cursor: pointer;
+            }
+            [data-type="tree"] ul li [data-role="expander"].bt-tree-glyphicons-expander .glyphicon {
+            
+            height: 29px;
+            }
+            
+            .glyphicon {
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-style: normal;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            }
+            .glyphicon-plus:before {
+            content: "\002b";
+            }
+            [data-type="tree"] ul li [data-role="expander"].bt-tree-glyphicons-expander {
+            width: 24px;
+            }
+            
+            ul.bt-list li [data-role="expander"] {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            cursor: pointer;
+            }
+            .glyphicon-minus:before {
+            content: "\2212";
+            }
+            .bt-hidden {
+            display: none;
+            }
+            ul.bt-list-bootstrap {
+            padding-left: 0;
+            margin-bottom: 0;
+            }
+            .bt-tree-bootstrap-3 ul.bt-list-bootstrap li {
+            border: 0;
+            border-radius: 0;
+            color: #333;
+            }
+            
+            ul.bt-list-bootstrap li [data-role="wrapper"] {
+            padding: 0 10px;
+            }
+            
+            ul.bt-list li [data-role="wrapper"] {
+            display: table;
+            width: 100%;
+            }
+            ul.bt-list li [data-role="spacer"] {
+            display: table-cell;
+            }
+            ul.bt-list li [data-role="expander"] {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            cursor: pointer;
+            }
+            ul.bt-list-bootstrap li [data-role="checkbox"] {
+            width: 24px;
+            padding: 3px;
+            }
+            
+            ul.bt-list li [data-role="checkbox"] {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            }
+            .bt-checkbox-bootstrap {
+            min-width: 0;
+            font-size: 0;
+            font-weight: 400;
+            margin: 0;
+            text-align: center;
+            width: 18px;
+            height: 18px;
+            position: relative;
+            display: inline;
+            }
+            .bt-checkbox-bootstrap input[type="checkbox"] {
+            display: none;
+            margin-bottom: -12px;
+            }
+            
+            input[type="checkbox"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+            position: relative;
+            border: none;
+            
+            -webkit-appearance: none;
+            
+            cursor: pointer;
+            }
+            
+            .bt-checkbox-bootstrap span {
+            background: #fff;
+            display: block;
+            content: " ";
+            width: 18px;
+            height: 18px;
+            line-height: 11px;
+            font-size: 11px;
+            padding: 2px;
+            color: #555;
+            border: 1px solid #CCC;
+            border-radius: 3px;
+            transition: box-shadow 0.2s linear,border-color 0.2s linear;
+            cursor: pointer;
+            margin: auto;
+            }
+            ul.bt-list-bootstrap li [data-role="display"] {
+            padding: 8px 0 8px 4px;
+            }
+            
+            ul.bt-list li [data-role="display"] {
+            display: table-cell;
+            vertical-align: middle;
+            cursor: pointer;
+            }
+            .bt-checkbox-glyphicons input[type="checkbox"]:checked + span:after {
+            display: block;
+            content: '';
+            height: .25rem;
+            width: .5rem;
+            position: relative;
+            top: 50%;
+            margin-left: 5px;
+            transform: translate3d(-50%, -50%, 0) rotate(-45deg);
+            border-bottom: 2px solid rgb(0, 112, 210);
+            border-left: 2px solid rgb(0, 112, 210);
+            }
+            
+            
+            .searchResult  {
+            
+            position: relative;
+            display: inline-block;
+            border: 1px solid transparent;
+            padding: 0;
+            font-size: .75rem!important;
+            line-height: 1.875rem!important;
+            text-decoration: none;
+            white-space: normal;
+            border-radius: .25rem;
+            background: transparent;
+            background-clip: border-box;
+            
+            user-select: none;
+            
+            padding-left: 1rem;
+            padding-right: 1rem;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid rgb(221, 219, 218);
+            
+            transition: border 0.15s linear;
+            background-color: rgba(27, 82, 151, 1);
+            border-color: rgba(27, 82, 151, 1);
+            color: rgb(255, 255, 255)!important;
+            }
+            .bt-checkbox-glyphicons input[type="checkbox"]:indeterminate + span:after {
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            content: "\2212 ";
+            padding-right: 1px;
+            }  
+            
+        </style>
+    </html>
+</apex:page>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quantity_of_Work__c</fullName>
+    <externalId>false</externalId>
+    <label>Quantity of Work</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Produces acceptable work products</fullName>
+                <default>false</default>
+                <label>Produces acceptable work products</label>
+            </value>
+            <value>
+                <fullName>Works quickly and efficiently</fullName>
+                <default>false</default>
+                <label>Works quickly and efficiently</label>
+            </value>
+            <value>
+                <fullName>Organizes and prioritizes work</fullName>
+                <default>false</default>
+                <label>Organizes and prioritizes work</label>
+            </value>
+            <value>
+                <fullName>Performs well under pressure</fullName>
+                <default>false</default>
+                <label>Performs well under pressure</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

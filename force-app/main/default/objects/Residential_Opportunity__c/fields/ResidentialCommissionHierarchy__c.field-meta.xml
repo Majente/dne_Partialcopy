@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ResidentialCommissionHierarchy__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Residential Commission Hierarchy</label>
+    <referenceTo>Residential_Commission_Hierarchy__c</referenceTo>
+    <relationshipLabel>Residential Opportunity</relationshipLabel>
+    <relationshipName>Residential_Opportunity</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

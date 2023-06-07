@@ -1,0 +1,361 @@
+<apex:page showHeader="false" sidebar="false" cache="false" contentType="text/xml" applyHtmlTag="true"  controller="LESiteInfoPageController" action="{!chooseplan2}">
+    
+    <block >
+        <table >
+            <table-body font-size="10">
+                <table-row>
+                    <table-cell number-columns-spanned="6" border="1px solid black">
+                        <block text-align="center" font-weight="bold" background-color="#1f52a5" color="white">Choose Your Energy Plan</block>
+                    </table-cell>
+                </table-row>
+                <table-row background-color="#e8eff9">
+                    <table-cell number-columns-spanned="3" border="1px solid black">
+                        <block text-align="center">Product</block>
+                    </table-cell>
+                    <table-cell border="1px solid black">
+                        <block text-align="center">Administration Fee</block>
+                    </table-cell>
+                    <table-cell border="1px solid black">
+                        <block text-align="center">Terms</block>
+                    </table-cell>
+                    <table-cell border="1px solid black">
+                        <block text-align="center">Service Information</block>
+                    </table-cell>
+                </table-row>
+                <table-row border="1px solid black" >
+                    <table-cell height="35" font-size="9" width="18">
+                        <block>
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            <apex:outputText >Fixed Electricity Rate</apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell width="16" font-size="15">
+                        <block font-weight="bold" >
+                            <apex:outputText >${!quoteLineItemList3.SBQQ__Quote__r.Selling_Price__c}</apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell width="16">
+                        <block font-weight="bold">
+                            <apex:outputText >/kWh</apex:outputText>
+                        </block>
+                        <block font-size="7px">
+                            <apex:outputText >
+                                +UFE and Line Loss
+                                Charges</apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell border="1px solid black" number-rows-spanned="2" padding="5" width="16">
+                        <block text-align="center" font-weight="bold">
+                            <apex:outputText rendered="{!quoteLineItemList3 == null}">$9.99
+                                per month per site</apex:outputText>
+                            <apex:outputText rendered="{!quoteLineItemList3 != null}">$9.99
+                                per month per site</apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell border="1px solid black" number-rows-spanned="2" width="10">
+                        <block text-align="center" padding="3">
+                            <apex:outputText rendered="{!quoteLineItemList3 == null}" >{!quoteLineItemList5.SBQQ__Quote__r.SBQQ__SubscriptionTerm__c}
+                            </apex:outputText>
+                            <apex:outputText rendered="{!quoteLineItemList3 != null}" >{!quoteLineItemList3.SBQQ__Quote__r.SBQQ__SubscriptionTerm__c}
+                            </apex:outputText>
+                        </block>
+                        <block text-align="center" padding="3">
+                            <apex:outputText >
+                                Month(s)</apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell border="1px solid black" width="24">
+                        <block font-size="8" >
+                            <apex:outputText >Service Flow Date(MM/DD/YYYY):</apex:outputText>
+                        </block>
+                        <block font-weight="bold" font-size="15">
+                            <apex:outputText rendered="{!quoteLineItemList3 != null}">{!quoteLineItemList3.SBQQ__Quote__r.Start_Date_CpqTemplate__c}</apex:outputText>
+                            <apex:outputText rendered="{!quoteLineItemList3 == null}">{!quoteLineItemList5.SBQQ__Quote__r.Start_Date_CpqTemplate__c}</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row border="1px solid black">
+                    <table-cell font-size="8" height="35">
+                        <block>
+                            
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            <apex:outputText >Variable Electricity
+                                Rate
+                                
+                            </apex:outputText>
+                        </block>
+                        <block>
+                            
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            <apex:outputText >
+                                Fixed Term
+                            </apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell font-size="15" >
+                        <block font-weight="bold">
+                            <apex:outputText >+${!quoteLineItemList5.SBQQ__Quote__r.Selling_Price__c}</apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell >
+                        <block font-weight="bold">
+                            <apex:outputText >/
+                                kWh
+                            </apex:outputText>
+                        </block>
+                        <block font-size="7px">
+                            <apex:outputText >
+                                transaction fee</apex:outputText>
+                        </block>
+                    </table-cell>
+                    
+                    <table-cell border="1px solid black" font-size="8">
+                        <block>
+                            <apex:outputText >Annual Aggregated Volume in kWh:</apex:outputText>
+                        </block>
+                        <block font-weight="bold" font-size="15">
+                            <apex:outputText rendered="{!quoteLineItemList3 != null}">{!quoteLineItemAnnualVolume3}</apex:outputText>
+                            <apex:outputText rendered="{!quoteLineItemList3 == null}">{!quoteLineItemAnnualVolume5}</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row border="1px solid black" >
+                    <table-cell font-size="8" height="35">
+                        <block>
+                            
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            <apex:outputText >Fixed Natural Gas Rate</apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell font-size="15" >
+                        <block font-weight="bold">
+                            <apex:outputText >${!quoteLineItemList2.SBQQ__Quote__r.Selling_Price__c}</apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell >
+                        <block font-weight="bold">
+                            <apex:outputText >/GJ
+                            </apex:outputText>
+                        </block>
+                        
+                    </table-cell>
+                    <table-cell border="1px solid black" number-rows-spanned="2" padding="5">
+                        <block text-align="center" font-weight="bold">
+                           <apex:outputText rendered="{!quoteLineItemList2 == null}">$9.99
+                                per month per site</apex:outputText>
+                            <apex:outputText rendered="{!quoteLineItemList2 != null}">$9.99
+                                per month per site</apex:outputText>
+                           
+                        </block>
+                    </table-cell>
+                    <table-cell border="1px solid black" number-rows-spanned="2">
+                        <block text-align="center" padding="3">
+                            <apex:outputText rendered="{!quoteLineItemList2 == null}">{!quoteLineItemList4.SBQQ__Quote__r.SBQQ__SubscriptionTerm__c}
+                            </apex:outputText>
+                            <apex:outputText rendered="{!quoteLineItemList2 != null}">{!quoteLineItemList2.SBQQ__Quote__r.SBQQ__SubscriptionTerm__c}
+                            </apex:outputText>
+                        </block>
+                        <block text-align="center" padding="3">
+                            <apex:outputText >
+                                Month(s)</apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell border="1px solid black" font-size="8">
+                        <block>
+                            <apex:outputText >Service Flow Date(MM/DD/YYYY):</apex:outputText>
+                        </block>
+                        <block font-weight="bold" font-size="15">
+                            <apex:outputText rendered="{!quoteLineItemList2 == null}">{!quoteLineItemList4.SBQQ__Quote__r.Start_Date_CpqTemplate__c}</apex:outputText>
+                            <apex:outputText rendered="{!quoteLineItemList2 != null}">{!quoteLineItemList2.SBQQ__Quote__r.Start_Date_CpqTemplate__c}</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                <table-row border="1px solid black">
+                    <table-cell font-size="8" height="35">
+                        <block>
+                            
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            <apex:outputText >Variable Natural Gas
+                                Rate
+                            </apex:outputText>
+                        </block>
+                        <block>
+                            
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            <apex:outputText >
+                                Fixed Term
+                            </apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell font-size="15">
+                        <block font-weight="bold">
+                            <apex:outputText >+${!quoteLineItemList4.SBQQ__Quote__r.Selling_Price__c}</apex:outputText>
+                        </block>
+                    </table-cell>
+                    <table-cell >
+                        <block font-weight="bold">
+                            <apex:outputText >/
+                                GJ
+                            </apex:outputText>
+                        </block>
+                        <block font-size="7px">
+                            <apex:outputText >
+                                transaction fee</apex:outputText>
+                        </block>
+                    </table-cell>
+                    
+                    <table-cell border="1px solid black" font-size="8">
+                        <block >
+                            <apex:outputText >Annual Aggregated Volume in GJ:</apex:outputText>
+                        </block>
+                        <block font-weight="bold" font-size="15">
+                            <apex:outputText rendered="{!quoteLineItemList2 == null}">{!quoteLineItemAnnualVolume4}</apex:outputText>
+                            <apex:outputText rendered="{!quoteLineItemList2 != null}">{!quoteLineItemAnnualVolume2}</apex:outputText>
+                        </block>
+                    </table-cell>
+                </table-row>
+                
+                <table-row><table-cell number-columns-spanned="6" height="15"><block></block></table-cell></table-row>
+                
+                <table-row>
+                    <table-cell border="1px solid black" number-columns-spanned="6">
+                        <block text-align="center" font-weight="bold" background-color="#1f52a5" color="white">
+                            Payment and Billing Options
+                        </block>
+                    </table-cell>
+                </table-row>
+                
+                <table-row>
+                    <table-cell border="1px solid black" background-color="#e8eff9" number-columns-spanned="6">
+                        <block >
+                            Your invoice will be processed on a monthly basis from the meter read cycle adopted by the Distribution Company. The invoice will include charges and adjustments for Energy supplied to you under this Agreement, as well as all Other Charges as set out in this Agreement. You will receive an email notifying you of new invoices and provided a link to your online portal.Payment will be due sixteen (16) days after the invoice is issued or late fees will apply.
+                        </block>
+                    </table-cell>
+                </table-row>
+                
+                <table-row>
+                    <table-cell border="1px solid black" number-columns-spanned="6">
+                        <block font-weight="bold">
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            Business Pre-Authorized Debit (Business PAD)
+                        </block>
+                        <block>
+                            We will contact you directly to collect your financial institution information and sign our Business PAD Authorization Form.
+                        </block>
+                    </table-cell>
+                </table-row>
+                
+                <table-row>
+                    <table-cell border="1px solid black" number-columns-spanned="6">
+                        <block font-weight="bold">
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            Pre-Authorized Credit Card
+                        </block>
+                        <block>
+                            We will contact you directly to collect your credit card information and sign our Credit Card Authorization Form. By checking the box above, you agree to a 2% surcharge that will be automatically added for each transaction made to Link Energy Supply Inc.
+                        </block>
+                    </table-cell>
+                </table-row>
+                
+                <table-row>
+                    <table-cell border="1px solid black" number-columns-spanned="6">
+                        <block font-weight="bold">
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            Post Pay Payment Options: Cheque, Online Banking (select major banks), Credit Card
+                        </block>
+                        <block>
+                            You must submit payment to Link Energy within sixteen (16) days of the date the invoice was issued, or late fees and interest charges will apply. Note that a 2% surcharge will be automatically added for each transaction made to Link Energy Supply Inc. by credit card.
+                        </block>
+                        <block font-weight="bold" color="red">
+                            Submit payments to Link Energy Supply Inc. at: Suite 211-1500 14th Street SW Calgary, AB T3C 1C9
+                        </block>
+                    </table-cell>
+                </table-row>
+                
+                <table-row><table-cell number-columns-spanned="6" height="15"><block></block></table-cell></table-row>
+                
+                <table-row>
+                    <table-cell border="1px solid black" number-columns-spanned="2">
+                        <block font-weight="bold">
+                            Sales Agent: {!quoteLineItemList2.SBQQ__Quote__r.owner.name}
+                        </block>
+                    </table-cell>
+                    
+                    <table-cell border="1px solid black" number-columns-spanned="2">
+                        <block font-weight="bold">
+                            Bills Attached: 
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            Yes
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            No
+                        </block>
+                    </table-cell>
+                    
+                    <table-cell border="1px solid black" number-columns-spanned="2">
+                        <block font-weight="bold">
+                            Renewal:
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            Yes
+                            <apex:outputText >
+                                <external-graphic content-height="scale-to-fit" width="10px" height="10px" src="https://dneresources--partial--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00D030000008jPk"/>
+                            </apex:outputText>
+                            No
+                        </block>
+                    </table-cell>
+                    
+                    
+                </table-row>
+                
+            </table-body>
+        </table>
+    </block>
+    <block >
+        <table >
+            <table-body>
+                <table-row><table-cell  height="90"><block></block></table-cell></table-row>
+                <table-row >
+                    <table-cell><block text-align="left" font-weight="bold"></block></table-cell>
+                <table-cell>
+                    <block text-align="right" font-weight="bold">
+                        Client Initials: 
+                        
+                        
+                        </block>
+                    </table-cell>
+                    <table-cell border-bottom="1px solid black" width="50"><block text-align="center" font-weight="bold" >
+                        <apex:outputText rendered="{!quoteLineItemList2 != null}">{!quoteLineItemList2.Client_Initials__c}</apex:outputText>
+                        <apex:outputText rendered="{!quoteLineItemList3 != null}">{!quoteLineItemList3.Client_Initials__c}</apex:outputText>
+                        <apex:outputText rendered="{!quoteLineItemList4 != null}">{!quoteLineItemList4.Client_Initials__c}</apex:outputText>
+                        <apex:outputText rendered="{!quoteLineItemList5 != null}">{!quoteLineItemList5.Client_Initials__c}</apex:outputText></block></table-cell>
+                    <table-cell ><block text-align="left" font-weight="bold">Version 12.0  09292020</block></table-cell>
+                    <table-cell><block text-align="left" font-weight="bold"></block></table-cell>
+                </table-row>
+            
+            </table-body>
+        </table>
+    </block>
+</apex:page>

@@ -1,0 +1,29 @@
+.THIS {
+}
+.THIS .hideLabel .slds-form-element__label{
+    display:none!important;
+}
+
+.THIS .vw-header{
+	padding: 0px 5px 10px 5px;
+    font-size: 15px;
+    font-weight: bold;
+    border-bottom: 1px solid #a9a9a9;
+}
+.THIS .add-remove-btn{
+    text-align:right;
+}
+.THIS .vw-body-service{
+	padding: 10px 0% 5px 1%;    
+    
+}
+.THIS .vw-body{
+	padding: 0 25px 5px 25px;
+    
+}
+.THIS .slds-table_bordered{
+        border: 1px solid rgb(217, 219, 221);
+}
+.THIS .slds-box-vw{
+    margin:5px!important;
+}

@@ -1,0 +1,22 @@
+<apex:page controller="RadioController" lightningStylesheets="true">
+    <apex:slds />
+    <apex:form >
+        <!-- Account page block -->
+        <apex:pageBlock title="Account Viewer" >
+            <apex:pageblockSection >
+                <apex:pageBlockTable value="{!accounts}" var="acc"  id="accTable">
+                    <apex:column headerValue="Select">
+                        <input type="radio" name="<strong>selectRadio</strong>" id= "radio">
+                        <br/>
+                        <apex:actionSupport event="onclick" status="buttonStatus"  reRender="cntblock">
+                            <apex:param name="accid" value="{!acc.id}"/>
+                        </apex:actionSupport>
+                    </input>
+                </apex:column>
+                <apex:column value="{!acc.Name}"/>
+                <apex:column value="{!acc.Duplicate_Account__c}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

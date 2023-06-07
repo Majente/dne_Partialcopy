@@ -1,0 +1,106 @@
+<apex:page showHeader="false" sidebar="false" cache="false" controller="HScSiteSchedule" contentType="text/xml" applyHtmlTag="true" >
+    <block>
+        <table table-layout="fixed" width="100%" border-bottom-style="solid" border-collapse="collapse">
+            <table-body>
+                           
+                     <table-row border="1pt solid black" font-weight="bold" width="100%">
+                        <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left" font-size ="8px"> TDU Name </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left" font-size ="8px"> ESI ID </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left" font-size ="8px"> Service Address </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="2"  padding="4px" border=" 1px solid black">
+                            <block text-align="left" font-size ="8px"> Start Date*</block>
+                            <block text-align="left" font-size ="8px"> (mm/dd/yyyy) </block>
+                        </table-cell>
+                        
+                        <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                                                     
+ 
+                                                     <block text-align="center" font-size ="8px"> Start Date Type </block>
+<block text-align="center" font-size ="8px"  > SELECT ONE </block>
+<block text-align="center" font-size ="8px" > _____________________________ </block>
+<!--
+<block text-align="center"  >
+<external-graphic  src="https://dneresources--partial.my.salesforce.com/servlet/servlet.ImageServer?id=01503000000DRV8&oid=00D030000008jPk" content-width="5px" content-height="20px"/>
+</block>-->
+             <block text-align="left" font-size ="8px">&nbsp;&nbsp;&nbsp;&nbsp;Meter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;Calendar</block>
+             <block text-align="left" font-size ="8px">Read Date |&nbsp;&nbsp;&nbsp;Date</block>
+                        </table-cell>
+                        <!--<table-cell number-columns-spanned="1"  padding="4px" border=" 1px solid black">
+                            <block text-align="left" > Calendar Date </block>
+                            
+                        </table-cell>-->
+                        <table-cell number-columns-spanned="2" padding="4px">
+<block text-align="center" font-size ="8px" > Transaction Type** </block>
+<block text-align="center" font-size ="8px" > SELECT ONE </block>
+<block text-align="center" font-size ="8px" > _____________________________ </block>
+             <block text-align="left" font-size ="8px">&nbsp;&nbsp;Switch&nbsp;&nbsp;&nbsp;&nbsp;| Move In</block>
+             <block text-align="left" font-size ="8px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</block>
+
+                        </table-cell>
+                    </table-row>
+ 
+                <apex:repeat value="{!siteScheduleList}" var="site">
+                    <table-row border="1pt solid black" width="100%">
+                        <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left" font-size ="8px"> </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left" font-size ="8px"> {!site.SiteName} </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left" font-size ="8px"> {!site.ServiceAddress}  </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="2" padding="4px" border=" 1px solid black">
+                            <block text-align="left" font-size ="8px"> 
+                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                               <apex:param value="{!site.StartDate}" /> 
+                               </apex:outputText>
+                            </block>
+                        </table-cell>
+                        
+                        <table-cell number-columns-spanned="1" padding="4px" border=" 1px solid black">
+                            <block text-align="center" font-size ="8px"> 
+                            <apex:outputText >
+                                                        <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                                                    </apex:outputText>
+                                                     </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="1"  padding="4px" border=" 1px solid black">
+                            <block text-align="center" font-size ="8px"> 
+                            <apex:outputText >
+                                                        <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                                                    </apex:outputText>
+                                                    
+                                                     </block>
+                            
+                        </table-cell>
+                       
+                       <table-cell number-columns-spanned="1" padding="4px" border=" 1px solid black">
+                            <block text-align="center" font-size ="8px"> 
+                            <apex:outputText >
+                                                        <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                                                    </apex:outputText>
+                                                     </block>
+                        </table-cell>
+                        <table-cell number-columns-spanned="1"  padding="4px" border=" 1px solid black">
+                            <block text-align="center" font-size ="8px">
+                            <apex:outputText >
+                                                        <external-graphic  src="https://dneresources--c.documentforce.com/servlet/servlet.ImageServer?id=015f4000002s4qy&oid=00Df4000004kCT3" content-width="15px"/>
+                                                    </apex:outputText>
+                                                    
+                                                     </block>
+                            
+                        </table-cell>
+                        
+                    </table-row>
+                </apex:repeat>
+            </table-body>
+        </table>
+    </block>
+</apex:page>

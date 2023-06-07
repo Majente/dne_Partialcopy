@@ -1,0 +1,106 @@
+<apex:page standardController="Opportunity" extensions="AddSiteForAmendmentOppController" lightningStylesheets="true">
+    <apex:slds />
+    <apex:form id="frmId">
+        <apex:pageMessages />
+        <apex:actionFunction name="goToBack" action="{!goToOpportunity}"  />
+        <apex:actionFunction name="saveSites" action="{!saveSitesOnOpportunity}" reRender="frmId"/>
+        <div class="slds-page-header" style="text-align:center;background:#a7dbf0!important;border-radius:0px!important;">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h3>
+                                        <span class="slds-page-header__title slds-truncate"
+                                              title="Add Opportunity">Drop Sites Opportunity</span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <apex:outputPanel rendered="{!siteWrapperList.size > 0}">  
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title=""></div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Site Name">Site Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Market">Market</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Type">Type</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Volume">Volume</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Unit of Measure">Unit of Measure</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!siteWrapperList}" var="site">
+                        <tr class="slds-hint-parent">
+                            <td><apex:inputCheckbox value="{!site.isSiteSelected}" /></td>
+                            <td >
+                                <div class="slds-truncate" title="{!site.selectedSite.Name}">{!site.selectedSite.Name}</div>
+                            </td>
+                            <td >
+                                <div class="slds-truncate" title="{!site.selectedSite.Market__r.Name}">{!site.selectedSite.Market__r.Name}</div>
+                            </td>
+                            <td >
+                                <div class="slds-truncate" title="{!site.selectedSite.Type__c}">{!site.selectedSite.Type__c}</div>
+                            </td>
+                            <td >
+                                <div class="slds-truncate" title="{!site.selectedSite.Volume__c}">{!site.selectedSite.Volume__c}</div>
+                            </td>
+                            <td >
+                                <div class="slds-truncate" title="{!site.selectedSite.Unit_of_Measure__c}">{!site.selectedSite.Unit_of_Measure__c}</div>
+                            </td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            <div style="height: 55px;">
+                <div class="slds-docked-form-footer" style="background-color: rgb(205, 218, 233);">
+                    <button style="float:right" class="slds-button slds-button_neutral" onclick="goToBack();return false;">Cancel </button>
+                    <button style="float:left" class="slds-button slds-button_brand" onclick="saveSites();return false;">Save</button>
+                </div>
+            </div>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!siteWrapperList.size == 0}">
+            <br/>
+            <div style="text-align:center;">
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__body">
+                                <div class="slds-page-header__name">
+                                    <div class="slds-page-header__name-title">
+                                        <h3>
+                                            <span class="slds-page-header__title slds-truncate"
+                                                  title="">No Sites Available.</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 55px;">
+                <div class="slds-docked-form-footer" style="background-color: rgb(205, 218, 233);">
+                    <button style="float:right" class="slds-button slds-button_neutral" onclick="goToBack();return false;">Cancel </button>
+                </div>
+            </div>
+        </apex:outputPanel> 
+    </apex:form>
+</apex:page>

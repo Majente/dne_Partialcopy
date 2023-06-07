@@ -1,0 +1,7 @@
+<aura:component >
+	<ltng:require scripts='$Resource.CsvToJson.js' afterScriptsLoaded="{!c.setup}" />
+<lightning:fileUpload label="Attach receipt"
+        name="fileUploader"
+        accept="csv"
+        onuploadfinished="{!c.setup}" />
+</aura:component>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Subtype__c</fullName>
+    <externalId>false</externalId>
+    <label>Subtype</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Huff - Historical - Credit</fullName>
+                <default>false</default>
+                <label>Huff - Historical - Credit</label>
+            </value>
+            <value>
+                <fullName>Custom pricing requests</fullName>
+                <default>false</default>
+                <label>Custom pricing requests</label>
+            </value>
+            <value>
+                <fullName>Future pricing requests</fullName>
+                <default>false</default>
+                <label>Future pricing requests</label>
+            </value>
+            <value>
+                <fullName>Other requests</fullName>
+                <default>false</default>
+                <label>Other requests</label>
+            </value>
+            <value>
+                <fullName>Renewal extension</fullName>
+                <default>false</default>
+                <label>Renewal extension</label>
+            </value>
+            <value>
+                <fullName>Historical usage request</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Historical usage request</label>
+            </value>
+            <value>
+                <fullName>Huff Data</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Huff Data</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>To Operations</controllingFieldValue>
+            <valueName>Huff - Historical - Credit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>To Operations</controllingFieldValue>
+            <valueName>Custom pricing requests</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>To Operations</controllingFieldValue>
+            <valueName>Future pricing requests</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>To Operations</controllingFieldValue>
+            <valueName>Other requests</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>To Operations</controllingFieldValue>
+            <valueName>Renewal extension</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

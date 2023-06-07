@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Cancelled_Date_Set_Or_Not</fullName>
+    <active>true</active>
+    <description>This rule check when stage of Residential Opportunity set to cancelled then Cancelled Date must be set otherwise give error on Cancelled.</description>
+    <errorConditionFormula>AND (
+					 ISPICKVAL(StageName__c, &quot;Cancelled&quot;) ,
+					 ISBLANK(Cancelled_Date__c )
+						)</errorConditionFormula>
+    <errorDisplayField>Cancelled_Date__c</errorDisplayField>
+    <errorMessage>Please fill the Cancelled Date before Cancelled the Residential Opportunity.</errorMessage>
+</ValidationRule>

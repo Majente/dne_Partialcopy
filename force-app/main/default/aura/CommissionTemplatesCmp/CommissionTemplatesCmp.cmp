@@ -1,0 +1,284 @@
+<aura:component description="CommissionTemplatesCmp" controller="AddCommisionTemplateController">
+    <aura:attribute name="commissionHierarchy" type="DNE_Commission_Hierarchy__c"/>
+    <aura:attribute name="no" type="Integer"/>
+    <aura:attribute name="typeOptions" type="Object[]"/>
+
+    <aura:attribute name="pageMessage" type="String"/>
+
+    <aura:attribute name="disableSaveButton" type="Boolean" default="false"/>
+
+    <!--<aura:handler event="c:SaveAllCommissionHierarchies_Event" action="{!c.saveCommissionHierarchyJSC}"/>-->
+    
+    <aura:attribute Name="openerLkp" type="Object"  access="public" />
+    <aura:attribute Name="level1Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level2Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level3Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level4Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level5Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level6Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level7Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level8Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level9Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level10Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level11Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level12Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level13Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level14Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level15Lkp" type="Object"  access="public" />
+    <aura:attribute Name="level16Lkp" type="Object"  access="public" />
+
+        <lightning:card title="{!'New Commission Hierarchy ' + v.no}">
+            <!--<aura:set attribute="actions">
+                <lightning:button label="New"/>
+            </aura:set>-->
+            <table>
+            	<tr>
+	        		<td>
+	        			<div aura:id="pageMessageDiv">{!v.pageMessage}</div>
+	        		</td>
+	        	</tr>
+                <tr>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.openerLkp }"
+                                  label="Opener"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <lightning:select name="controllerFld"
+                              value="{!v.commissionHierarchy.Type__c}"
+                              label="Type" >
+                            <aura:iteration items="{!v.typeOptions}" var="record">
+                                <ui:inputSelectOption text="{!record.value}" label="{!record.label}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        Effective From:<lightning:input label="" type="Datetime" variant="standard" value="{!v.commissionHierarchy.Effective_From__c}"></lightning:input>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level1Lkp }"
+                                  label="Level 1"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level2Lkp }"
+                                  label="Level 2"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level3Lkp }"
+                                  label="Level 3"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level4Lkp }"
+                                  label="Level 4"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level5Lkp }"
+                                  label="Level 5"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level6Lkp }"
+                                  label="Level 6"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level7Lkp }"
+                                  label="Level 7"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level8Lkp }"
+                                  label="Level 8"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level9Lkp }"
+                                  label="Level 9"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level10Lkp }"
+                                  label="Level 10"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level11Lkp }"
+                                  label="Level 11"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level12Lkp }"
+                                  label="Level 12"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level13Lkp }"
+                                  label="Level 13"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level14Lkp }"
+                                  label="Level 14"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level15Lkp }"
+                                  label="Level 15"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td>
+                        <c:Lookup objectName="Contact"
+                                  field_API_text="Name"
+                                  field_API_val="Id"
+                                  limit="10"
+                                  field_API_search="Name"
+                                  lookupIcon="standard:user"
+                                  selItem="{! v.level16Lkp }"
+                                  label="Level 16"
+                                  extraWhereClause = " AND Account.Name = 'DNE'"
+                                  placeholder="Type here to search" />
+                    </td>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                	<td>
+                		<div class="slds-align_absolute-center">
+	            			<lightning:button class="slds-m-top_small slds-m-horizontal_large slds-theme_brand"
+	                                          iconName="utility:approval" 
+	                                          variant="success" 
+	                                          type="button" 
+	                                          label="Save"
+	                                          onclick="{!c.saveCommissionHierarchyJSC}"
+	                                          disabled="{! v.disableSaveButton}"
+	                                           />
+                        </div>
+                	</td>
+                </tr>
+            </table>
+        </lightning:card>
+</aura:component>

@@ -1,0 +1,48 @@
+<apex:page renderAs="pdf" standardController="Opportunity" applyBodyTag="false">
+      
+    <html>
+   
+    <div style = "text-align:center; font-family: Roboto; line-height: 2.8;">
+        <u>NEW TPV SCRIPT</u> <strong>(CANADA &amp; USA)</strong>
+    </div>
+    <div style = "font-family: inherit; line-height: 2.8;">
+        We will be going over the details of your {!Opportunity.Commodity_Type__c} agreement, please note this call follows a closely regulated script and we must ask 
+        all questions in the way they were written in order to process your agreement with the supplier. 
+    </div>
+    <div style = "font-family: inherit; line-height: 2.8;">
+        To begin, please answer with a clear YES or NO 
+    </div>
+        
+    <div style = "font-family: inherit; line-height: 2.8;">
+        <ol>
+            <li>Do you understand that this call is recorded for quality assurances?</li>
+            <li>Do you understand that {!Opportunity.Owner.Name}, the consultant with whom you spoke represents DNE Resources an independent consulting firm, brokering for {!Opportunity.Supplier__r.Name}?</li>
+            <li>Was the agreement reviewed by you and all information deemed to be accurate?</li>
+            <li>Please state the company’s Legal Name and Operating name (if applicable): {!Opportunity.Account.Company_Legal_Name__c} AND {!Opportunity.Account.Name}</li>
+            <li>Please state your name and position with the company: </li>
+            <li>Do you have signing authority to bind this corporation? </li>
+            <li>Do you understand that this agreement will have you on a {!Opportunity.RecordType.Name} program with a price of {!Opportunity.Selling_Price__c} for a period of <apex:outputText value="{0, number, 0}"><apex:param value="{!Opportunity.Subscription_Term__c}"/></apex:outputText> months starting on  
+                <apex:outputText value="{0,date,' 'MM'/'dd'/'yyyy}">
+                    <apex:param value="{!Opportunity.Flow_Date__c}"/>
+                </apex:outputText>?</li>
+            <apex:variable value="{1}" var="foo" rendered="{!Opportunity.RecordType.Name == 'Fixed'}">
+            <li>Do you understand that if you cancel this agreement before the end date, drop or close any sites without replacing them 
+                or sign up with a different supplier for the same location(s), you could be subject to cancellation fees?
+            </li>
+            </apex:variable>
+            <apex:variable value="{1}" var="foo" rendered="{!Opportunity.RecordType.Name == 'Variable'}">
+            <li>Do you understand that you must provide a 30 day written notice to prior to any cancellations as to not incur any exit fees? 
+                </li>
+            </apex:variable>
+            <li>Do you understand that savings are not guaranteed under this agreement? </li>
+            <li>On a scale of 1-10 how would you rate the service you received from your energy consultant?</li>
+        </ol>
+    </div>
+
+    <div style = "font-family: inherit; line-height: 2.8;">
+        - So this brings us to the end of our call, I thank you very much for your time and please note you will be receiving a confirmation notice 
+        from {!Opportunity.Supplier__r.Name}. 
+    </div>
+        
+            </html>
+</apex:page>

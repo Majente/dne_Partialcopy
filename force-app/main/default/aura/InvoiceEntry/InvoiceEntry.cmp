@@ -1,0 +1,110 @@
+<aura:component controller="InvoiceEntryController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="ObjectName" type="string" default="CSV_INVOICE_DATA_TEMP__c"/>
+    <aura:attribute name="InvoiceData" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="15"/>
+    <aura:attribute name="PaginationList" type="List"/>
+    <aura:attribute name="selectedEntries" type="List" default="[]"/>
+    <aura:attribute name="isSelectAll" type="boolean" default="false"/>
+    <aura:attribute name="spinner" type="boolean"/>
+    <aura:html tag="style">
+        .slds-button-group .slds-button:last-child, .slds-button-group-list li:last-child .slds-button, .slds-button-group .slds-button_last .slds-button, .slds-button-group .slds-button--last .slds-button, .slds-button-group .slds-button.slds-button_last, .slds-button-group .slds-button.slds-button--last, .slds-button-group .slds-button_last .slds-button:only-child, .slds-button-group .slds-button--last .slds-button:only-child, .slds-button-group .slds-button.slds-button_last, .slds-button-group .slds-button.slds-button--last {
+        border-radius: 0 var(--lwc-buttonBorderRadius,.25rem) var(--lwc-buttonBorderRadius,.25rem) 0;
+        margin-left: 15px;
+        }
+    </aura:html>
+    <lightning:card title="Invoice Entry Data Table">
+        <aura:if isTrue="{!v.spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+        <aura:if isTrue="true">
+            <div class="slds-grid slds-grid_vertical">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-text-title_caps" scope="col">
+                                <label class="slds-checkbox">
+                                    <ui:inputCheckbox value="{!v.isSelectAll}" change="{!c.handleSelectAll}"  aura:id="SelectAllEntry"/>
+                                    <span class="slds-checkbox--faux" />
+                                    <span class="slds-form-element__label"></span>
+                                </label>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Invoice Key">Invoice Key</div>
+                            </th>
+                             <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Contract">Contract</div>
+                            </th>
+                             <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Reason">Reason</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Supplier Contract Id">Supplier Contract Id</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Payment Type">Payment Type</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <aura:iteration items="{! v.PaginationList }" var="Data">
+                            <tr>
+                                <td>
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox aura:id="SelectEntry" change="{!c.handleSelect}" value="" text="{!Data.Id}"/>
+                                        <span class="slds-checkbox--faux" />
+                                        <span class="slds-form-element__label"></span>
+                                    </label> 
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!Data.Formula_for_match_with_Contract_c__c}"/>
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!Data.MatchedContract__c}"/>
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!Data.Reason__c}"/>
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!Data.Contract_ID__c}"/>
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!Data.Calculation_Type__c}"/>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                        
+                    </tbody>
+                </table>
+                <div style="margin: 20px;">
+                    <lightning:buttonGroup>
+                        <lightning:button label="Previous" 
+                                          disabled="{!v.startPage == 0}"  
+                                          onclick="{!c.previous}" 
+                                          variant="brand"
+                                          iconName="utility:back"/>
+                        <lightning:button label="Next" 
+                                          disabled="{!v.endPage + 1 >= v.totalRecords}" 
+                                          onclick="{!c.next}" 
+                                          variant="brand"
+                                          iconName="utility:forward"/>
+                    </lightning:buttonGroup>
+                    <div style="float:right;">
+                        <lightning:button variant="brand" label="Proceed" title="Proceed Entry" onclick="{! c.handleProceed }" />
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+    </lightning:card>
+</aura:component>

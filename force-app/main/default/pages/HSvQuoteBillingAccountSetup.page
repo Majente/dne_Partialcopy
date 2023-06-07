@@ -1,0 +1,78 @@
+<apex:page showHeader="false" sidebar="false" cache="false" controller="HScQuoteBillingAccountSetup" contentType="text/xml" >
+
+    <block text-align="center" font-family="open sans" color="gray" font-size="16" font-weight="bold">
+        BILLING ACCOUNT SETUP
+    </block>
+    <block>
+        <table table-layout="fixed" width="100%" border-bottom-style="solid" border-collapse="collapse">
+            <table-body>
+                <table-row border="1pt solid black" width="100%">
+                    <table-cell display-align="center" border=" 1px solid black" font-weight="bold" padding="3" width="60px"><block text-align="center" font-family="open sans" color="gray" font-size="10" > Billing account# </block></table-cell>
+                    <table-cell display-align="center" border=" 1px solid black" font-weight="bold" padding="2" width="120px"><block text-align="center" font-family="open sans" color="gray" font-size="10" > Site ID/s </block></table-cell>
+                    <table-cell display-align="center" border=" 1px solid black" font-weight="bold" padding="2" width="190px"><block text-align="center" font-family="open sans" color="gray" font-size="10" > Site Address </block></table-cell>
+                    <table-cell display-align="center" border=" 1px solid black" font-weight="bold" padding="2" width="130px"><block text-align="center" font-family="open sans" color="gray" font-size="10" >Billing account mailing address</block></table-cell>
+                    <table-cell display-align="center" border=" 1px solid black" font-weight="bold" padding="2" width="120px"><block text-align="center" font-family="open sans" color="gray" font-size="10" > Operating name (as desired on invoice) </block></table-cell>
+                </table-row>
+                
+                
+                 <apex:repeat var="obj" value="{!QuoteDetailList}">
+                     <table-row border="1pt solid black">
+                         <table-cell display-align="center" border=" 1px solid black" padding="5" font-family="open sans" color="black" font-size="10">
+                             <block text-align="center"> 
+                                 <apex:outputText value="{!obj.BillingAccountNo}"></apex:outputText>
+                             </block>
+                         </table-cell>
+                         
+                         <table-cell number-columns-spanned="4">
+                             <block> 
+                                 <table table-layout="fixed" width="100%" border-bottom-style="solid" border-collapse="collapse">
+                                     <table-body>
+                                         <apex:repeat var="siteidobj" value="{!obj.siteList}">
+                                             <table-row border="1pt solid black">
+                                                 <table-cell display-align="center" border=" 1px solid black" padding="5" width="120px" font-family="open sans" color="black" font-size="10">
+                                                     <block text-align="center"> 
+                                                         <apex:outputText value="{!siteidobj.SiteIDs}"></apex:outputText>
+                                                     </block>
+                                                 </table-cell>
+                                                 <table-cell border=" 1px solid black" padding="5" width="190px" font-family="open sans" color="black" font-size="10">
+                                                     <block> 
+                                                         <apex:outputText value="{!siteidobj.SiteAddress}"></apex:outputText>
+                                                     </block>
+                                                 </table-cell>
+                                                 
+                                                 <table-cell display-align="top" border=" 1px solid black" padding="5" width="130px" font-family="open sans" color="black" font-size="10">
+                                                     <block text-align="center"> 
+                                                         <apex:outputText value="{!siteidobj.BillingStreet}"></apex:outputText>
+                                                     </block>    
+                                                     <block text-align="center"> 
+                                                         <apex:outputText value="{!siteidobj.BillingCity}"></apex:outputText>,
+                                                         <apex:outputText value="{!siteidobj.BillingState}"></apex:outputText>
+                                                     </block>
+                                                     <block text-align="center">     
+                                                         <apex:outputText value="{!siteidobj.BillingPostalCode}"></apex:outputText>
+                                                     </block>
+                                                 </table-cell>
+                                                 
+                                                 <table-cell display-align="top" border=" 1px solid black" padding="5" width="120px" font-family="open sans" color="black" font-size="10">
+                                                     <block text-align="center" display-align="top"> 
+                                                         <apex:outputText value="{!siteidobj.AccountName}"></apex:outputText>
+                                                     </block>
+                                                 </table-cell>
+                                                 
+                                             </table-row>
+                                         </apex:repeat>
+                                     </table-body>
+                                 </table>
+                             </block>
+                         </table-cell>
+                        
+                         
+                     </table-row>
+                     
+                 </apex:repeat>
+                
+            </table-body>
+        </table>
+    </block>
+   
+</apex:page>

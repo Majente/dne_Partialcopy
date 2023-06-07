@@ -1,0 +1,36 @@
+<aura:component controller="DupsTestController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <!-- attributes -->
+    <aura:attribute name="DupsList" type="Account_Dups__c[]" />
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="TempId" type="string"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="title" type="String" default="Dups-Accounts"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="5"/>
+    <aura:attribute name="selectedRows" type="String"/>
+    <aura:attribute name="isButtonDisabled" type="Boolean" default="true" access="PRIVATE"/>
+    
+    <!-- handlers-->
+    <aura:handler name="init" value="{!this }" action="{!c.init}"/>
+    <lightning:card>
+        <aura:set attribute="title">
+            <lightning:icon iconName="action:new_note" size="small"/>
+            <u><b style="margin-left: 10px;font-size: 18px;">{! v.title }</b></u>
+        </aura:set>
+        <div>
+            <lightning:datatable
+                                 columns="{!v.columns }"
+                                 data="{!v.data }"
+                                 keyField="Id"
+                                 maxRowSelection="{! v.maxRowSelection }"
+                                 onrowselection="{! c.handleSelect }"/>
+        </div>
+        <span style="display: block;margin-top: 15px;text-align: center;"><b>Do You Want Change Parent Account ?</b></span>
+        <span style="margin-top: 10px;display: block;text-align: center;">
+            <lightning:button variant="brand" label="Process" title="Brand action" onclick="{! c.processSelect }"/>
+        </span>
+    </lightning:card>
+    <!-- the container element determine the height of the datatable -->
+</aura:component>

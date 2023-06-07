@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Manager_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Manager Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Managing Others</fullName>
+                <default>false</default>
+                <label>Managing Others</label>
+            </value>
+            <value>
+                <fullName>No Subordinates</fullName>
+                <default>false</default>
+                <label>No Subordinates</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

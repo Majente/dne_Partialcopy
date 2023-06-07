@@ -1,0 +1,133 @@
+<apex:page showHeader="true" sidebar="true" standardController="Account" extensions="AddSiteAccountController"
+           lightningStylesheets="true" docType="html-5.0">
+    <apex:slds />
+    <apex:form > <div class="slds-page-header">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h3>
+                                    <span class="slds-page-header__title slds-truncate"
+                                          title="Add Opportunity">Add Site</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <apex:outputPanel id="pb1">
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_striped slds-p-top_x-small">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Name">Name</div>
+                    </th>
+                     <th scope="col">
+                        <div class="slds-truncate" title="Business Size">Business Size</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Street">Billing Street</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="City">Billing City</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="State">Billing State</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="PostalCode">Billing PostalCode</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Country">Billing Country</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Market">Market</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Total Volume Gas">Total Volume Gas</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Total Volume Electricity">Total Volume Electricity</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <apex:repeat value="{!lstInner}" var="e1">
+                    <tr>   
+                        
+                        <td>
+                            <div class="slds-truncate" title="">
+                                <apex:inputfield value="{!e1.acct.Name}"/> 
+                            </div>
+                        </td>
+                         <td>
+                            <div class="slds-truncate" title="">
+                                <apex:inputfield value="{!e1.acct.Business_Size__c}"/> 
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate" title="">
+                                <apex:inputfield value="{!e1.acct.BillingStreet}" /> 
+                            </div>
+                        </td>
+                         <td>
+                            <div class="slds-truncate" title="">
+                                <apex:inputfield value="{!e1.acct.BillingCity}" /> 
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate" title="">
+                                <apex:inputfield value="{!e1.acct.BillingState}"/> 
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate" title="">
+                                <apex:inputfield value="{!e1.acct.BillingPostalCode}" /> 
+                            </div>
+                        </td>
+                         <td>
+                            <div class="slds-truncate" title="">
+                                <apex:inputfield value="{!e1.acct.BillingCountry}" /> 
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <div class="slds-truncate" title="">
+                                <apex:inputfield value="{!e1.acct.Market__c}" /> 
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <div class="slds-truncate" title="">
+                                <apex:inputfield value="{!e1.acct.Total_Annual_Volume_Gas__c}"/> 
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate" title="">
+                                <apex:inputfield value="{!e1.acct.Total_Annual_Volume_ElectrictIy__c}"/> 
+                            </div>
+                        </td>
+                        <td>
+                            <apex:commandbutton value="Remove" action="{!Remove}" rerender="pb1" >
+                                <apex:param name="rowToBeDeleted" value="{!e1.recCount}" assignTo="{!selectedRowIndex}"></apex:param>
+                                <apex:param assignTo="{!recCount}" value="{!index}" name="id"/>
+                            </apex:commandbutton>
+                            <apex:commandbutton value="Add" action="{!Add}" />
+                        </td>
+                        
+                        <apex:variable var="index" value="{!index+1}" /></tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+        </apex:outputPanel>
+        <div align="center">
+            <apex:commandButton value="Add Site" action="{!Save}" status="myStatus"
+                                styleClass="slds-vf-button_brand" />
+        </div>
+    </apex:form>
+</apex:page>

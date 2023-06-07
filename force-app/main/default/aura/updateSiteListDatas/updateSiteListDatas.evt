@@ -1,0 +1,4 @@
+<aura:event type="Application" description="Event template" >
+    <aura:attribute name="cardList" type="object[]" />
+    <aura:attribute name="FinalcardList" type="object[]" />
+</aura:event>
