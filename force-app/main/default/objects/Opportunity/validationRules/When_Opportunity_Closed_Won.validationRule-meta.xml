@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>When_Opportunity_Closed_Won</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND
+( 
+    OR
+    (
+        ISPICKVAL(StageName ,&apos;Closed Won&apos;),
+        ISPICKVAL(StageName ,&apos;Activate Change&apos;)
+    ),
+    OR
+    (
+        ISCHANGED( Subscription_Term__c ),
+        ISCHANGED( Supplier__c ),
+        ISCHANGED( Margin__c ),
+        ISCHANGED( Supplier_Price__c ),
+        ISCHANGED( Admin_Fee__c ),
+        ISCHANGED(  Flow_Date__c )
+    )
+)</errorConditionFormula>
+    <errorMessage>You&apos;re not allowed to change the opportunity details in this stage.</errorMessage>
+</ValidationRule>

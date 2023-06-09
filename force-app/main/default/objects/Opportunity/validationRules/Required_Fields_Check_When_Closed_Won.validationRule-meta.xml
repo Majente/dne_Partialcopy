@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_Fields_Check_When_Closed_Won</fullName>
+    <active>false</active>
+    <description>This rule validate necessary fields of Opportunity are not blank on Close Won.</description>
+    <errorConditionFormula>AND
+(
+    OR
+    (
+        ISPICKVAL(StageName ,&apos;Closed Won&apos;),
+        ISPICKVAL(StageName ,&apos;Activate Change&apos;)
+    ),
+    OR
+    (
+         ISBLANK( Opener__c ),
+         ISBLANK( Closer__c ),
+         ISBLANK( Flow_Date__c ),
+         ISBLANK( Margin__c ),
+         ISBLANK( Supplier__c ),
+         ISBLANK( Supplier_Price__c ),
+         ISBLANK( Subscription_Term__c )
+    )
+)</errorConditionFormula>
+    <errorMessage>The Opener, the Closer, Flow Date, Term, Margin, Supplier and Supplier Price are required on Closed-Won Opportunities</errorMessage>
+</ValidationRule>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Agents_Max_nb_of_Accounts_required</fullName>
+    <active>true</active>
+    <description>A Sales Agent must have a maximum number of Accounts assigned</description>
+    <errorConditionFormula>AND 
+( 
+Sales_Agent__c = true, 
+OR 
+( 
+ISNULL(Maximum_Number_of_Accounts__c), 
+Maximum_Number_of_Accounts__c &lt; 0 
+) 
+)</errorConditionFormula>
+    <errorMessage>Sales Agents must have a value for the field &quot;Maximum Number of Accounts&quot;</errorMessage>
+</ValidationRule>

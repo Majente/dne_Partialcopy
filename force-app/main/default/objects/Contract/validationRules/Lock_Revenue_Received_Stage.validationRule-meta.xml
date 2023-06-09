@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lock_Revenue_Received_Stage</fullName>
+    <active>false</active>
+    <description>Once the contract stage set to &quot;Revenue Received&quot; it will lock that stage and don&apos;t allow to changes the contract stage except &apos;Cancelled&apos;.</description>
+    <errorConditionFormula>AND(
+    TEXT(PRIORVALUE( Status )) = &quot;Revenue Received&quot;,
+    ISCHANGED( Status ),
+    NOT( ISPICKVAL(Status , &apos;Cancelled&apos; ) ) 
+)</errorConditionFormula>
+    <errorMessage>You can&apos;t change the stage of the contract from &quot;Revenue Received&quot; to any other stage except &apos;Cancelled&apos;.</errorMessage>
+</ValidationRule>

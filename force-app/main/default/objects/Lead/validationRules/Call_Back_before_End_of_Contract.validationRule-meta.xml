@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Call_Back_before_End_of_Contract</fullName>
+    <active>true</active>
+    <errorConditionFormula>DATEVALUE(Call_Back_Date__c) &gt; End_Date_of_Contract__c</errorConditionFormula>
+    <errorMessage>Call Back Date must be before the End Date of Contract</errorMessage>
+</ValidationRule>

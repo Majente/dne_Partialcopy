@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Competitor_info_required</fullName>
+    <active>true</active>
+    <description>If the Lead is with a competitor, we need more data about it</description>
+    <errorConditionFormula>AND
+(
+    ISPICKVAL(Status, &apos;With Competitor&apos;),
+    OR
+    (
+        ISBLANK(Competitor__c),
+        ISNULL(Call_Back_Date__c),
+        ISNULL(End_Date_of_Contract__c)
+    )
+)</errorConditionFormula>
+    <errorMessage>When the Lead is with a Competitor, the Competitor, Call Back Date and End Date of Contract are required</errorMessage>
+</ValidationRule>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>R_R_New</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>R&amp;R New</label>
+        <sharedTo>
+            <group>R_R_New_business_group</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Type</field>
+            <operation>equals</operation>
+            <value>R&amp;R New</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>R_R_Renewal</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>R&amp;R Renewal</label>
+        <sharedTo>
+            <group>R_R_Renewal_group</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Type</field>
+            <operation>equals</operation>
+            <value>R&amp;R Renewal</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Select_a_Product_of_Choice_when_Stage_is</fullName>
+    <active>false</active>
+    <errorConditionFormula>ISBLANK(TEXT(Product_of_Choice__c ) )
+
+&amp;&amp; 
+
+TEXT(StageName) = &apos;Send to Operations&apos;</errorConditionFormula>
+    <errorMessage>Product of Choice is Required.</errorMessage>
+</ValidationRule>

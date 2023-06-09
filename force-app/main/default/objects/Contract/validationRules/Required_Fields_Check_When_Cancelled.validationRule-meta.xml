@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_Fields_Check_When_Cancelled</fullName>
+    <active>true</active>
+    <description>The Date of Cancellation and Cancellation Reason are required for Contract cancellation.</description>
+    <errorConditionFormula>AND
+(
+ISPICKVAL(Status ,&apos;Cancelled&apos;),
+OR
+(
+ISBLANK(TEXT(CancellationReason__c)),
+ISBLANK(DateofCancellation__c)
+)
+)</errorConditionFormula>
+    <errorMessage>The Date of Cancellation and Cancellation Reason are required for contract cancellation.</errorMessage>
+</ValidationRule>

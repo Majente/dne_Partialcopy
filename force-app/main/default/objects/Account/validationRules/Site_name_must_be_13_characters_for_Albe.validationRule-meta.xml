@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Site_name_must_be_13_characters_for_Albe</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( RecordType.DeveloperName = &apos;Site&apos;,Market__r.Name = &apos;Alberta&apos;,  LEN(Name) != 13 )</errorConditionFormula>
+    <errorMessage>Site name must be 13 characters for Alberta</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Copy_addr_from_Parent_if_parent_exists</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( ISNULL(ParentId ), 
+				OR ( Service_address_same_as_parent__c ,  Billing_address_same_as_parent__c ))</errorConditionFormula>
+    <errorMessage>Cannot set copy address from parent if parent is blank</errorMessage>
+</ValidationRule>

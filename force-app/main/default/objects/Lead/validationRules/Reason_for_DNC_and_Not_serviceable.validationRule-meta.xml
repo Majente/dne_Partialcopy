@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_for_DNC_and_Not_serviceable</fullName>
+    <active>true</active>
+    <description>Need to put a reason for DNC and Not Serviceable</description>
+    <errorConditionFormula>AND(OR(ISPICKVAL(Status,&apos;Do Not Call&apos;), ISPICKVAL(Status,&apos;Not Serviceable&apos;)), 
+						ISBLANK(TEXT(Reason__c)))</errorConditionFormula>
+    <errorMessage>Need to put reason if Status is DNC or Not Serviceable</errorMessage>
+</ValidationRule>

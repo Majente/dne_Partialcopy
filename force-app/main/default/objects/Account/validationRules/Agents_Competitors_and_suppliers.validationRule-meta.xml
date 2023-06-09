@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Agents_Competitors_and_suppliers</fullName>
+    <active>true</active>
+    <errorConditionFormula>and ($Profile.Name = &apos;Sales Agent&apos;,
+OR ( RecordType.Name = &apos;Competitor&apos;, RecordType.Name = &apos;Supplier&apos;))</errorConditionFormula>
+    <errorMessage>Cannot Create Competitor or &apos;Supplier. Please contact Operations</errorMessage>
+</ValidationRule>

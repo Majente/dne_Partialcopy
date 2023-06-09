@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FlowDate_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+ Flow_Date__c &gt; PP_Parent_Opportunity__r.End_date__c,
+Flow_Date__c &gt;  Renewal_Parent_Opportunity__r.End_date__c 
+)</errorConditionFormula>
+    <errorMessage>Flow Date can&apos;t be greater than Parent Opportunity&apos;s End Date</errorMessage>
+</ValidationRule>

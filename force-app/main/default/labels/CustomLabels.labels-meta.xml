@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ACTION</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ACTION</shortDescription>
+        <value>ACTION</value>
+    </labels>
+    <labels>
+        <fullName>ACTION1</fullName>
+        <categories>DNE</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ACTION1</shortDescription>
+        <value>ACTION</value>
+    </labels>
+    <labels>
+        <fullName>AR_Title</fullName>
+        <categories>Sent To Operations</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select documents to send</shortDescription>
+        <value>Select documents to send</value>
+    </labels>
+    <labels>
+        <fullName>AddLocation</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for Location</shortDescription>
+        <value>LOCATION NAME</value>
+    </labels>
+    <labels>
+        <fullName>AddLocationName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for Add Location</shortDescription>
+        <value>Add Location Name</value>
+    </labels>
+    <labels>
+        <fullName>AddNewSite</fullName>
+        <categories>Opportunity Amendment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddNewSite</shortDescription>
+        <value>Add New Sites</value>
+    </labels>
+    <labels>
+        <fullName>Add_Sites_to_Opportunity</fullName>
+        <categories>DNE</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Add Sites to Opportunity</shortDescription>
+        <value>Add Sites to Opportunity</value>
+    </labels>
+    <labels>
+        <fullName>AmendExistingSites</fullName>
+        <categories>Opportunity Amendment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AmendExistingSites</shortDescription>
+        <value>Amend Existing Sites [To remove a site make the volume zero].</value>
+    </labels>
+    <labels>
+        <fullName>AmendOpportunityWithoutProduct</fullName>
+        <categories>Opportunity Amendment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AmendOpportunityWithoutProduct</shortDescription>
+        <value>Can not amend an opportunity with no products.</value>
+    </labels>
+    <labels>
+        <fullName>Amend_with_Updated_Values</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Amend with Updated Values</shortDescription>
+        <value>Amend With New margin, Supplier Price &amp; Type</value>
+    </labels>
+    <labels>
+        <fullName>An_error_has_occured_while_saving_data</fullName>
+        <categories>CSV Controller</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>An error has occured while saving data</shortDescription>
+        <value>An error has occured while saving data</value>
+    </labels>
+    <labels>
+        <fullName>An_error_has_occured_while_savinupdating_data</fullName>
+        <categories>Invoice Monthly</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>An error has occurred while updating data</shortDescription>
+        <value>An error has occurred while updating data:</value>
+    </labels>
+    <labels>
+        <fullName>Attachment_are_not_available_in_this_record</fullName>
+        <categories>Send to operations</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Attachment are not available in this record.</shortDescription>
+        <value>Attachment are not available in this record.</value>
+    </labels>
+    <labels>
+        <fullName>Batch_selection_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Batch selection label</shortDescription>
+        <value>Please select a batch to run.</value>
+    </labels>
+    <labels>
+        <fullName>Body</fullName>
+        <categories>Sent To Operations</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Body</shortDescription>
+        <value>Mail Body</value>
+    </labels>
+    <labels>
+        <fullName>CITY</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CITY</shortDescription>
+        <value>CITY</value>
+    </labels>
+    <labels>
+        <fullName>COUNTRY</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COUNTRY</shortDescription>
+        <value>COUNTRY</value>
+    </labels>
+    <labels>
+        <fullName>CSVImportSuccessMessage</fullName>
+        <categories>Reconciliation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSV Import Success Message</shortDescription>
+        <value>Records are sucessfully inserted for process. You will be notified by email when the process is completed.</value>
+    </labels>
+    <labels>
+        <fullName>CSV_file_data_error_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSV file data error label</shortDescription>
+        <value>An error has occured while saving CSV file data into salesforce object and error caused by :</value>
+    </labels>
+    <labels>
+        <fullName>CSV_upload_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSV upload label</shortDescription>
+        <value>Please upload csv upto 10000 lines.</value>
+    </labels>
+    <labels>
+        <fullName>Call_back_lead_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Call back lead label</shortDescription>
+        <value>). Please remember to call back the Lead!.</value>
+    </labels>
+    <labels>
+        <fullName>Cancel_Date_Error_Label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cancel Date Error Label</shortDescription>
+        <value>Please select cancellation date.</value>
+    </labels>
+    <labels>
+        <fullName>CaseOwner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Owner</shortDescription>
+        <value>Please select the case owner</value>
+    </labels>
+    <labels>
+        <fullName>Case_creation_for_all_contract_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case creation for all contract label</shortDescription>
+        <value>Cases creation process for the all contracts started. You will be notified by email when the process is completed.</value>
+    </labels>
+    <labels>
+        <fullName>Case_creation_for_selected_contract_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case creation for selected contract label</shortDescription>
+        <value>Cases creation process for the selected contracts started. You will be notified by email when the process is completed.</value>
+    </labels>
+    <labels>
+        <fullName>Cause</fullName>
+        <categories>CSV Controller</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cause</shortDescription>
+        <value>Cause:</value>
+    </labels>
+    <labels>
+        <fullName>Commission_Hierarchy_Record_Label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Commission Hierarchy Record Label</shortDescription>
+        <value>Please create a Commission Hierarchy record for this OPENER (</value>
+    </labels>
+    <labels>
+        <fullName>Commission_Percent_Record_Label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Commission Percent Record Label</shortDescription>
+        <value>Please create a Commission Percent record for this Commission Type (</value>
+    </labels>
+    <labels>
+        <fullName>Commission_hierarchy_required_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Commission hierarchy required label</shortDescription>
+        <value>ERROR: At least one Level is required for a Commission Hierarchy.</value>
+    </labels>
+    <labels>
+        <fullName>Contract_without_Renewal_Opportunity</fullName>
+        <categories>Renewal Opportunity Sync</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract without Renewal Opportunity</shortDescription>
+        <value>Contract has no renewal Opportunity</value>
+    </labels>
+    <labels>
+        <fullName>CreateCaseForReconcile</fullName>
+        <categories>Reconciliation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreateCaseForReconcile</shortDescription>
+        <value>Are you sure you want to create cases for all shown contracts?</value>
+    </labels>
+    <labels>
+        <fullName>Currently_running_batch_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Currently running batch label</shortDescription>
+        <value>The batch is currently running. An email will be sent to</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Result_Batch_Size_Error</fullName>
+        <categories>Add Site Component</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate Result Batch Size Error</shortDescription>
+        <value>Max. 50 Records can be processed at a time.</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Service_Address</fullName>
+        <categories>Add Site Component</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate Service Address</shortDescription>
+        <value>This Service Address for this Market is already exists</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Site_For_Market</fullName>
+        <categories>Add Site Component</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate site for same market is not allow</shortDescription>
+        <value>Duplicate Site for the same market is not allowed.</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Sites</fullName>
+        <categories>Add Site Component</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate Sites</shortDescription>
+        <value>Duplicate Sites</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_site_for_same_service_address_is_not_allow</fullName>
+        <categories>Add Site Component</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate site for same service address is not allow</shortDescription>
+        <value>Duplicate Site for same Service Address is not allowed.</value>
+    </labels>
+    <labels>
+        <fullName>Effective_from_field_is_required_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Effective from field is required label</shortDescription>
+        <value>ERROR: The Effective From field is required.</value>
+    </labels>
+    <labels>
+        <fullName>Email_Sent_Success_message</fullName>
+        <categories>Send to operations</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email Sent Success message</shortDescription>
+        <value>Email Sent Successfully.</value>
+    </labels>
+    <labels>
+        <fullName>Email_to_Cc</fullName>
+        <categories>Send to operations</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email_to_Cc</shortDescription>
+        <value>Email to Cc</value>
+    </labels>
+    <labels>
+        <fullName>Error_reading_CSV_file</fullName>
+        <categories>CSV Controller</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error reading CSV file</shortDescription>
+        <value>Error reading CSV file</value>
+    </labels>
+    <labels>
+        <fullName>Go_Back</fullName>
+        <categories>Send to operations</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Go Back</shortDescription>
+        <value>Go Back</value>
+    </labels>
+    <labels>
+        <fullName>Identical_Record_Error_Label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Identical Record Error Label</shortDescription>
+        <value>ERROR: There is already an identical record:</value>
+    </labels>
+    <labels>
+        <fullName>ImportCSVNotificationSubject</fullName>
+        <categories>Reconciliation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Import CSV Notification Subject</shortDescription>
+        <value>Reconciliation Status Update</value>
+    </labels>
+    <labels>
+        <fullName>Import_Site_Data_Template</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Import Site Data Template</shortDescription>
+        <value>LOCATION_NAME,MARKET,STREET_ADDRESS,CITY,PROVINCE/STATE,POSTALCODE/ZIP,COUNTRY,SITE_ID,TYPE,UNIT_OF_MEASURE,VOLUME</value>
+    </labels>
+    <labels>
+        <fullName>Import_Supplier_Invoice_Template</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Import Supplier Invoice Template</shortDescription>
+        <value>Payment_Month,Calculation_Type,Commodity,Contract_ID,LDC_Contracted_Usage,LDC_Account_Number,Adder,Amount,Supplier Name,LDC_Annual_Usage,LDC_Status</value>
+    </labels>
+    <labels>
+        <fullName>Job_done_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Job done label</shortDescription>
+        <value>when the job is done.</value>
+    </labels>
+    <labels>
+        <fullName>Lead_contract_with_competitor_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Lead contract with competitor label</shortDescription>
+        <value>This Lead\&apos;s contract with a competitor is near the end (</value>
+    </labels>
+    <labels>
+        <fullName>MARKET1</fullName>
+        <categories>DNE</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MARKET1</shortDescription>
+        <value>MARKET</value>
+    </labels>
+    <labels>
+        <fullName>Margin_must_be</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Margin limit</shortDescription>
+        <value>Margin must be</value>
+    </labels>
+    <labels>
+        <fullName>Margin_must_be_between</fullName>
+        <categories>Account Chart</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Margin must be between</shortDescription>
+        <value>Margin must be between</value>
+    </labels>
+    <labels>
+        <fullName>MarketLabel</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Market Label</shortDescription>
+        <value>MARKET</value>
+    </labels>
+    <labels>
+        <fullName>NoSiteSelected</fullName>
+        <categories>Opportunity Amendment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoSiteSelected</shortDescription>
+        <value>Either no site selected or volume is not changed.</value>
+    </labels>
+    <labels>
+        <fullName>No_Account_found</fullName>
+        <categories>Account Chart</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Account found</shortDescription>
+        <value>No Account found</value>
+    </labels>
+    <labels>
+        <fullName>No_Contract_Found_Error_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Contract Found Error Label</shortDescription>
+        <value>There is no contract associated with opportunity.</value>
+    </labels>
+    <labels>
+        <fullName>No_Prices_for_today_found</fullName>
+        <categories>Account Chart</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Prices for today found</shortDescription>
+        <value>No Prices for today found</value>
+    </labels>
+    <labels>
+        <fullName>No_Prices_found_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Prices found label</shortDescription>
+        <value>No prices for today found.</value>
+    </labels>
+    <labels>
+        <fullName>No_Record_Selected_Error_Label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Record Selected Error Label</shortDescription>
+        <value>Please select at least one record.</value>
+    </labels>
+    <labels>
+        <fullName>No_Site_Selected_Error_Label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Site Selected Error Label</shortDescription>
+        <value>None Site Selected to Add Under Opportunity.</value>
+    </labels>
+    <labels>
+        <fullName>No_lead_found_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No lead found label</shortDescription>
+        <value>No Lead found.</value>
+    </labels>
+    <labels>
+        <fullName>Opener_is_required_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opener is required label</shortDescription>
+        <value>ERROR: The Opener is required.</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_have_no_product_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity have no product label</shortDescription>
+        <value>This opportunity have no product.</value>
+    </labels>
+    <labels>
+        <fullName>POSTALCODE_ZIP</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>POSTALCODE/ZIP</shortDescription>
+        <value>POSTALCODE/ZIP</value>
+    </labels>
+    <labels>
+        <fullName>PROVINCE_STATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROVINCE/STATE</shortDescription>
+        <value>PROVINCE/STATE</value>
+    </labels>
+    <labels>
+        <fullName>PageMessage_No_Price_History</fullName>
+        <categories>Price_History_Summary</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Price History</shortDescription>
+        <value>No Price found for this supplier</value>
+    </labels>
+    <labels>
+        <fullName>PageMessage_Price_History_Summary</fullName>
+        <categories>Price_History_Summary</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Price_History_Summary</shortDescription>
+        <value>Showing ~totalSize results on ~totalPages page(s), ~limitSize records/page</value>
+    </labels>
+    <labels>
+        <fullName>Please_provide_a_positive_value_for_the_Estimated_Volume</fullName>
+        <categories>Account Chart</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please provide a positive value for the Estimated Volume</shortDescription>
+        <value>Please provide a positive value for the Estimated Volume</value>
+    </labels>
+    <labels>
+        <fullName>Please_provide_a_positive_value_for_the_Margin</fullName>
+        <categories>Account Chart</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please provide a positive value for the Margin</shortDescription>
+        <value>Please provide a positive value for the Margin</value>
+    </labels>
+    <labels>
+        <fullName>Please_provide_a_valid_value_for_the_Chosen_Margin_and_Estimated_Volume</fullName>
+        <categories>Account Chart</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please provide a valid value for the Chosen Margin and Estimated Volume</shortDescription>
+        <value>Please provide a valid value for the Chosen Margin and Estimated Volume</value>
+    </labels>
+    <labels>
+        <fullName>Please_select_Effective_From_and_Effective_To</fullName>
+        <categories>CSV Controller</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please select Effective From and Effective To</shortDescription>
+        <value>Please select Effective From and Effective To</value>
+    </labels>
+    <labels>
+        <fullName>Please_select_a_CSV_file</fullName>
+        <categories>CSV Controller</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please select a CSV file</shortDescription>
+        <value>Please select a CSV file</value>
+    </labels>
+    <labels>
+        <fullName>Please_select_at_least_one_contract_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please select at least one contract label</shortDescription>
+        <value>Please select atleast one contract.</value>
+    </labels>
+    <labels>
+        <fullName>Please_select_at_least_one_entry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please_select_at_least_one_entry</shortDescription>
+        <value>Please select at least one invoice entry.</value>
+    </labels>
+    <labels>
+        <fullName>Positive_value_for_margin_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Positive value for margin label</shortDescription>
+        <value>Please provide a positive value for the margin.</value>
+    </labels>
+    <labels>
+        <fullName>Price_List_uploaded_successfully</fullName>
+        <categories>PriceList Upload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Price List uploaded successfully</shortDescription>
+        <value>Price List uploaded successfully</value>
+    </labels>
+    <labels>
+        <fullName>Provide_numeric_value_for_estimated_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Provide numeric value for estimated label</shortDescription>
+        <value>WARNING: Please provide a numeric value for the estimated volume.</value>
+    </labels>
+    <labels>
+        <fullName>Provide_numeric_value_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Provide numeric value label</shortDescription>
+        <value>WARNING: Please provide a numeric value for the selected price.</value>
+    </labels>
+    <labels>
+        <fullName>Provide_positive_value_for_estimated_volume_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Provide positive value for estimated volume label</shortDescription>
+        <value>Please provide a positive value for the estimated volume.</value>
+    </labels>
+    <labels>
+        <fullName>Provide_value_for_chosen_margin_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Provide value for chosen margin label</shortDescription>
+        <value>Please provide a valid value for the chosen margin and estimated volume.</value>
+    </labels>
+    <labels>
+        <fullName>ReconcilePageLimitMessage</fullName>
+        <categories>Reconciliation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ReconcilePageLimitMessage</shortDescription>
+        <value>Records max limit to view. For more please download CSV.</value>
+    </labels>
+    <labels>
+        <fullName>RecordCountReconcilePage</fullName>
+        <categories>Reconciliation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RecordCountReconcilePage</shortDescription>
+        <value>The number of records are larger, Display in Batch.</value>
+    </labels>
+    <labels>
+        <fullName>Renewal_Opportunity_Sync_Successfully</fullName>
+        <categories>Renewal Opportunity Sync</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Renewal Opportunity Sync Successfully</shortDescription>
+        <value>Renewal Opportunity has been Synced Successfully.</value>
+    </labels>
+    <labels>
+        <fullName>Renewal_already_created_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Renewal already created label</shortDescription>
+        <value>Renewal already created.</value>
+    </labels>
+    <labels>
+        <fullName>Renewal_created_successfully_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Renewal created successfully label</shortDescription>
+        <value>Renewal created successfully.</value>
+    </labels>
+    <labels>
+        <fullName>SAMEASBILLINGADDRESS</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SAME AS BILLING ADDRESS</shortDescription>
+        <value>SAME AS BILLING ADDRESS</value>
+    </labels>
+    <labels>
+        <fullName>SERVICE_ADDRESS</fullName>
+        <categories>DNE</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SERVICE ADDRESS</shortDescription>
+        <value>SERVICE ADDRESS</value>
+    </labels>
+    <labels>
+        <fullName>SITEID</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SITE ID</shortDescription>
+        <value>SITE ID</value>
+    </labels>
+    <labels>
+        <fullName>SUCCESS_Commission_Hierarchy_created</fullName>
+        <categories>Add Commission</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SUCCESS: Commission Hierarchy created</shortDescription>
+        <value>SUCCESS: Commission Hierarchy created.</value>
+    </labels>
+    <labels>
+        <fullName>Select_Email_Template</fullName>
+        <categories>Send to operations</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select Email Template</shortDescription>
+        <value>Select Email Template</value>
+    </labels>
+    <labels>
+        <fullName>Select_documents_to_send</fullName>
+        <categories>Sent To Operations</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select documents to send</shortDescription>
+        <value>Select documents to send</value>
+    </labels>
+    <labels>
+        <fullName>Send_Email</fullName>
+        <categories>Sent To Operations</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Send Email</shortDescription>
+        <value>Send Email</value>
+    </labels>
+    <labels>
+        <fullName>Site_name_must_be_13_character_for_Alberta</fullName>
+        <categories>Add Site Component</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Site name must be 13 character for Alberta</shortDescription>
+        <value>Site name must be 13 character for Alberta.</value>
+    </labels>
+    <labels>
+        <fullName>Street_Address_Label</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Street Address Label</shortDescription>
+        <value>STREET ADDRESS</value>
+    </labels>
+    <labels>
+        <fullName>Subject</fullName>
+        <categories>Sent To Operations</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Subject</shortDescription>
+        <value>Subject</value>
+    </labels>
+    <labels>
+        <fullName>TYPE</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TYPE</shortDescription>
+        <value>TYPE</value>
+    </labels>
+    <labels>
+        <fullName>TYPE1</fullName>
+        <categories>DNE</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TYPE1</shortDescription>
+        <value>TYPE</value>
+    </labels>
+    <labels>
+        <fullName>Task_created_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Task created label</shortDescription>
+        <value>SUCCESS: Task Created.</value>
+    </labels>
+    <labels>
+        <fullName>There_is_invalid_data_in_CSV_file</fullName>
+        <categories>PriceList Upload</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>There is invalid data in CSV file</shortDescription>
+        <value>There is invalid data in CSV file.</value>
+    </labels>
+    <labels>
+        <fullName>UNITOFMEASURE</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UNIT OF MEASURE</shortDescription>
+        <value>UNIT OF MEASURE</value>
+    </labels>
+    <labels>
+        <fullName>UNIT_OF_MEASURE1</fullName>
+        <categories>DNE</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UNIT OF MEASURE1</shortDescription>
+        <value>UNIT OF MEASURE</value>
+    </labels>
+    <labels>
+        <fullName>Unidentified_Opporunity_Label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unidentified Opporunity Label</shortDescription>
+        <value>Unidentified Opporunity</value>
+    </labels>
+    <labels>
+        <fullName>VOLUME</fullName>
+        <categories>Page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VOLUME</shortDescription>
+        <value>VOLUME</value>
+    </labels>
+    <labels>
+        <fullName>VOLUME1</fullName>
+        <categories>DNE</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VOLUME1</shortDescription>
+        <value>VOLUME</value>
+    </labels>
+    <labels>
+        <fullName>Valid_email_address_label</fullName>
+        <categories>DNE Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Valid email address label</shortDescription>
+        <value>Please provide a valid email address.</value>
+    </labels>
+</CustomLabels>

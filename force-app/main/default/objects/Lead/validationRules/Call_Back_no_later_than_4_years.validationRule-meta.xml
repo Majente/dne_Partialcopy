@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Call_Back_no_later_than_4_years</fullName>
+    <active>true</active>
+    <errorConditionFormula>DATEVALUE(Call_Back_Date__c) &gt; ADDMONTHS(TODAY(),48)</errorConditionFormula>
+    <errorMessage>The Call Back Date can&apos;t be later than 4 years from now</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Convert_Without_Email</fullName>
+    <active>true</active>
+    <description>Cannot convert a lead if there is no email filled</description>
+    <errorConditionFormula>AND(ISPICKVAL(Status, &apos;Converted&apos;) , AND(ISBLANK( Email ),ISBLANK( TEXT(Reason_no_Email_Provided__c))))</errorConditionFormula>
+    <errorMessage>You must Enter the Email Address or Reason for no Email Provided before Convert</errorMessage>
+</ValidationRule>

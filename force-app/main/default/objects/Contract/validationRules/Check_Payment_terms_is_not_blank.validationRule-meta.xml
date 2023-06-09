@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Payment_terms_is_not_blank</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Status, &quot;Revenue Received&quot;), 
+OR(Text(Payment_Terms__c) == NULL, supplier_s_contract_ID__c == NULL))</errorConditionFormula>
+    <errorMessage>Please fill the Payment terms and Supplier’s Contract ID.</errorMessage>
+</ValidationRule>

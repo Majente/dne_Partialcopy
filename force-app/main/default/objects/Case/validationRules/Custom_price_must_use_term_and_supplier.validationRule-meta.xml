@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Custom_price_must_use_term_and_supplier</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Subtype__c, &apos;Custom pricing requests&apos;), 
+					OR(AND(ISBLANK( Term__c), ISBLANK(Other_terms__c)),
+					AND(
+					ISBLANK( Supplier_1__c ),
+					ISBLANK( Supplier_2__c ),
+					ISBLANK( Supplier_3__c ),
+					ISBLANK( Supplier_4__c ),
+					ISBLANK( Supplier_5__c )
+					
+					) 
+					)
+					)</errorConditionFormula>
+    <errorMessage>On custom pricing request, you must fill suppliers and terms</errorMessage>
+</ValidationRule>
